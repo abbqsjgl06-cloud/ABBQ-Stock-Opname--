@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Stock ABBQ</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h2 id="judulHalaman"></h2>
+
+    <table class="table-stock">
+
+        <thead>
+            <tr>
+                <th>Nama Barang</th>
+                <th>CS</th>
+                <th>PCS/Gr</th>
+            </tr>
+        </thead>
+
+        <tbody id="tableBody">
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <button onclick="simpanData()">
+        SIMPAN
+    </button>
+
+    <br><br>
+
+    <button onclick="resetData()">
+        RESET
+    </button>
+
+    <br><br>
+
+    <button onclick="exportExcel()">
+        EXPORT EXCEL
+    </button>
+
+    <br><br>
+
+    <button onclick="window.location.href='history.html'">
+        RIWAYAT
+    </button>
+
+</div>
+
+<script src="input.js"></script>
+
+</body>
+</html>
