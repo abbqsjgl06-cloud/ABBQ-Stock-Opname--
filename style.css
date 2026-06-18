@@ -72,3 +72,9 @@ button:hover{
     width:70px;
     text-align:center;
 }
+.history-card{
+    border:1px solid #ddd;
+    padding:15px;
+    border-radius:10px;
+    background:white;
+}
