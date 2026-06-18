@@ -62,3 +62,70 @@ fetch(databaseFile)
     document.getElementById("tableBody").innerHTML = html;
 
 });
+function simpanData(){
+
+    let rows = document.querySelectorAll("#tableBody tr");
+
+    let items = [];
+
+    rows.forEach((row,index)=>{
+
+        let nama_item =
+            row.cells[0].innerText;
+
+        let cs =
+            document.getElementById(
+                "cs_"+index
+            ).value;
+
+        let pcs_gr =
+            document.getElementById(
+                "pcs_"+index
+            ).value;
+
+        items.push({
+
+            nama_item:nama_item,
+
+            cs:Number(cs),
+
+            pcs_gr:Number(pcs_gr)
+
+        });
+
+    });
+
+    let data = {
+
+        tanggal:tanggal,
+
+        kategori:kategori,
+
+        type:type,
+
+        items:items
+
+    };
+
+    localStorage.setItem(
+        "currentStock",
+        JSON.stringify(data)
+    );
+
+    let historyData =
+        JSON.parse(
+            localStorage.getItem(
+                "historyStock"
+            )
+        ) || [];
+
+    historyData.push(data);
+
+    localStorage.setItem(
+        "historyStock",
+        JSON.stringify(historyData)
+    );
+
+    alert("Data berhasil disimpan");
+
+}
