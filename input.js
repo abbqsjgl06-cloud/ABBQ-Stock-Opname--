@@ -129,3 +129,17 @@ function simpanData(){
     alert("Data berhasil disimpan");
 
 }
+function resetData(){
+
+    let inputQty =
+        document.querySelectorAll(
+            ".qty-input"
+        );
+
+    inputQty.forEach(input=>{
+
+        input.value=0;
+
+    });
+
+}
