@@ -1,11 +1,35 @@
 [
-  {
-    "nama_item":"Chicken Karaage"
-  },
-  {
-    "nama_item":"Chicken Katsu"
-  },
-  {
-    "nama_item":"Mozarella Stick"
-  }
+  {"nama_item":"SAUCE TALIWANG 0.9KG/PAC"},
+  {"nama_item":"SAUCE KECOMBRANG 0.9KG/PAC"},
+  {"nama_item":"SAUCE SOLO 0.9KG/PAC"},
+  {"nama_item":"SAMBAL MATAH 174 PC/CTN"},
+  {"nama_item":"SAMBAL KECOMBRANG 174 PC/CTN"},
+  {"nama_item":"AYAM BAKAR (DADA 4 PAC X 12 PCS /CAR)"},
+  {"nama_item":"AYAM BAKAR (PAHA 4 PAC X 12 PCS /CAR)"},
+  {"nama_item":"SAYUR ASAM BASE 307GR/PAC"},
+  {"nama_item":"CORN RIBS 300GR/PAC"},
+  {"nama_item":"PERKEDEL 10PCS/PAC"},
+  {"nama_item":"IKAN PEDA BALADO 4PAC X 8PCS/CAR"},
+  {"nama_item":"SAMBAL BAWANG 174PC/CTN"},
+  {"nama_item":"SAMBAL TALIWANG 174PC/CTN"},
+  {"nama_item":"SAMBAL SOLO 174PC/CTN"},
+  {"nama_item":"NASI PUTIH"},
+  {"nama_item":"NASI MERAH"},
+  {"nama_item":"SAMBAL DAUN JERUK"},
+  {"nama_item":"TELUR"},
+  {"nama_item":"LALAPAN"},
+  {"nama_item":"KEMANGI"},
+  {"nama_item":"TIMUN"},
+  {"nama_item":"TOMAT"},
+  {"nama_item":"JERUK NIPIS"},
+  {"nama_item":"BAWANG GORENG"},
+  {"nama_item":"KERUPUK"},
+  {"nama_item":"MINYAK GORENG"},
+  {"nama_item":"GARAM"},
+  {"nama_item":"GULA"},
+  {"nama_item":"LADA"},
+  {"nama_item":"KALDU"},
+  {"nama_item":"MARGARIN"},
+  {"nama_item":"AIR"},
+  {"nama_item":"ES BATU"}
 ]
