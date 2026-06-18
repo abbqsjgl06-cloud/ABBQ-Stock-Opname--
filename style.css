@@ -52,3 +52,23 @@ button{
 button:hover{
     background:#ffcb00;
 }
+.table-stock{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.table-stock th{
+    background:#FFD400;
+    padding:10px;
+    border:1px solid #ddd;
+}
+
+.table-stock td{
+    border:1px solid #ddd;
+    padding:8px;
+}
+
+.qty-input{
+    width:70px;
+    text-align:center;
+}
