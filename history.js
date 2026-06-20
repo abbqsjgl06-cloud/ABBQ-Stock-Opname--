@@ -7,22 +7,21 @@ function renderHistory() {
     let html = "";
 
     if (historyData.length === 0) {
-
         html = `
             <div class="history-card">
                 <h3>Belum ada data</h3>
                 <p>Silakan lakukan stock opname terlebih dahulu.</p>
             </div>
         `;
-
     } else {
 
         historyData.forEach((data, index) => {
 
+            const operator = data.operator || "-";
             const kategori = data.kategori || "-";
             const type = data.type || "-";
             const tanggal = data.tanggal || "-";
-            const timestamp = data.timestamp || "-";
+            const timestamp = data.timestamp || "Belum ada waktu input";
 
             const jumlahItem = Array.isArray(data.items)
                 ? data.items.length
@@ -32,6 +31,8 @@ function renderHistory() {
                 <div class="history-card">
 
                     <h3>${kategori} - ${type}</h3>
+
+                    <p>Operator : ${operator}</p>
 
                     <p>Tanggal : ${tanggal}</p>
 
@@ -44,7 +45,6 @@ function renderHistory() {
                     </button>
 
                 </div>
-
                 <br>
             `;
         });
