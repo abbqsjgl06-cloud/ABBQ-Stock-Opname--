@@ -26,7 +26,12 @@ function getCurrentTimestamp() {
  */
 function setError(el, isError) {
     if (!el) return;
-    el.style.border = isError ? "2px solid red" : "";
+
+    if (isError) {
+        el.style.border = "2px solid red";
+    } else {
+        el.style.border = "";
+    }
 }
 
 /**
@@ -44,7 +49,7 @@ function mulaiInput() {
     const type = typeEl?.value.trim() || "";
     const tanggal = tanggalEl?.value || "";
 
-    // reset error state dulu
+    // reset error state
     setError(operatorEl, false);
     setError(kategoriEl, false);
     setError(typeEl, false);
@@ -73,10 +78,8 @@ function mulaiInput() {
         hasError = true;
     }
 
-    // stop kalau ada error
-    if (hasError) {
-        return;
-    }
+    // stop jika ada error
+    if (hasError) return;
 
     const timestamp = getCurrentTimestamp();
 
@@ -92,11 +95,11 @@ function mulaiInput() {
 
     history.push({
         action: "mulai input stock opname",
-        operator,
-        kategori,
-        type,
-        tanggal,
-        timestamp
+        operator: operator,
+        kategori: kategori,
+        type: type,
+        tanggal: tanggal,
+        timestamp: timestamp
     });
 
     localStorage.setItem("history", JSON.stringify(history));
