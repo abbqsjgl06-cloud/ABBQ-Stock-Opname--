@@ -29,35 +29,35 @@ fetch(databaseFile)
 
     let html="";
 
-    data.forEach((item,index)=>{
+    ```javascript
+data.forEach((item,index)=>{
 
-        html += `
-        <tr>
+html += `
+<tr>
 
-            <td>${item.nama_item}</td>
+    <td>${item.nomor}</td>
 
-            <td>
-                <input
-                    type="number"
-                    class="qty-input"
-                    id="cs_${index}"
-                    min="0"
-                    value="0">
-            </td>
+    <td>${item.kode}</td>
 
-            <td>
-                <input
-                    type="number"
-                    class="qty-input"
-                    id="pcs_${index}"
-                    min="0"
-                    value="0">
-            </td>
+    <td>${item.item}</td>
 
-        </tr>
-        `;
+    <td>${item.konv}</td>
 
-    });
+    <td>${item.uom}</td>
+
+    <td>
+        <input
+            type="number"
+            class="qty-input"
+            id="qty_${index}"
+            min="0"
+            value="0">
+    </td>
+
+</tr>
+`;
+
+});
 
     document.getElementById("tableBody").innerHTML = html;
 
@@ -70,18 +70,33 @@ function simpanData(){
 
     rows.forEach((row,index)=>{
 
-        let nama_item =
-            row.cells[0].innerText;
+        ```javascript
+let nomor = row.cells[0].innerText;
+let kode = row.cells[1].innerText;
+let item = row.cells[2].innerText;
+let konv = row.cells[3].innerText;
+let uom = row.cells[4].innerText;
 
-        let cs =
-            document.getElementById(
-                "cs_"+index
-            ).value;
+let pcs_gr =
+document.getElementById(
+    "qty_"+index
+).value;
 
-        let pcs_gr =
-            document.getElementById(
-                "pcs_"+index
-            ).value;
+items.push({
+
+    nomor:Number(nomor),
+
+    kode:kode,
+
+    item:item,
+
+    konv:Number(konv),
+
+    uom:uom,
+
+    pcs_gr:Number(pcs_gr)
+
+});
 
         items.push({
 
