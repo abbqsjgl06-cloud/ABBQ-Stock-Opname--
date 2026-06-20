@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
         html = `
             <div class="history-card">
                 <h3>Belum ada data</h3>
-                <p>Silakan lakukan stock opname terlebih dahulu</p>
             </div>
         `;
 
@@ -17,18 +16,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
         data.forEach((item, index) => {
 
+            // 🔥 FIX COMPATIBILITY SEMUA VERSI DATA
+            const pic =
+                item.pic ||
+                item.operator ||
+                "-";
+
+            const waktu =
+                item.waktuInput ||
+                item.timestamp ||
+                "-";
+
+            const kategori = item.kategori || "-";
+            const type = item.type || "-";
+            const tanggal = item.tanggal || "-";
+
+            const jumlah = Array.isArray(item.items)
+                ? item.items.length
+                : 0;
+
             html += `
                 <div class="history-card">
 
-                    <h3>${item.kategori} - ${item.type}</h3>
+                    <h3>${kategori} - ${type}</h3>
 
-                    <p><b>PIC:</b> ${item.pic || "Tidak ada PIC"}</p>
+                    <p><b>PIC:</b> ${pic}</p>
 
-                    <p><b>Tanggal:</b> ${item.tanggal}</p>
+                    <p><b>Tanggal:</b> ${tanggal}</p>
 
-                    <p><b>Waktu Input:</b> ${item.waktuInput || "-"}</p>
+                    <p><b>Waktu Input:</b> ${waktu}</p>
 
-                    <p><b>Jumlah Item:</b> ${item.items?.length || 0}</p>
+                    <p><b>Jumlah Item:</b> ${jumlah}</p>
 
                     <button onclick="bukaData(${index})">
                         BUKA DATA
