@@ -1,5 +1,5 @@
 /* =========================
-   GLOBAL
+GLOBAL
 ========================= */
 
 body{
@@ -16,7 +16,7 @@ body{
 
 
 /* =========================
-   LOGO
+LOGO
 ========================= */
 
 .logo{
@@ -27,7 +27,7 @@ body{
 
 
 /* =========================
-   TITLE
+TITLE
 ========================= */
 
 h1,
@@ -39,7 +39,7 @@ h3{
 
 
 /* =========================
-   FORM
+FORM
 ========================= */
 
 .form-group{
@@ -63,7 +63,7 @@ input{
 
 
 /* =========================
-   BUTTON
+BUTTON
 ========================= */
 
 button{
@@ -96,7 +96,7 @@ button:hover{
 
 
 /* =========================
-   TABLE
+TABLE
 ========================= */
 
 .table-stock{
@@ -135,7 +135,7 @@ button:hover{
 
 
 /* =========================
-   INPUT QTY
+INPUT QTY
 ========================= */
 
 .qty-input{
@@ -148,7 +148,7 @@ button:hover{
 
 
 /* =========================
-   HISTORY CARD
+HISTORY CARD
 ========================= */
 
 .history-card{
@@ -163,7 +163,7 @@ button:hover{
 
     margin-bottom:15px;
 
-    box-shadow:0px 2px 5px rgba(0,0,0,0.10);
+    box-shadow:0 2px 5px rgba(0,0,0,0.10);
 
 }
 
@@ -181,7 +181,38 @@ button:hover{
 
 
 /* =========================
-   WATERMARK
+NOTIFICATION
+========================= */
+
+.notif{
+
+    display:none;
+
+    position:fixed;
+
+    top:20px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    background:#28a745;
+
+    color:white;
+
+    padding:15px 25px;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+    z-index:9999;
+
+}
+
+
+/* =========================
+WATERMARK
 ========================= */
 
 .watermark{
@@ -206,7 +237,7 @@ button:hover{
 
 
 /* =========================
-   RESPONSIVE ANDROID
+RESPONSIVE ANDROID
 ========================= */
 
 @media(max-width:768px){
@@ -254,29 +285,5 @@ button:hover{
         font-size:14px;
 
     }
-
-.notif{
-
-    display:none;
-
-    position:fixed;
-
-    top:20px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    background:#28a745;
-
-    color:white;
-
-    padding:15px 25px;
-
-    border-radius:10px;
-
-    font-weight:bold;
-
-    z-index:9999;
 
 }
