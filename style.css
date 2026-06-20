@@ -1,5 +1,5 @@
 /* =========================
-GLOBAL
+   GLOBAL
 ========================= */
 
 body{
@@ -14,9 +14,8 @@ body{
     padding:20px;
 }
 
-
 /* =========================
-LOGO
+   LOGO
 ========================= */
 
 .logo{
@@ -25,9 +24,8 @@ LOGO
     margin:auto;
 }
 
-
 /* =========================
-TITLE
+   TITLE
 ========================= */
 
 h1,
@@ -37,9 +35,8 @@ h3{
     color:#000;
 }
 
-
 /* =========================
-FORM
+   FORM
 ========================= */
 
 .form-group{
@@ -56,234 +53,153 @@ select,
 input{
     width:100%;
     padding:12px;
-    border-radius:8px;
     border:1px solid #cccccc;
+    border-radius:8px;
     box-sizing:border-box;
 }
 
-
 /* =========================
-BUTTON
+   BUTTON
 ========================= */
 
 button{
-
     width:100%;
-
     padding:15px;
-
     background:#FFD400;
-
     border:none;
-
     border-radius:10px;
-
     font-size:16px;
-
     font-weight:bold;
-
     cursor:pointer;
-
     transition:0.3s;
-
 }
 
 button:hover{
-
     opacity:0.9;
-
 }
 
-
 /* =========================
-TABLE
+   TABLE
 ========================= */
 
 .table-stock{
-
     width:100%;
-
     border-collapse:collapse;
-
+    background:#ffffff;
     margin-top:15px;
-
-    background:white;
-
 }
 
 .table-stock th{
-
     background:#FFD400;
-
     border:1px solid #dddddd;
-
     padding:10px;
-
     font-size:14px;
-
 }
 
 .table-stock td{
-
     border:1px solid #dddddd;
-
     padding:8px;
-
     font-size:13px;
-
 }
 
-
 /* =========================
-INPUT QTY
+   INPUT QTY
 ========================= */
 
 .qty-input{
-
     width:80px;
-
     text-align:center;
-
 }
 
-
 /* =========================
-HISTORY CARD
+   HISTORY CARD
 ========================= */
 
 .history-card{
-
+    background:#ffffff;
     border:1px solid #dddddd;
-
-    background:white;
-
     border-radius:15px;
-
     padding:15px;
-
     margin-bottom:15px;
-
-    box-shadow:0 2px 5px rgba(0,0,0,0.10);
-
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
 
 .history-card h3{
-
     margin-top:0;
-
 }
 
 .history-card p{
-
     margin-bottom:15px;
-
 }
 
-
 /* =========================
-NOTIFICATION
+   NOTIFICATION
 ========================= */
 
 .notif{
-
     display:none;
-
     position:fixed;
-
     top:20px;
-
     left:50%;
-
     transform:translateX(-50%);
-
     background:#28a745;
-
     color:white;
-
     padding:15px 25px;
-
-    border-radius:10px;
-
+    border-radius:12px;
+    font-size:14px;
     font-weight:bold;
-
+    box-shadow:0 3px 10px rgba(0,0,0,0.2);
     z-index:9999;
-
 }
 
-
 /* =========================
-WATERMARK
+   WATERMARK
 ========================= */
 
 .watermark{
-
     position:fixed;
-
-    bottom:12px;
-
     right:12px;
-
+    bottom:12px;
     font-size:11px;
-
     font-weight:500;
-
     color:rgba(0,0,0,0.40);
-
     letter-spacing:1px;
-
     z-index:999;
-
 }
 
-
 /* =========================
-RESPONSIVE ANDROID
+   RESPONSIVE ANDROID
 ========================= */
 
 @media(max-width:768px){
 
     .container{
-
         padding:12px;
-
     }
 
     .table-stock{
-
         display:block;
-
         overflow-x:auto;
-
         white-space:nowrap;
-
     }
 
     .table-stock th{
-
-        font-size:11px;
-
         padding:6px;
-
+        font-size:11px;
     }
 
     .table-stock td{
-
-        font-size:11px;
-
         padding:6px;
-
+        font-size:11px;
     }
 
     .qty-input{
-
         width:60px;
-
     }
 
     button{
-
         font-size:14px;
-
+        padding:14px;
     }
 
 }
