@@ -1,45 +1,48 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Stock ABBQ</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ABBQ Stock Opname</title>
 
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
 
-<div class="container">
+</head>
+
+<body>
 
     <h2 id="judulHalaman"></h2>
 
-<table class="table-stock">
+    <table class="table-stock">
 
-    <thead>
+        <thead>
 
-        <tr>
+            <tr>
 
-            <th>No</th>
+                <th>No</th>
 
-            <th>Kode</th>
+                <th>Kode</th>
 
-            <th>Item</th>
+                <th>Item</th>
 
-            <th>Konv</th>
+                <th>Konv</th>
 
-            <th>UOM</th>
+                <th>UOM</th>
 
-            <th>PCS/Gr</th>
+                <th>PCS/Gr</th>
 
-        </tr>
+            </tr>
 
-    </thead>
+        </thead>
 
-    <tbody id="tableBody">
+        <tbody id="tableBody">
 
-    </tbody>
-
-</table>
+        </tbody>
 
     </table>
 
@@ -67,13 +70,19 @@
         RIWAYAT
     </button>
 
-</div>
+    <div class="watermark">
+        © 2026 Fdl
+    </div>
 
-<div class="watermark">
-    © 2026 Fdl
-</div>
+    <!-- Library Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <!-- Fungsi export -->
+    <script src="export.js"></script>
+
+    <!-- Fungsi input -->
+    <script src="input.js"></script>
 
 </body>
+
 </html>
-<script src="libraries/xlsx.full.min.js"></script> <script src="export.js"></script> <script src="input.js"></script>
-<script src="input.js"></script>
