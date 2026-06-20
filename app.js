@@ -1,14 +1,15 @@
-document.addEventListener("DOMContentLoaded", () => {
+function initTanggal() {
     const tanggalEl = document.getElementById("tanggal");
 
-    // Set tanggal otomatis hari ini
     if (tanggalEl) {
         tanggalEl.valueAsDate = new Date();
     }
-});
+}
+
+document.addEventListener("DOMContentLoaded", initTanggal);
 
 /**
- * FORMAT WAKTU LENGKAP (ID Locale)
+ * FORMAT WAKTU
  */
 function getCurrentTimestamp() {
     return new Date().toLocaleString("id-ID", {
@@ -22,22 +23,17 @@ function getCurrentTimestamp() {
 }
 
 /**
- * helper: highlight error field
+ * helper error border
  */
 function setError(el, isError) {
     if (!el) return;
-
-    if (isError) {
-        el.style.border = "2px solid red";
-    } else {
-        el.style.border = "";
-    }
+    el.style.border = isError ? "2px solid red" : "";
 }
 
 /**
- * MAIN FUNCTION
+ * MAIN FUNCTION (HARUS GLOBAL)
  */
-function mulaiInput() {
+window.mulaiInput = function () {
 
     const operatorEl = document.getElementById("operator");
     const kategoriEl = document.getElementById("kategori");
@@ -49,7 +45,7 @@ function mulaiInput() {
     const type = typeEl?.value.trim() || "";
     const tanggal = tanggalEl?.value || "";
 
-    // reset error state
+    // reset error
     setError(operatorEl, false);
     setError(kategoriEl, false);
     setError(typeEl, false);
@@ -57,53 +53,33 @@ function mulaiInput() {
 
     let hasError = false;
 
-    // VALIDASI SILENT (tanpa alert)
-    if (!operator) {
-        setError(operatorEl, true);
-        hasError = true;
-    }
+    if (!operator) { setError(operatorEl, true); hasError = true; }
+    if (!kategori) { setError(kategoriEl, true); hasError = true; }
+    if (!type) { setError(typeEl, true); hasError = true; }
+    if (!tanggal) { setError(tanggalEl, true); hasError = true; }
 
-    if (!kategori) {
-        setError(kategoriEl, true);
-        hasError = true;
-    }
-
-    if (!type) {
-        setError(typeEl, true);
-        hasError = true;
-    }
-
-    if (!tanggal) {
-        setError(tanggalEl, true);
-        hasError = true;
-    }
-
-    // stop jika ada error
     if (hasError) return;
 
     const timestamp = getCurrentTimestamp();
 
-    // simpan session
     localStorage.setItem("operator", operator);
     localStorage.setItem("kategori", kategori);
     localStorage.setItem("type", type);
     localStorage.setItem("tanggal", tanggal);
     localStorage.setItem("created_at", timestamp);
 
-    // history / audit trail
-    let history = JSON.parse(localStorage.getItem("history")) || [];
+    let history = JSON.parse(localStorage.getItem("historyStock")) || [];
 
     history.push({
-        action: "mulai input stock opname",
-        operator: operator,
-        kategori: kategori,
-        type: type,
-        tanggal: tanggal,
-        timestamp: timestamp
+        operator,
+        kategori,
+        type,
+        tanggal,
+        timestamp,
+        items: []
     });
 
-    localStorage.setItem("history", JSON.stringify(history));
+    localStorage.setItem("historyStock", JSON.stringify(history));
 
-    // redirect
     window.location.href = "input.html";
-}
+};
