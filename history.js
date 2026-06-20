@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let html = "";
 
-    if (!Array.isArray(data) || data.length === 0) {
+    if (!data.length) {
 
         html = `
             <div class="history-card">
@@ -17,40 +17,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         data.forEach((item, index) => {
 
-            const kategori = item.kategori || "-";
-            const type = item.type || "-";
-            const operator = item.operator || "Tidak ada PIC";
-            const tanggal = item.tanggal || "-";
-
-            // FIX TIME HANDLING (ANTI UNDEFINED)
-            const waktuJam =
-                item.time ||
-                (item.timestamp ? item.timestamp.split(",")[1]?.trim() : null) ||
-                "-";
-
-            const waktuLengkap =
-                item.timestamp ||
-                item.time ||
-                "-";
-
-            const jumlahItem = Array.isArray(item.items)
-                ? item.items.length
-                : 0;
-
             html += `
                 <div class="history-card">
 
-                    <h3>${kategori} - ${type}</h3>
+                    <h3>${item.kategori} - ${item.type}</h3>
 
-                    <p><b>PIC:</b> ${operator}</p>
+                    <p><b>PIC:</b> ${item.pic || "Tidak ada PIC"}</p>
 
-                    <p><b>Tanggal:</b> ${tanggal}</p>
+                    <p><b>Tanggal:</b> ${item.tanggal}</p>
 
-                    <p><b>Waktu Input:</b> ${waktuJam}</p>
+                    <p><b>Waktu Input:</b> ${item.waktuInput || "-"}</p>
 
-                    <p><b>Waktu Lengkap:</b> ${waktuLengkap}</p>
-
-                    <p><b>Jumlah Item:</b> ${jumlahItem}</p>
+                    <p><b>Jumlah Item:</b> ${item.items?.length || 0}</p>
 
                     <button onclick="bukaData(${index})">
                         BUKA DATA
@@ -62,11 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const container = document.getElementById("historyList");
-
-    if (container) {
-        container.innerHTML = html;
-    }
+    document.getElementById("historyList").innerHTML = html;
 });
 
 function bukaData(index) {
@@ -75,10 +49,7 @@ function bukaData(index) {
 
     if (!data[index]) return;
 
-    localStorage.setItem(
-        "selectedHistory",
-        JSON.stringify(data[index])
-    );
+    localStorage.setItem("selectedHistory", JSON.stringify(data[index]));
 
     window.location.href = "detail_history.html";
 }
