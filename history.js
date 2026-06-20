@@ -1,44 +1,32 @@
-document.addEventListener("DOMContentLoaded", renderHistory);
+document.addEventListener("DOMContentLoaded", () => {
 
-function renderHistory() {
-
-    let historyData = JSON.parse(localStorage.getItem("historyStock")) || [];
+    const data = JSON.parse(localStorage.getItem("historyStock")) || [];
 
     let html = "";
 
-    if (historyData.length === 0) {
+    if (data.length === 0) {
         html = `
             <div class="history-card">
                 <h3>Belum ada data</h3>
-                <p>Silakan lakukan stock opname terlebih dahulu.</p>
+                <p>Silakan lakukan stock opname terlebih dahulu</p>
             </div>
         `;
     } else {
 
-        historyData.forEach((data, index) => {
-
-            const operator = data.operator || "-";
-            const kategori = data.kategori || "-";
-            const type = data.type || "-";
-            const tanggal = data.tanggal || "-";
-            const timestamp = data.timestamp || "Belum ada waktu input";
-
-            const jumlahItem = Array.isArray(data.items)
-                ? data.items.length
-                : 0;
+        data.forEach((item, index) => {
 
             html += `
                 <div class="history-card">
 
-                    <h3>${kategori} - ${type}</h3>
+                    <h3>${item.kategori} - ${item.type}</h3>
 
-                    <p>Operator : ${operator}</p>
+                    <p><b>Operator:</b> ${item.operator}</p>
 
-                    <p>Tanggal : ${tanggal}</p>
+                    <p><b>Tanggal:</b> ${item.tanggal}</p>
 
-                    <p>Waktu Input : ${timestamp}</p>
+                    <p><b>Waktu Input (REALTIME):</b> ${item.timestamp}</p>
 
-                    <p>Jumlah Item : ${jumlahItem}</p>
+                    <p><b>Jumlah Item:</b> ${item.items?.length || 0}</p>
 
                     <button onclick="bukaData(${index})">
                         BUKA DATA
@@ -50,23 +38,16 @@ function renderHistory() {
         });
     }
 
-    const container = document.getElementById("historyList");
-
-    if (container) {
-        container.innerHTML = html;
-    }
-}
+    document.getElementById("historyList").innerHTML = html;
+});
 
 function bukaData(index) {
 
-    let historyData = JSON.parse(localStorage.getItem("historyStock")) || [];
+    const data = JSON.parse(localStorage.getItem("historyStock")) || [];
 
-    if (!historyData[index]) return;
+    if (!data[index]) return;
 
-    localStorage.setItem(
-        "selectedHistory",
-        JSON.stringify(historyData[index])
-    );
+    localStorage.setItem("selectedHistory", JSON.stringify(data[index]));
 
     window.location.href = "detail_history.html";
 }
