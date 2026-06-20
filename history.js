@@ -1,4 +1,3 @@
-```javascript
 let historyData =
     JSON.parse(
         localStorage.getItem(
