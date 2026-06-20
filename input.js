@@ -136,7 +136,7 @@ function simpanData() {
         JSON.stringify(historyData)
     );
 
-    alert("Data berhasil disimpan");
+    tampilNotif("✓ Data berhasil disimpan");
 
 }
 
