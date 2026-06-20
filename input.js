@@ -6,9 +6,17 @@ const kategori = localStorage.getItem("kategori");
 const type = localStorage.getItem("type");
 const tanggal = localStorage.getItem("tanggal");
 
-document.getElementById("judulHalaman").innerHTML =
-    kategori + " - " + type + " - " + tanggal;
+// ambil PIC dari activeStock
+const activeStock =
+JSON.parse(localStorage.getItem("activeStock")) || {};
 
+const pic =
+activeStock.pic ||
+activeStock.operator ||
+"-";
+
+document.getElementById("judulHalaman").innerHTML =
+kategori + " - " + type + " - " + tanggal;
 
 // ======================
 // Menentukan database
@@ -17,236 +25,247 @@ document.getElementById("judulHalaman").innerHTML =
 let databaseFile = "";
 
 if (kategori === "Kitchen" && type === "Daily") {
-    databaseFile = "database/daily_kitchen.json";
+databaseFile = "database/daily_kitchen.json";
 }
 
 if (kategori === "Frontliner" && type === "Daily") {
-    databaseFile = "database/daily_frontliner.json";
+databaseFile = "database/daily_frontliner.json";
 }
 
 if (kategori === "Kitchen" && type === "WM") {
-    databaseFile = "database/wm_kitchen.json";
+databaseFile = "database/wm_kitchen.json";
 }
 
 if (kategori === "Frontliner" && type === "WM") {
-    databaseFile = "database/wm_frontliner.json";
+databaseFile = "database/wm_frontliner.json";
 }
-
 
 // ======================
 // Membaca database
 // ======================
 
 fetch(databaseFile)
+
 .then(response => response.json())
+
 .then(data => {
 
-    let html = "";
+```
+let html = "";
 
-    data.forEach((item, index) => {
+data.forEach((item, index) => {
 
-        html += `
-        <tr>
+    html += `
+    <tr>
 
-            <td>${item.nomor}</td>
+        <td>${item.nomor}</td>
 
-            <td>${item.kode}</td>
+        <td>${item.kode}</td>
 
-            <td>${item.item}</td>
+        <td>${item.item}</td>
 
-            <td>${item.konv}</td>
+        <td>${item.konv}</td>
 
-            <td>${item.uom}</td>
+        <td>${item.uom}</td>
 
-            <td>
+        <td>
 
-                <input
-                    type="number"
-                    class="qty-input"
-                    id="qty_${index}"
-                    min="0"
-                    value="0">
+            <input
+                type="number"
+                class="qty-input"
+                id="qty_${index}"
+                min="0"
+                value="0">
 
-            </td>
+        </td>
 
-        </tr>
-        `;
-
-    });
-
-    document.getElementById("tableBody").innerHTML = html;
-
-})
-.catch(error => {
-
-    tampilNotif("Database tidak ditemukan");
+    </tr>
+    `;
 
 });
 
+document.getElementById("tableBody").innerHTML = html;
+```
+
+})
+
+.catch(error => {
+
+```
+tampilNotif("Database tidak ditemukan");
+```
+
+});
+
+// ======================
+// Fungsi waktu realtime
+// ======================
+
+function getWaktuInput() {
+
+```
+return new Date().toLocaleString("id-ID", {
+
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+
+});
+```
+
+}
 
 // ======================
 // Simpan data
 // ======================
 
-function simpanData(){
+function simpanData() {
 
-    let rows =
-        document.querySelectorAll(
-            "#tableBody tr"
-        );
+```
+let rows =
+    document.querySelectorAll("#tableBody tr");
 
-    let items = [];
+let items = [];
 
-    rows.forEach((row,index)=>{
+rows.forEach((row, index) => {
 
-        items.push({
+    items.push({
 
-            nomor:Number(
-                row.cells[0].innerText
-            ),
+        nomor: Number(
+            row.cells[0].innerText
+        ),
 
-            kode:
-                row.cells[1].innerText,
+        kode:
+            row.cells[1].innerText,
 
-            item:
-                row.cells[2].innerText,
+        item:
+            row.cells[2].innerText,
 
-            konv:Number(
-                row.cells[3].innerText
-            ),
+        konv: Number(
+            row.cells[3].innerText
+        ),
 
-            uom:
-                row.cells[4].innerText,
+        uom:
+            row.cells[4].innerText,
 
-            pcs_gr:Number(
+        pcs_gr: Number(
 
-                document.getElementById(
-                    "qty_"+index
-                ).value
+            document.getElementById(
+                "qty_" + index
+            ).value
 
-            )
-
-        });
+        )
 
     });
 
-
-    let data = {
-
-        tanggal:tanggal,
-
-        kategori:kategori,
-
-        type:type,
-
-        items:items
-
-    };
+});
 
 
-    localStorage.setItem(
-        "currentStock",
-        JSON.stringify(data)
-    );
+let data = {
+
+    id: Date.now(),
+
+    pic: pic,
+
+    tanggal: tanggal,
+
+    kategori: kategori,
+
+    type: type,
+
+    waktuInput: getWaktuInput(),
+
+    items: items
+
+};
 
 
-    let historyData =
-        JSON.parse(
-            localStorage.getItem(
-                "historyStock"
-            )
-        ) || [];
+let historyData =
+
+    JSON.parse(
+        localStorage.getItem(
+            "historyStock"
+        )
+    ) || [];
 
 
-    let indexData =
-        historyData.findIndex(
-
-            x =>
-
-            x.tanggal === tanggal &&
-
-            x.kategori === kategori &&
-
-            x.type === type
-
-        );
+historyData.push(data);
 
 
-    if(indexData !== -1){
+localStorage.setItem(
 
-        historyData[indexData] = data;
+    "historyStock",
 
-    }
-    else{
+    JSON.stringify(historyData)
 
-        historyData.push(data);
-
-    }
+);
 
 
-    localStorage.setItem(
+localStorage.setItem(
 
-        "historyStock",
+    "currentStock",
 
-        JSON.stringify(historyData)
+    JSON.stringify(data)
 
-    );
+);
 
 
-    tampilNotif(
-        "✓ Data berhasil disimpan"
-    );
+tampilNotif(
+    "✓ Data berhasil disimpan"
+);
+```
 
 }
-
-
 
 // ======================
 // Reset
 // ======================
 
-function resetData(){
+function resetData() {
 
-    let inputQty =
-        document.querySelectorAll(
-            ".qty-input"
-        );
-
-    inputQty.forEach(input=>{
-
-        input.value = 0;
-
-    });
-
-    tampilNotif(
-        "✓ Data berhasil direset"
+```
+let inputQty =
+    document.querySelectorAll(
+        ".qty-input"
     );
 
+inputQty.forEach(input => {
+
+    input.value = 0;
+
+});
+
+tampilNotif(
+    "✓ Data berhasil direset"
+);
+```
+
 }
-
-
 
 // ======================
 // Notifikasi
 // ======================
 
-function tampilNotif(pesan){
+function tampilNotif(pesan) {
 
-    let notif =
-        document.getElementById(
-            "notif"
-        );
+```
+let notif =
+    document.getElementById(
+        "notif"
+    );
 
-    if(!notif) return;
+if (!notif) return;
 
-    notif.innerHTML = pesan;
+notif.innerHTML = pesan;
 
-    notif.style.display = "block";
+notif.style.display = "block";
 
-    setTimeout(function(){
+setTimeout(function () {
 
-        notif.style.display = "none";
+    notif.style.display = "none";
 
-    },2000);
-
+}, 2000);
 }
