@@ -20,19 +20,22 @@ function getCurrentDateTime() {
     });
 }
 
+/**
+ * MAIN FUNCTION (HARUS GLOBAL)
+ */
 window.mulaiInput = function () {
 
-    const operator = document.getElementById("operator")?.value.trim();
-    const kategori = document.getElementById("kategori")?.value;
-    const type = document.getElementById("type")?.value;
-    const tanggal = document.getElementById("tanggal")?.value;
+    const operator = document.getElementById("operator")?.value?.trim() || "";
+    const kategori = document.getElementById("kategori")?.value || "";
+    const type = document.getElementById("type")?.value || "";
+    const tanggal = document.getElementById("tanggal")?.value || "";
 
-    // validasi sederhana
+    // validasi wajib isi
     if (!operator || !kategori || !type || !tanggal) {
-        return;
+        return; // silent validation
     }
 
-    // 🔥 AUTO TIME (TIDAK DIINPUT USER)
+    // 🔥 waktu realtime saat klik SIMPAN
     const timeNow = getCurrentTime();
     const fullTimestamp = getCurrentDateTime();
 
@@ -40,17 +43,22 @@ window.mulaiInput = function () {
 
     historyStock.push({
         id: Date.now(),
-        operator: operator,          // PIC
+
+        operator: operator,     // PIC
         kategori: kategori,
         type: type,
         tanggal: tanggal,
-        time: timeNow,                // ⏰ JAM SAJA
-        timestamp: fullTimestamp,     // ⏰ FULL DETAIL
+
+        // 🔥 TIME FIELDS (FIX UTAMA)
+        time: timeNow,
+        timestamp: fullTimestamp,
+
         items: []
     });
 
     localStorage.setItem("historyStock", JSON.stringify(historyStock));
 
+    // session aktif stock opname
     localStorage.setItem("activeStock", JSON.stringify({
         operator,
         kategori,
