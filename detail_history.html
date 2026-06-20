@@ -3,14 +3,15 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<title>Detail Riwayat</title>
+    <title>Detail Riwayat</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -18,62 +19,77 @@ content="width=device-width, initial-scale=1.0">
 
 <div class="container">
 
-<h2 id="judulHistory"></h2>
+    <h2 id="judulHistory"></h2>
 
-<table class="table-stock">
+    <table class="table-stock">
 
-<thead>
+        <thead>
 
-<tr>
+            <tr>
 
-<th>No</th>
+                <th>No</th>
 
-<th>Kode</th>
+                <th>Kode</th>
 
-<th>Item</th>
+                <th>Item</th>
 
-<th>Konv</th>
+                <th>Konv</th>
 
-<th>UOM</th>
+                <th>UOM</th>
 
-<th>PCS/Gr</th>
+                <th>PCS/Gr</th>
 
-</tr>
+            </tr>
 
-</thead>
+        </thead>
 
-<tbody id="tableBody">
+        <tbody id="tableBody">
 
-</tbody>
+        </tbody>
 
-</table>
+    </table>
 
-<br>
+    <br>
 
-<button onclick="updateData()">
-UPDATE DATA
-</button>
+    <button onclick="updateData()">
+        UPDATE DATA
+    </button>
 
-<br><br>
+    <br><br>
 
-<button onclick="exportHistoryExcel()">
-EXPORT EXCEL
-</button>
+    <button onclick="exportHistoryExcel()">
+        EXPORT EXCEL
+    </button>
 
-<br><br>
+    <br><br>
 
-<button onclick="window.location.href='history.html'">
-KEMBALI
-</button>
+    <button onclick="window.location.href='history.html'">
+        KEMBALI
+    </button>
 
 </div>
 
+
+<!-- NOTIFIKASI -->
+<div
+    id="notif"
+    class="notif">
+</div>
+
+
+<!-- WATERMARK -->
 <div class="watermark">
-© 2026 Fdl
+
+    © 2026 Fdl
+
 </div>
 
+
+<!-- LIBRARY EXCEL -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
+
+<!-- DETAIL HISTORY -->
 <script src="detail_history.js"></script>
 
 </body>
