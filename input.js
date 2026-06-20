@@ -1,12 +1,13 @@
+//
 // ======================
 // Ambil data dari localStorage
 // ======================
+//
 
-const kategori = localStorage.getItem("kategori");
-const type = localStorage.getItem("type");
-const tanggal = localStorage.getItem("tanggal");
+const kategori = localStorage.getItem("kategori") || "";
+const type = localStorage.getItem("type") || "";
+const tanggal = localStorage.getItem("tanggal") || "";
 
-// ambil PIC dari activeStock
 const activeStock =
 JSON.parse(localStorage.getItem("activeStock")) || {};
 
@@ -16,37 +17,50 @@ activeStock.operator ||
 "-";
 
 document.getElementById("judulHalaman").innerHTML =
-kategori + " - " + type + " - " + tanggal;
+`${kategori} - ${type} - ${tanggal}`;
 
+//
 // ======================
 // Menentukan database
 // ======================
+//
 
 let databaseFile = "";
 
 if (kategori === "Kitchen" && type === "Daily") {
 databaseFile = "database/daily_kitchen.json";
 }
-
-if (kategori === "Frontliner" && type === "Daily") {
+else if (kategori === "Frontliner" && type === "Daily") {
 databaseFile = "database/daily_frontliner.json";
 }
-
-if (kategori === "Kitchen" && type === "WM") {
+else if (kategori === "Kitchen" && type === "WM") {
 databaseFile = "database/wm_kitchen.json";
 }
-
-if (kategori === "Frontliner" && type === "WM") {
+else if (kategori === "Frontliner" && type === "WM") {
 databaseFile = "database/wm_frontliner.json";
 }
 
+console.log("Database :", databaseFile);
+
+//
 // ======================
 // Membaca database
 // ======================
+//
 
 fetch(databaseFile)
 
-.then(response => response.json())
+.then(response => {
+
+```
+if (!response.ok) {
+    throw new Error(databaseFile);
+}
+
+return response.json();
+```
+
+})
 
 .then(data => {
 
@@ -69,14 +83,12 @@ data.forEach((item, index) => {
         <td>${item.uom}</td>
 
         <td>
-
             <input
                 type="number"
                 class="qty-input"
                 id="qty_${index}"
                 min="0"
                 value="0">
-
         </td>
 
     </tr>
@@ -92,14 +104,20 @@ document.getElementById("tableBody").innerHTML = html;
 .catch(error => {
 
 ```
-tampilNotif("Database tidak ditemukan");
+console.error(error);
+
+tampilNotif(
+    "Database tidak ditemukan"
+);
 ```
 
 });
 
+//
 // ======================
-// Fungsi waktu realtime
+// Waktu Input
 // ======================
+//
 
 function getWaktuInput() {
 
@@ -118,9 +136,11 @@ return new Date().toLocaleString("id-ID", {
 
 }
 
+//
 // ======================
-// Simpan data
+// Simpan Data
 // ======================
+//
 
 function simpanData() {
 
@@ -134,9 +154,8 @@ rows.forEach((row, index) => {
 
     items.push({
 
-        nomor: Number(
-            row.cells[0].innerText
-        ),
+        nomor:
+            Number(row.cells[0].innerText),
 
         kode:
             row.cells[1].innerText,
@@ -144,25 +163,22 @@ rows.forEach((row, index) => {
         item:
             row.cells[2].innerText,
 
-        konv: Number(
-            row.cells[3].innerText
-        ),
+        konv:
+            Number(row.cells[3].innerText),
 
         uom:
             row.cells[4].innerText,
 
-        pcs_gr: Number(
-
-            document.getElementById(
-                "qty_" + index
-            ).value
-
-        )
+        pcs_gr:
+            Number(
+                document.getElementById(
+                    "qty_" + index
+                ).value
+            )
 
     });
 
 });
-
 
 let data = {
 
@@ -182,36 +198,24 @@ let data = {
 
 };
 
-
 let historyData =
-
     JSON.parse(
         localStorage.getItem(
             "historyStock"
         )
     ) || [];
 
-
 historyData.push(data);
 
-
 localStorage.setItem(
-
     "historyStock",
-
     JSON.stringify(historyData)
-
 );
-
 
 localStorage.setItem(
-
     "currentStock",
-
     JSON.stringify(data)
-
 );
-
 
 tampilNotif(
     "✓ Data berhasil disimpan"
@@ -220,9 +224,11 @@ tampilNotif(
 
 }
 
+//
 // ======================
 // Reset
 // ======================
+//
 
 function resetData() {
 
@@ -245,9 +251,11 @@ tampilNotif(
 
 }
 
+//
 // ======================
 // Notifikasi
 // ======================
+//
 
 function tampilNotif(pesan) {
 
@@ -263,9 +271,10 @@ notif.innerHTML = pesan;
 
 notif.style.display = "block";
 
-setTimeout(function () {
+setTimeout(() => {
 
     notif.style.display = "none";
 
 }, 2000);
+
 }
