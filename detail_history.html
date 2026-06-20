@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Detail Riwayat</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2 id="judulHistory"></h2>
+
+<table class="table-stock">
+
+<thead>
+
+<tr>
+
+<th>No</th>
+
+<th>Kode</th>
+
+<th>Item</th>
+
+<th>Konv</th>
+
+<th>UOM</th>
+
+<th>PCS/Gr</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+</tbody>
+
+</table>
+
+<br>
+
+<button onclick="updateData()">
+UPDATE DATA
+</button>
+
+<br><br>
+
+<button onclick="exportHistoryExcel()">
+EXPORT EXCEL
+</button>
+
+<br><br>
+
+<button onclick="window.location.href='history.html'">
+KEMBALI
+</button>
+
+</div>
+
+<div class="watermark">
+© 2026 Fdl
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+<script src="detail_history.js"></script>
+
+</body>
+
+</html>
