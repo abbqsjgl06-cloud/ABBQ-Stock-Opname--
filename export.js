@@ -1,30 +1,45 @@
-function exportExcel(){
+```javascript
+function exportExcel() {
 
     let rows = document.querySelectorAll("#tableBody tr");
 
     let excelData = [];
 
-    rows.forEach((row,index)=>{
+    rows.forEach((row, index) => {
 
-        let nama_item = row.cells[0].innerText;
+        let nomor = row.cells[0].innerText;
 
-        let cs = document.getElementById(
-            "cs_"+index
-        ).value;
+        let kode = row.cells[1].innerText;
 
-        let pcs = document.getElementById(
-            "pcs_"+index
-        ).value;
+        let item = row.cells[2].innerText;
+
+        let konv = row.cells[3].innerText;
+
+        let uom = row.cells[4].innerText;
+
+        let pcs_gr =
+            document.getElementById(
+                "qty_" + index
+            ).value;
 
         excelData.push({
 
-            "Nama Barang": nama_item,
-            "CS": cs,
-            "PCS/Gr": pcs
+            "No": nomor,
+
+            "Kode": kode,
+
+            "Item": item,
+
+            "Konv": konv,
+
+            "UOM": uom,
+
+            "PCS/Gr": pcs_gr
 
         });
 
     });
+
 
     let wb = XLSX.utils.book_new();
 
@@ -38,22 +53,46 @@ function exportExcel(){
         "Stock Opname"
     );
 
-    let kategori = localStorage.getItem("kategori");
-    let type = localStorage.getItem("type");
-    let tanggal = localStorage.getItem("tanggal");
+
+    let kategori =
+        localStorage.getItem(
+            "kategori"
+        );
+
+    let type =
+        localStorage.getItem(
+            "type"
+        );
+
+    let tanggal =
+        localStorage.getItem(
+            "tanggal"
+        );
+
 
     let namaFile =
+
         "SO_" +
+
         kategori +
+
         "_" +
+
         type +
+
         "_" +
+
         tanggal +
+
         ".xlsx";
 
+
     XLSX.writeFile(
+
         wb,
+
         namaFile
+
     );
 
 }
