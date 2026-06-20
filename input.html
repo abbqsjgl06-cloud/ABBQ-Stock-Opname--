@@ -5,8 +5,9 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>ABBQ Stock Opname</title>
 
@@ -16,78 +17,91 @@
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <h2 id="judulHalaman"></h2>
+    <h2 id="judulHalaman"></h2>
 
-        <table class="table-stock">
+    <table class="table-stock">
 
-            <thead>
+        <thead>
 
-                <tr>
+            <tr>
 
-                    <th>No</th>
+                <th>No</th>
 
-                    <th>Kode</th>
+                <th>Kode</th>
 
-                    <th>Item</th>
+                <th>Item</th>
 
-                    <th>Konv</th>
+                <th>Konv</th>
 
-                    <th>UOM</th>
+                <th>UOM</th>
 
-                    <th>PCS/Gr</th>
+                <th>PCS/Gr</th>
 
-                </tr>
+            </tr>
 
-            </thead>
+        </thead>
 
-            <tbody id="tableBody">
+        <tbody id="tableBody">
 
-            </tbody>
+        </tbody>
 
-        </table>
+    </table>
 
-        <br>
+    <br>
 
-        <button onclick="simpanData()">
-            SIMPAN
-        </button>
+    <button onclick="simpanData()">
+        SIMPAN
+    </button>
 
-        <br><br>
+    <br><br>
 
-        <button onclick="resetData()">
-            RESET
-        </button>
+    <button onclick="resetData()">
+        RESET
+    </button>
 
-        <br><br>
+    <br><br>
 
-        <button onclick="exportExcel()">
-            EXPORT EXCEL
-        </button>
+    <button onclick="exportExcel()">
+        EXPORT EXCEL
+    </button>
 
-        <br><br>
+    <br><br>
 
-        <button onclick="window.location.href='history.html'">
-            RIWAYAT
-        </button>
+    <button onclick="window.location.href='history.html'">
+        RIWAYAT
+    </button>
 
-    </div>
-
-
-    <div class="watermark">
-        © 2026 Fdl
-    </div>
+</div>
 
 
-    <!-- Library Excel -->
-    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<!-- NOTIFIKASI -->
+<div
+    id="notif"
+    class="notif">
 
-    <!-- Export -->
-    <script src="export.js"></script>
+</div>
 
-    <!-- Input -->
-    <script src="input.js"></script>
+
+<!-- WATERMARK -->
+<div class="watermark">
+
+    © 2026 Fdl
+
+</div>
+
+
+<!-- LIBRARY EXCEL -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+
+<!-- EXPORT EXCEL -->
+<script src="export.js"></script>
+
+
+<!-- INPUT DATA -->
+<script src="input.js"></script>
 
 </body>
 
