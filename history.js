@@ -1,27 +1,62 @@
-let historyData = JSON.parse(
-    localStorage.getItem("historyStock")
-) || [];
+```javascript
+let historyData =
+    JSON.parse(
+        localStorage.getItem(
+            "historyStock"
+        )
+    ) || [];
 
 let html = "";
 
-historyData.forEach((item,index)=>{
+historyData.forEach((data,index)=>{
 
     html += `
-        <div class="history-card">
 
-            <h3>${item.tanggal}</h3>
+    <div class="history-card">
 
-            <p>
-                ${item.kategori}
-                -
-                ${item.type}
-            </p>
+        <h3>
+            ${data.kategori}
+            -
+            ${data.type}
+        </h3>
 
-        </div>
+        <p>
+            Tanggal :
+            ${data.tanggal}
+        </p>
 
-        <br>
+        <button
+            onclick="bukaData(${index})">
+
+            BUKA DATA
+
+        </button>
+
+    </div>
+
+    <br>
+
     `;
 
 });
 
-document.getElementById("historyList").innerHTML = html;
+document.getElementById(
+    "historyList"
+).innerHTML = html;
+
+
+
+function bukaData(index){
+
+    localStorage.setItem(
+
+        "selectedHistoryIndex",
+
+        index
+
+    );
+
+    window.location.href =
+        "detail_history.html";
+
+}
