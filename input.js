@@ -1,13 +1,21 @@
-let kategori = localStorage.getItem("kategori");
-let type = localStorage.getItem("type");
-let tanggal = localStorage.getItem("tanggal");
+// ======================
+// Ambil data dari localStorage
+// ======================
+
+const kategori = localStorage.getItem("kategori");
+const type = localStorage.getItem("type");
+const tanggal = localStorage.getItem("tanggal");
 
 document.getElementById("judulHalaman").innerHTML =
-kategori + " - " + type + " - " + tanggal;
+    kategori + " - " + type + " - " + tanggal;
+
+
+// ======================
+// Menentukan database
+// ======================
 
 let databaseFile = "";
 
-// Menentukan file database
 if (kategori === "Kitchen" && type === "Daily") {
     databaseFile = "database/daily_kitchen.json";
 }
@@ -25,7 +33,10 @@ if (kategori === "Frontliner" && type === "WM") {
 }
 
 
-// Membaca database dan menampilkan tabel
+// ======================
+// Membaca database
+// ======================
+
 fetch(databaseFile)
 .then(response => response.json())
 .then(data => {
@@ -48,12 +59,14 @@ fetch(databaseFile)
             <td>${item.uom}</td>
 
             <td>
+
                 <input
                     type="number"
                     class="qty-input"
                     id="qty_${index}"
                     min="0"
                     value="0">
+
             </td>
 
         </tr>
@@ -63,65 +76,80 @@ fetch(databaseFile)
 
     document.getElementById("tableBody").innerHTML = html;
 
+})
+.catch(error => {
+
+    tampilNotif("Database tidak ditemukan");
+
 });
 
 
+// ======================
 // Simpan data
-function simpanData() {
+// ======================
 
-    let rows = document.querySelectorAll("#tableBody tr");
+function simpanData(){
+
+    let rows =
+        document.querySelectorAll(
+            "#tableBody tr"
+        );
 
     let items = [];
 
-    rows.forEach((row, index) => {
-
-        let nomor = row.cells[0].innerText;
-        let kode = row.cells[1].innerText;
-        let item = row.cells[2].innerText;
-        let konv = row.cells[3].innerText;
-        let uom = row.cells[4].innerText;
-
-        let pcs_gr = document.getElementById(
-            "qty_" + index
-        ).value;
+    rows.forEach((row,index)=>{
 
         items.push({
 
-            nomor: Number(nomor),
+            nomor:Number(
+                row.cells[0].innerText
+            ),
 
-            kode: kode,
+            kode:
+                row.cells[1].innerText,
 
-            item: item,
+            item:
+                row.cells[2].innerText,
 
-            konv: Number(konv),
+            konv:Number(
+                row.cells[3].innerText
+            ),
 
-            uom: uom,
+            uom:
+                row.cells[4].innerText,
 
-            pcs_gr: Number(pcs_gr)
+            pcs_gr:Number(
+
+                document.getElementById(
+                    "qty_"+index
+                ).value
+
+            )
 
         });
 
     });
 
+
     let data = {
 
-        tanggal: tanggal,
+        tanggal:tanggal,
 
-        kategori: kategori,
+        kategori:kategori,
 
-        type: type,
+        type:type,
 
-        items: items
+        items:items
 
     };
 
-    // data terakhir
+
     localStorage.setItem(
         "currentStock",
         JSON.stringify(data)
     );
 
-    // history
+
     let historyData =
         JSON.parse(
             localStorage.getItem(
@@ -129,30 +157,96 @@ function simpanData() {
             )
         ) || [];
 
-    historyData.push(data);
+
+    let indexData =
+        historyData.findIndex(
+
+            x =>
+
+            x.tanggal === tanggal &&
+
+            x.kategori === kategori &&
+
+            x.type === type
+
+        );
+
+
+    if(indexData !== -1){
+
+        historyData[indexData] = data;
+
+    }
+    else{
+
+        historyData.push(data);
+
+    }
+
 
     localStorage.setItem(
+
         "historyStock",
+
         JSON.stringify(historyData)
+
     );
 
-    tampilNotif("✓ Data berhasil disimpan");
+
+    tampilNotif(
+        "✓ Data berhasil disimpan"
+    );
 
 }
 
 
-// Reset semua quantity
-function resetData() {
+
+// ======================
+// Reset
+// ======================
+
+function resetData(){
 
     let inputQty =
         document.querySelectorAll(
             ".qty-input"
         );
 
-    inputQty.forEach(input => {
+    inputQty.forEach(input=>{
 
         input.value = 0;
 
     });
+
+    tampilNotif(
+        "✓ Data berhasil direset"
+    );
+
+}
+
+
+
+// ======================
+// Notifikasi
+// ======================
+
+function tampilNotif(pesan){
+
+    let notif =
+        document.getElementById(
+            "notif"
+        );
+
+    if(!notif) return;
+
+    notif.innerHTML = pesan;
+
+    notif.style.display = "block";
+
+    setTimeout(function(){
+
+        notif.style.display = "none";
+
+    },2000);
 
 }
