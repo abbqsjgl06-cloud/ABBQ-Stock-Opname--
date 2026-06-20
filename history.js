@@ -1,108 +1,72 @@
-let historyData = JSON.parse(
-    localStorage.getItem(
-        "historyStock"
-    )
-) || [];
+document.addEventListener("DOMContentLoaded", renderHistory);
 
-let html = "";
+function renderHistory() {
 
+    let historyData = JSON.parse(localStorage.getItem("historyStock")) || [];
 
-if(historyData.length === 0){
+    let html = "";
 
-    html = `
+    if (historyData.length === 0) {
 
-    <div class="history-card">
-
-        <h3>
-            Belum ada data
-        </h3>
-
-        <p>
-            Silakan lakukan stock opname terlebih dahulu.
-        </p>
-
-    </div>
-
-    `;
-
-}
-else{
-
-    historyData.forEach((data,index)=>{
-
-        html += `
-
-        <div class="history-card">
-
-            <h3>
-
-                ${data.kategori}
-
-                -
-
-                ${data.type}
-
-            </h3>
-
-            <p>
-
-                Tanggal :
-                ${data.tanggal}
-
-            </p>
-
-            <p>
-
-                Jumlah Item :
-                ${data.items.length}
-
-            </p>
-
-            <button
-                onclick="bukaData(${index})">
-
-                BUKA DATA
-
-            </button>
-
-        </div>
-
-        <br>
-
+        html = `
+            <div class="history-card">
+                <h3>Belum ada data</h3>
+                <p>Silakan lakukan stock opname terlebih dahulu.</p>
+            </div>
         `;
 
-    });
+    } else {
 
+        historyData.forEach((data, index) => {
+
+            const kategori = data.kategori || "-";
+            const type = data.type || "-";
+            const tanggal = data.tanggal || "-";
+            const timestamp = data.timestamp || "-";
+
+            const jumlahItem = Array.isArray(data.items)
+                ? data.items.length
+                : 0;
+
+            html += `
+                <div class="history-card">
+
+                    <h3>${kategori} - ${type}</h3>
+
+                    <p>Tanggal : ${tanggal}</p>
+
+                    <p>Waktu Input : ${timestamp}</p>
+
+                    <p>Jumlah Item : ${jumlahItem}</p>
+
+                    <button onclick="bukaData(${index})">
+                        BUKA DATA
+                    </button>
+
+                </div>
+
+                <br>
+            `;
+        });
+    }
+
+    const container = document.getElementById("historyList");
+
+    if (container) {
+        container.innerHTML = html;
+    }
 }
 
+function bukaData(index) {
 
-document.getElementById(
-    "historyList"
-).innerHTML = html;
+    let historyData = JSON.parse(localStorage.getItem("historyStock")) || [];
 
-
-
-function bukaData(index){
-
-    let historyData = JSON.parse(
-
-        localStorage.getItem(
-            "historyStock"
-        )
-
-    ) || [];
+    if (!historyData[index]) return;
 
     localStorage.setItem(
-
         "selectedHistory",
-
-        JSON.stringify(
-            historyData[index]
-        )
-
+        JSON.stringify(historyData[index])
     );
 
-    window.location.href =
-        "detail_history.html";
-
+    window.location.href = "detail_history.html";
 }
