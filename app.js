@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tanggalEl = document.getElementById("tanggal");
 
-    // Set tanggal hari ini otomatis
+    // Set tanggal otomatis hari ini
     if (tanggalEl) {
         tanggalEl.valueAsDate = new Date();
     }
 });
 
 /**
- * FORMAT TIMESTAMP (tanggal + jam)
+ * FORMAT WAKTU LENGKAP (ID Locale)
  */
 function getCurrentTimestamp() {
     return new Date().toLocaleString("id-ID", {
@@ -22,49 +22,85 @@ function getCurrentTimestamp() {
 }
 
 /**
- * MULAI INPUT STOCK OPNAME
+ * helper: highlight error field
+ */
+function setError(el, isError) {
+    if (!el) return;
+    el.style.border = isError ? "2px solid red" : "";
+}
+
+/**
+ * MAIN FUNCTION
  */
 function mulaiInput() {
 
+    const operatorEl = document.getElementById("operator");
     const kategoriEl = document.getElementById("kategori");
     const typeEl = document.getElementById("type");
     const tanggalEl = document.getElementById("tanggal");
-    const operatorEl = document.getElementById("operator");
 
+    const operator = operatorEl?.value.trim() || "";
     const kategori = kategoriEl?.value.trim() || "";
     const type = typeEl?.value.trim() || "";
     const tanggal = tanggalEl?.value || "";
-    const operator = operatorEl?.value.trim() || "";
 
-    // VALIDASI WAJIB
-    if (!operator || !kategori || !type || !tanggal) {
-        alert("PIC (Operator), Kategori, Type, dan Tanggal wajib diisi!");
+    // reset error state dulu
+    setError(operatorEl, false);
+    setError(kategoriEl, false);
+    setError(typeEl, false);
+    setError(tanggalEl, false);
+
+    let hasError = false;
+
+    // VALIDASI SILENT (tanpa alert)
+    if (!operator) {
+        setError(operatorEl, true);
+        hasError = true;
+    }
+
+    if (!kategori) {
+        setError(kategoriEl, true);
+        hasError = true;
+    }
+
+    if (!type) {
+        setError(typeEl, true);
+        hasError = true;
+    }
+
+    if (!tanggal) {
+        setError(tanggalEl, true);
+        hasError = true;
+    }
+
+    // stop kalau ada error
+    if (hasError) {
         return;
     }
 
     const timestamp = getCurrentTimestamp();
 
-    // SIMPAN SESSION (untuk halaman input)
+    // simpan session
     localStorage.setItem("operator", operator);
     localStorage.setItem("kategori", kategori);
     localStorage.setItem("type", type);
     localStorage.setItem("tanggal", tanggal);
     localStorage.setItem("created_at", timestamp);
 
-    // HISTORY / AUDIT TRAIL
+    // history / audit trail
     let history = JSON.parse(localStorage.getItem("history")) || [];
 
     history.push({
         action: "mulai input stock opname",
-        operator: operator,
-        kategori: kategori,
-        type: type,
-        tanggal: tanggal,
-        timestamp: timestamp
+        operator,
+        kategori,
+        type,
+        tanggal,
+        timestamp
     });
 
     localStorage.setItem("history", JSON.stringify(history));
 
-    // LANJUT KE HALAMAN INPUT
+    // redirect
     window.location.href = "input.html";
 }
