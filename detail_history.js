@@ -1,120 +1,143 @@
 let data =
 JSON.parse(
-localStorage.getItem(
-"selectedHistory"
-)
+    localStorage.getItem(
+        "selectedHistory"
+    )
 );
 
+
+if(!data){
+
+    window.location.href =
+        "history.html";
+
+}
+
+
 document.getElementById(
-"judulHistory"
+    "judulHistory"
 ).innerHTML =
 
-data.kategori +
-" - " +
-data.type +
-" - " +
-data.tanggal;
+    data.kategori +
+    " - " +
+    data.type +
+    " - " +
+    data.tanggal;
+
 
 
 let html = "";
 
+
 data.items.forEach((item,index)=>{
 
-html += `
+    html += `
 
-<tr>
+    <tr>
 
-<td>${item.nomor}</td>
+        <td>${item.nomor}</td>
 
-<td>${item.kode}</td>
+        <td>${item.kode}</td>
 
-<td>${item.item}</td>
+        <td>${item.item}</td>
 
-<td>${item.konv}</td>
+        <td>${item.konv}</td>
 
-<td>${item.uom}</td>
+        <td>${item.uom}</td>
 
-<td>
+        <td>
 
-<input
-type="number"
-class="qty-input"
-id="qty_${index}"
-value="${item.pcs_gr}">
+            <input
+                type="number"
+                class="qty-input"
+                id="qty_${index}"
+                min="0"
+                value="${item.pcs_gr}">
 
-</td>
+        </td>
 
-</tr>
+    </tr>
 
-`;
+    `;
 
 });
 
+
 document.getElementById(
-"tableBody"
+    "tableBody"
 ).innerHTML = html;
 
 
 
 function updateData(){
 
-data.items.forEach((item,index)=>{
+    data.items.forEach((item,index)=>{
 
-item.pcs_gr = Number(
+        item.pcs_gr = Number(
 
-document.getElementById(
-"qty_"+index
-).value
+            document.getElementById(
+                "qty_"+index
+            ).value
 
-);
+        );
 
-});
+    });
 
-let historyData =
 
-JSON.parse(
-localStorage.getItem(
-"historyStock"
-)
-) || [];
+    let historyData =
 
-let index = historyData.findIndex(
+        JSON.parse(
+            localStorage.getItem(
+                "historyStock"
+            )
+        ) || [];
 
-x =>
 
-x.tanggal === data.tanggal &&
+    let index = historyData.findIndex(
 
-x.kategori === data.kategori &&
+        x =>
 
-x.type === data.type
+        x.tanggal === data.tanggal &&
 
-);
+        x.kategori === data.kategori &&
 
-if(index !== -1){
+        x.type === data.type
 
-historyData[index] = data;
+    );
 
-localStorage.setItem(
 
-"historyStock",
+    if(index !== -1){
 
-JSON.stringify(historyData)
+        historyData[index] = data;
 
-);
+    }
 
-}
 
-localStorage.setItem(
+    localStorage.setItem(
 
-"selectedHistory",
+        "historyStock",
 
-JSON.stringify(data)
+        JSON.stringify(
+            historyData
+        )
 
-);
+    );
 
-alert(
-"Data berhasil diperbarui"
-);
+
+    localStorage.setItem(
+
+        "selectedHistory",
+
+        JSON.stringify(
+            data
+        )
+
+    );
+
+
+    tampilNotif(
+        "✓ Data berhasil diperbarui"
+    );
 
 }
 
@@ -122,61 +145,103 @@ alert(
 
 function exportHistoryExcel(){
 
-let excelData = [];
+    let excelData = [];
 
-data.items.forEach(item=>{
 
-excelData.push({
+    data.items.forEach(item=>{
 
-"No":item.nomor,
+        excelData.push({
 
-"Kode":item.kode,
+            "No": item.nomor,
 
-"Item":item.item,
+            "Kode": item.kode,
 
-"Konv":item.konv,
+            "Item": item.item,
 
-"UOM":item.uom,
+            "Konv": item.konv,
 
-"PCS/Gr":item.pcs_gr
+            "UOM": item.uom,
 
-});
+            "PCS/Gr": item.pcs_gr
 
-});
+        });
 
-let wb =
-XLSX.utils.book_new();
+    });
 
-let ws =
-XLSX.utils.json_to_sheet(
-excelData
-);
 
-XLSX.utils.book_append_sheet(
-wb,
-ws,
-"Stock Opname"
-);
+    let wb =
+        XLSX.utils.book_new();
 
-let namaFile =
 
-"SO_" +
+    let ws =
+        XLSX.utils.json_to_sheet(
+            excelData
+        );
 
-data.kategori +
 
-"_" +
+    XLSX.utils.book_append_sheet(
 
-data.type +
+        wb,
 
-"_" +
+        ws,
 
-data.tanggal +
+        "Stock Opname"
 
-".xlsx";
+    );
 
-XLSX.writeFile(
-wb,
-namaFile
-);
+
+    let namaFile =
+
+        "SO_" +
+
+        data.kategori +
+
+        "_" +
+
+        data.type +
+
+        "_" +
+
+        data.tanggal +
+
+        ".xlsx";
+
+
+    XLSX.writeFile(
+
+        wb,
+
+        namaFile
+
+    );
+
+
+    tampilNotif(
+        "✓ Excel berhasil dibuat"
+    );
+
+}
+
+
+
+function tampilNotif(pesan){
+
+    let notif =
+
+        document.getElementById(
+            "notif"
+        );
+
+
+    notif.innerHTML = pesan;
+
+    notif.style.display = "block";
+
+
+    setTimeout(()=>{
+
+        notif.style.display = "none";
+
+    },2000);
 
 }
