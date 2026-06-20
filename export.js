@@ -3,7 +3,7 @@ function exportExcel() {
     let rows = document.querySelectorAll("#tableBody tr");
 
     if(rows.length === 0){
-        alert("Tidak ada data untuk diexport");
+        tampilNotif("Tidak ada data untuk diexport");
         return;
     }
 
