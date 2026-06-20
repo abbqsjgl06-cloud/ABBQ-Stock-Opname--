@@ -1,8 +1,9 @@
+```css
 body{
     margin:0;
     padding:0;
     background:#ffffff;
-    font-family:Arial,sans-serif;
+    font-family:Arial, sans-serif;
 }
 
 .container{
@@ -15,7 +16,7 @@ body{
     margin:auto;
 }
 
-h1{
+h1,h2{
     text-align:center;
     color:#000;
 }
@@ -30,7 +31,8 @@ label{
     font-weight:bold;
 }
 
-select,input{
+select,
+input{
     width:100%;
     padding:12px;
     border-radius:8px;
@@ -50,45 +52,75 @@ button{
 }
 
 button:hover{
-    background:#ffcb00;
+    opacity:0.9;
 }
+
 .table-stock{
     width:100%;
     border-collapse:collapse;
+    margin-top:15px;
 }
 
 .table-stock th{
     background:#FFD400;
     padding:10px;
     border:1px solid #ddd;
+    font-size:14px;
 }
 
 .table-stock td{
     border:1px solid #ddd;
     padding:8px;
+    font-size:13px;
 }
 
 .qty-input{
-    width:70px;
+    width:80px;
     text-align:center;
 }
+
 .history-card{
     border:1px solid #ddd;
     padding:15px;
     border-radius:10px;
     background:white;
+    margin-bottom:15px;
 }
+
 .watermark{
-    position: fixed;
-    bottom: 12px;
-    right: 12px;
+    position:fixed;
+    bottom:12px;
+    right:12px;
 
-    font-size: 11px;
-    font-weight: 500;
+    font-size:11px;
+    font-weight:500;
 
-    color: rgba(0,0,0,0.45);
+    color:rgba(0,0,0,0.45);
 
-    letter-spacing: 1px;
+    letter-spacing:1px;
 
-    z-index: 999;
+    z-index:999;
+}
+
+/* Tampilan HP Android */
+@media(max-width:768px){
+
+    .table-stock{
+        font-size:12px;
+    }
+
+    .table-stock th{
+        font-size:11px;
+        padding:6px;
+    }
+
+    .table-stock td{
+        font-size:11px;
+        padding:6px;
+    }
+
+    .qty-input{
+        width:60px;
+    }
+
 }
