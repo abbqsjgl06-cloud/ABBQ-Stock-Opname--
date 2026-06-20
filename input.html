@@ -16,71 +16,77 @@
 
 <body>
 
-    <h2 id="judulHalaman"></h2>
+    <div class="container">
 
-    <table class="table-stock">
+        <h2 id="judulHalaman"></h2>
 
-        <thead>
+        <table class="table-stock">
 
-            <tr>
+            <thead>
 
-                <th>No</th>
+                <tr>
 
-                <th>Kode</th>
+                    <th>No</th>
 
-                <th>Item</th>
+                    <th>Kode</th>
 
-                <th>Konv</th>
+                    <th>Item</th>
 
-                <th>UOM</th>
+                    <th>Konv</th>
 
-                <th>PCS/Gr</th>
+                    <th>UOM</th>
 
-            </tr>
+                    <th>PCS/Gr</th>
 
-        </thead>
+                </tr>
 
-        <tbody id="tableBody">
+            </thead>
 
-        </tbody>
+            <tbody id="tableBody">
 
-    </table>
+            </tbody>
 
-    <br>
+        </table>
 
-    <button onclick="simpanData()">
-        SIMPAN
-    </button>
+        <br>
 
-    <br><br>
+        <button onclick="simpanData()">
+            SIMPAN
+        </button>
 
-    <button onclick="resetData()">
-        RESET
-    </button>
+        <br><br>
 
-    <br><br>
+        <button onclick="resetData()">
+            RESET
+        </button>
 
-    <button onclick="exportExcel()">
-        EXPORT EXCEL
-    </button>
+        <br><br>
 
-    <br><br>
+        <button onclick="exportExcel()">
+            EXPORT EXCEL
+        </button>
 
-    <button onclick="window.location.href='history.html'">
-        RIWAYAT
-    </button>
+        <br><br>
+
+        <button onclick="window.location.href='history.html'">
+            RIWAYAT
+        </button>
+
+    </div>
+
 
     <div class="watermark">
         © 2026 Fdl
     </div>
 
+
     <!-- Library Excel -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
-    <!-- Fungsi export -->
+    <!-- Export -->
     <script src="export.js"></script>
 
-    <!-- Fungsi input -->
+    <!-- Input -->
     <script src="input.js"></script>
 
 </body>
