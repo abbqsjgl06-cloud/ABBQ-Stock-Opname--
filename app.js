@@ -1,4 +1,13 @@
-function getCurrentTimestamp() {
+function getCurrentTime() {
+    const now = new Date();
+
+    return now.toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
+function getCurrentDateTime() {
     const now = new Date();
 
     return now.toLocaleString("id-ID", {
@@ -18,22 +27,25 @@ window.mulaiInput = function () {
     const type = document.getElementById("type")?.value;
     const tanggal = document.getElementById("tanggal")?.value;
 
+    // validasi sederhana
     if (!operator || !kategori || !type || !tanggal) {
-        return; // silent validation
+        return;
     }
 
-    // 🔥 INI WAKTU REALTIME SAAT CLICK
-    const timestamp = getCurrentTimestamp();
+    // 🔥 AUTO TIME (TIDAK DIINPUT USER)
+    const timeNow = getCurrentTime();
+    const fullTimestamp = getCurrentDateTime();
 
     let historyStock = JSON.parse(localStorage.getItem("historyStock")) || [];
 
     historyStock.push({
-        id: Date.now(),              // penting untuk tracking unik
-        operator,
-        kategori,
-        type,
-        tanggal,
-        timestamp,                  // 🔥 INI WAJIB
+        id: Date.now(),
+        operator: operator,          // PIC
+        kategori: kategori,
+        type: type,
+        tanggal: tanggal,
+        time: timeNow,                // ⏰ JAM SAJA
+        timestamp: fullTimestamp,     // ⏰ FULL DETAIL
         items: []
     });
 
@@ -44,7 +56,8 @@ window.mulaiInput = function () {
         kategori,
         type,
         tanggal,
-        timestamp
+        time: timeNow,
+        timestamp: fullTimestamp
     }));
 
     window.location.href = "input.html";
