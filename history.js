@@ -5,12 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
     let html = "";
 
     if (data.length === 0) {
+
         html = `
             <div class="history-card">
                 <h3>Belum ada data</h3>
                 <p>Silakan lakukan stock opname terlebih dahulu</p>
             </div>
         `;
+
     } else {
 
         data.forEach((item, index) => {
@@ -20,11 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     <h3>${item.kategori} - ${item.type}</h3>
 
-                    <p><b>Operator:</b> ${item.operator}</p>
+                    <p><b>PIC:</b> ${item.operator}</p>
 
                     <p><b>Tanggal:</b> ${item.tanggal}</p>
 
-                    <p><b>Waktu Input (REALTIME):</b> ${item.timestamp}</p>
+                    <p><b>Waktu Input (Jam):</b> ${item.time || "-"}</p>
+
+                    <p><b>Waktu Lengkap:</b> ${item.timestamp || "-"}</p>
 
                     <p><b>Jumlah Item:</b> ${item.items?.length || 0}</p>
 
