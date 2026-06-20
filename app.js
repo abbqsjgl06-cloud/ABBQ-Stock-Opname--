@@ -1,12 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tanggalEl = document.getElementById("tanggal");
 
-    // set tanggal hari ini otomatis
+    // Set tanggal hari ini otomatis
     if (tanggalEl) {
         tanggalEl.valueAsDate = new Date();
     }
 });
 
+/**
+ * FORMAT TIMESTAMP (tanggal + jam)
+ */
 function getCurrentTimestamp() {
     return new Date().toLocaleString("id-ID", {
         year: "numeric",
@@ -18,42 +21,50 @@ function getCurrentTimestamp() {
     });
 }
 
+/**
+ * MULAI INPUT STOCK OPNAME
+ */
 function mulaiInput() {
+
     const kategoriEl = document.getElementById("kategori");
     const typeEl = document.getElementById("type");
     const tanggalEl = document.getElementById("tanggal");
+    const operatorEl = document.getElementById("operator");
 
-    const kategori = kategoriEl?.value || "";
-    const type = typeEl?.value || "";
+    const kategori = kategoriEl?.value.trim() || "";
+    const type = typeEl?.value.trim() || "";
     const tanggal = tanggalEl?.value || "";
+    const operator = operatorEl?.value.trim() || "";
 
-    // VALIDASI (penting untuk stock opname)
-    if (!kategori || !type || !tanggal) {
-        alert("Kategori, Type, dan Tanggal wajib diisi!");
+    // VALIDASI WAJIB
+    if (!operator || !kategori || !type || !tanggal) {
+        alert("PIC (Operator), Kategori, Type, dan Tanggal wajib diisi!");
         return;
     }
 
-    // simpan ke localStorage
+    const timestamp = getCurrentTimestamp();
+
+    // SIMPAN SESSION (untuk halaman input)
+    localStorage.setItem("operator", operator);
     localStorage.setItem("kategori", kategori);
     localStorage.setItem("type", type);
     localStorage.setItem("tanggal", tanggal);
+    localStorage.setItem("created_at", timestamp);
 
-    // tambahan untuk tracing (RECOMMENDED)
-    localStorage.setItem("created_at", getCurrentTimestamp());
-
-    // optional: log aktivitas awal
+    // HISTORY / AUDIT TRAIL
     let history = JSON.parse(localStorage.getItem("history")) || [];
 
     history.push({
         action: "mulai input stock opname",
-        kategori,
-        type,
-        tanggal,
-        timestamp: getCurrentTimestamp()
+        operator: operator,
+        kategori: kategori,
+        type: type,
+        tanggal: tanggal,
+        timestamp: timestamp
     });
 
     localStorage.setItem("history", JSON.stringify(history));
 
-    // redirect
+    // LANJUT KE HALAMAN INPUT
     window.location.href = "input.html";
 }
