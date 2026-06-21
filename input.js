@@ -1,27 +1,28 @@
 // =====================================
-// Ambil data dari localStorage
+// Ambil data aktif
 // =====================================
 
 const activeStock =
-JSON.parse(
-    localStorage.getItem("activeStock")
-) || {};
+    JSON.parse(
+        localStorage.getItem("activeStock")
+    ) || {};
 
 const kategori = activeStock.kategori || "";
 const type = activeStock.type || "";
 const tanggal = activeStock.tanggal || "";
-const pic = activeStock.pic || "-";
-
-const activeStock =
-JSON.parse(localStorage.getItem("activeStock")) || {};
-
 const pic =
-activeStock.pic ||
-activeStock.operator ||
-"-";
+    activeStock.pic ||
+    activeStock.operator ||
+    "-";
 
-document.getElementById("judulHalaman").innerHTML =
-`${kategori} - ${type} - ${tanggal}`;
+document.getElementById(
+    "judulHalaman"
+).innerHTML =
+    kategori +
+    " - " +
+    type +
+    " - " +
+    tanggal;
 
 
 // =====================================
@@ -31,16 +32,24 @@ document.getElementById("judulHalaman").innerHTML =
 let databaseFile = "";
 
 if (kategori === "Kitchen" && type === "Daily") {
+
     databaseFile = "database/daily_kitchen.json";
+
 }
 else if (kategori === "Frontliner" && type === "Daily") {
+
     databaseFile = "database/daily_frontliner.json";
+
 }
 else if (kategori === "Kitchen" && type === "WM") {
+
     databaseFile = "database/wm_kitchen.json";
+
 }
 else if (kategori === "Frontliner" && type === "WM") {
+
     databaseFile = "database/wm_frontliner.json";
+
 }
 
 console.log("Kategori :", kategori);
@@ -59,9 +68,11 @@ if (databaseFile !== "") {
     .then(response => {
 
         if (!response.ok) {
+
             throw new Error(
-                "File tidak ditemukan : " + databaseFile
+                "File tidak ditemukan"
             );
+
         }
 
         return response.json();
@@ -94,8 +105,8 @@ if (databaseFile !== "") {
                         type="number"
                         class="qty-input"
                         id="qty_${index}"
-                        min="0"
-                        value="0">
+                        value="0"
+                        min="0">
 
                 </td>
 
@@ -122,10 +133,10 @@ if (databaseFile !== "") {
     });
 
 }
-else{
+else {
 
     tampilNotif(
-        "Kategori atau type tidak valid"
+        "Kategori atau Type tidak valid"
     );
 
 }
@@ -135,7 +146,7 @@ else{
 // Waktu input
 // =====================================
 
-function getWaktuInput(){
+function getWaktuInput() {
 
     return new Date().toLocaleString(
         "id-ID",
@@ -156,44 +167,54 @@ function getWaktuInput(){
 // Simpan data
 // =====================================
 
-function simpanData(){
+function simpanData() {
 
     let rows =
-    document.querySelectorAll(
-        "#tableBody tr"
-    );
+        document.querySelectorAll(
+            "#tableBody tr"
+        );
+
+    if (rows.length === 0) {
+
+        tampilNotif(
+            "Tidak ada data"
+        );
+
+        return;
+
+    }
 
     let items = [];
 
-    rows.forEach((row,index)=>{
+    rows.forEach((row, index) => {
 
         items.push({
 
             nomor:
-            Number(
-                row.cells[0].textContent
-            ),
+                Number(
+                    row.cells[0].textContent
+                ),
 
             kode:
-            row.cells[1].textContent,
+                row.cells[1].textContent,
 
             item:
-            row.cells[2].textContent,
+                row.cells[2].textContent,
 
             konv:
-            Number(
-                row.cells[3].textContent
-            ),
+                Number(
+                    row.cells[3].textContent
+                ),
 
             uom:
-            row.cells[4].textContent,
+                row.cells[4].textContent,
 
             pcs_gr:
-            Number(
-                document.getElementById(
-                    "qty_" + index
-                ).value
-            )
+                Number(
+                    document.getElementById(
+                        "qty_" + index
+                    ).value
+                )
 
         });
 
@@ -206,11 +227,11 @@ function simpanData(){
 
         pic: pic,
 
-        tanggal: tanggal,
-
         kategori: kategori,
 
         type: type,
+
+        tanggal: tanggal,
 
         waktuInput: getWaktuInput(),
 
@@ -219,20 +240,18 @@ function simpanData(){
     };
 
 
-    // current stock
     localStorage.setItem(
         "currentStock",
         JSON.stringify(data)
     );
 
 
-    // history stock
     let historyData =
-    JSON.parse(
-        localStorage.getItem(
-            "historyStock"
-        )
-    ) || [];
+        JSON.parse(
+            localStorage.getItem(
+                "historyStock"
+            )
+        ) || [];
 
 
     historyData.push(data);
@@ -252,17 +271,17 @@ function simpanData(){
 
 
 // =====================================
-// Reset data
+// Reset
 // =====================================
 
-function resetData(){
+function resetData() {
 
     let inputQty =
-    document.querySelectorAll(
-        ".qty-input"
-    );
+        document.querySelectorAll(
+            ".qty-input"
+        );
 
-    inputQty.forEach(input=>{
+    inputQty.forEach(input => {
 
         input.value = 0;
 
@@ -279,23 +298,23 @@ function resetData(){
 // Notifikasi
 // =====================================
 
-function tampilNotif(pesan){
+function tampilNotif(pesan) {
 
     let notif =
-    document.getElementById(
-        "notif"
-    );
+        document.getElementById(
+            "notif"
+        );
 
-    if(!notif) return;
+    if (!notif) return;
 
     notif.innerHTML = pesan;
 
     notif.style.display = "block";
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
         notif.style.display = "none";
 
-    },2000);
+    }, 2000);
 
 }
