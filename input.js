@@ -2,9 +2,15 @@
 // Ambil data dari localStorage
 // =====================================
 
-const kategori = localStorage.getItem("kategori") || "";
-const type = localStorage.getItem("type") || "";
-const tanggal = localStorage.getItem("tanggal") || "";
+const activeStock =
+JSON.parse(
+    localStorage.getItem("activeStock")
+) || {};
+
+const kategori = activeStock.kategori || "";
+const type = activeStock.type || "";
+const tanggal = activeStock.tanggal || "";
+const pic = activeStock.pic || "-";
 
 const activeStock =
 JSON.parse(localStorage.getItem("activeStock")) || {};
