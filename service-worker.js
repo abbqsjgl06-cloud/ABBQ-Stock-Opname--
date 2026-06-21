@@ -1,4 +1,4 @@
-const CACHE_NAME = "abbq-stock-v1";
+const CACHE_NAME = "abbq-stock-v5";
 
 const urlsToCache = [
 
