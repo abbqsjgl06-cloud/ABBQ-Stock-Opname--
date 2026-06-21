@@ -11,39 +11,37 @@ function getWaktuInput() {
 
 window.mulaiInput = function () {
 
-    const pic = document.getElementById("operator")?.value?.trim() || "";
-    const kategori = document.getElementById("kategori")?.value || "";
-    const type = document.getElementById("type")?.value || "";
-    const tanggal = document.getElementById("tanggal")?.value || "";
+    const pic = document.getElementById("operator").value.trim();
+    const kategori = document.getElementById("kategori").value;
+    const type = document.getElementById("type").value;
+    const tanggal = document.getElementById("tanggal").value;
 
-    // wajib isi
     if (!pic || !kategori || !type || !tanggal) {
+
+        alert("Lengkapi semua data terlebih dahulu");
+
         return;
     }
 
     const waktuInput = getWaktuInput();
 
-    let historyStock = JSON.parse(localStorage.getItem("historyStock")) || [];
+    // simpan data aktif
+    localStorage.setItem(
+        "activeStock",
+        JSON.stringify({
+            pic,
+            kategori,
+            type,
+            tanggal,
+            waktuInput
+        })
+    );
 
-    historyStock.push({
-        id: Date.now(),
-        pic: pic,
-        kategori: kategori,
-        type: type,
-        tanggal: tanggal,
-        waktuInput: waktuInput,
-        items: []
-    });
-
-    localStorage.setItem("historyStock", JSON.stringify(historyStock));
-
-    localStorage.setItem("activeStock", JSON.stringify({
-        pic,
-        kategori,
-        type,
-        tanggal,
-        waktuInput
-    }));
+    // WAJIB
+    localStorage.setItem("kategori", kategori);
+    localStorage.setItem("type", type);
+    localStorage.setItem("tanggal", tanggal);
 
     window.location.href = "input.html";
+
 };
