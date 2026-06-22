@@ -72,9 +72,14 @@ function filterHistory() {
         return;
     }
 
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
     const filtered = allData.filter(item => {
 
-        return item.tanggal >= start && item.tanggal <= end;
+        const itemDate = new Date(item.tanggal);
+
+        return itemDate >= startDate && itemDate <= endDate;
 
     });
 
