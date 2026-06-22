@@ -1,12 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="id">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
 <title>Riwayat Stock Opname</title>
 
@@ -18,43 +20,70 @@
 
 <div class="container">
 
-    <h2>RIWAYAT STOCK OPNAME</h2>
+<h2>RIWAYAT STOCK OPNAME</h2>
 
-    <!-- FILTER BOX -->
-    <div class="filter-box">
+<!-- FILTER -->
+<div class="filter-box">
 
-        <label>Dari Tanggal</label>
-        <input type="date" id="startDate">
+    <label>Dari Tanggal</label>
 
-        <label>Sampai Tanggal</label>
-        <input type="date" id="endDate">
+    <input
+        type="date"
+        id="startDate">
 
-        <button onclick="filterHistory()">
-            FILTER
-        </button>
+    <label>Sampai Tanggal</label>
 
-        <button onclick="resetFilter()">
-            RESET
-        </button>
-
-    </div>
+    <input
+        type="date"
+        id="endDate">
 
     <br>
 
-    <!-- HISTORY LIST -->
-    <div id="historyList"></div>
+    <button onclick="filterHistory()">
 
-    <br>
+        FILTER
 
-    <!-- BACK BUTTON -->
-    <button onclick="window.location.href='index.html'">
-        KEMBALI KE MENU UTAMA
+    </button>
+
+    <br><br>
+
+    <button onclick="resetFilter()">
+
+        RESET
+
     </button>
 
 </div>
 
-<!-- SCRIPT WAJIB -->
+<br>
+
+<!-- LIST HISTORY -->
+<div id="historyList">
+
+</div>
+
+<br>
+
+<!-- KEMBALI -->
+<button
+    onclick="window.location.href='index.html'">
+
+    KEMBALI KE MENU UTAMA
+
+</button>
+
+</div>
+
+<!-- NOTIFIKASI -->
+
+<div
+    id="notif"
+    class="notif">
+
+</div>
+
 <script src="history.js"></script>
 
 </body>
+
 </html>
