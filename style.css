@@ -148,29 +148,27 @@ NOTIFICATION (FIXED)
 
 .notif {
     display: none;
-
     position: fixed;
-    top: 20px;              /* ✅ DIPINDAH KE ATAS */
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 9999;
 
     padding: 12px 20px;
     border-radius: 8px;
 
     color: #fff;
     font-weight: bold;
-
-    z-index: 9999;
 }
 
 /* SUCCESS = HIJAU */
 .notif.success {
-    background-color: #28a745;
+    background-color: #28a745 !important;
 }
 
 /* ERROR = MERAH */
 .notif.error {
-    background-color: #dc3545;
+    background-color: #dc3545 !important;
 }
 
 /* =========================
