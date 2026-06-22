@@ -17,81 +17,82 @@
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h2 id="judulHalaman"></h2>
+        <!-- Judul -->
+        <h2 id="judulHalaman"></h2>
 
-    <table class="table-stock">
+        <!-- Notifikasi -->
+        <div id="notif"></div>
 
-        <thead>
+        <!-- Tabel Stock -->
+        <table class="table-stock">
 
-            <tr>
+            <thead>
 
-                <th>No</th>
-                <th>Kode</th>
-                <th>Item</th>
-                <th>Konv</th>
-                <th>UOM</th>
-                <th>PCS/Gr</th>
+                <tr>
 
-            </tr>
+                    <th>No</th>
+                    <th>Kode</th>
+                    <th>Item</th>
+                    <th>Konv</th>
+                    <th>UOM</th>
+                    <th>PCS/Gr</th>
 
-        </thead>
+                </tr>
 
-        <tbody id="tableBody">
+            </thead>
 
-        </tbody>
+            <tbody id="tableBody">
 
-    </table>
+            </tbody>
 
-    <br>
+        </table>
 
-    <button onclick="simpanData()">
-        SIMPAN
-    </button>
+        <br>
 
-    <br><br>
+        <!-- Tombol Simpan -->
+        <button onclick="simpanData()">
+            SIMPAN
+        </button>
 
-    <button onclick="resetData()">
-        RESET
-    </button>
+        <br><br>
 
-    <br><br>
+        <!-- Tombol Reset -->
+        <button onclick="resetData()">
+            RESET
+        </button>
 
-    <button onclick="exportExcel()">
-        EXPORT EXCEL
-    </button>
+        <br><br>
 
-    <br><br>
+        <!-- Tombol Export -->
+        <button onclick="exportExcel()">
+            EXPORT EXCEL
+        </button>
 
-    <button onclick="window.location.href='history.html'">
-        RIWAYAT
-    </button>
+        <br><br>
 
-</div>
+        <!-- Tombol Riwayat -->
+        <button onclick="window.location.href='history.html'">
+            RIWAYAT
+        </button>
 
+        <br><br>
 
-<!-- NOTIFIKASI -->
-<div
-    id="notif"
-    class="notif">
-</div>
+        <!-- Tombol Menu Utama -->
+        <button onclick="window.location.href='index.html'">
+            MENU UTAMA
+        </button>
 
+    </div>
 
-<!-- WATERMARK -->
-<div class="watermark">
-    © 2026 Fdl
-</div>
+    <!-- Javascript -->
+    <script src="input.js"></script>
 
-
-<!-- XLSX -->
-<script src="libraries/xlsx.full.min.js"></script>
-
-<!-- EXPORT -->
-<script src="export.js"></script>
-
-<!-- INPUT -->
-<script src="input.js"></script>
+    <!-- Jika ada file export excel -->
+    <!--
+    <script src="export.js"></script>
+    -->
 
 </body>
 
