@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-
 <html lang="id">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-   content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
 <title>Stock Opname ABBQ</title>
 
 <link rel="stylesheet" href="style.css">
-<link rel="manifest" href="manifest.json">
 
 </head>
 
@@ -20,114 +19,105 @@
 
 <div class="container">
 
-```
-<img
-    src="abbq_logo.png"
-    class="logo"
-    alt="logo">
+    <img
+        src="abbq_logo.png"
+        class="logo"
+        alt="logo">
 
-<h1>STOCK OPNAME ABBQ</h1>
+    <h1>STOCK OPNAME ABBQ</h1>
 
-<!-- PIC -->
-<div class="form-group">
+    <!-- PIC -->
+    <div class="form-group">
 
-    <label>PIC</label>
+        <label>PIC</label>
 
-    <input
-        type="text"
-        id="operator"
-        placeholder="Masukkan nama PIC">
+        <input
+            type="text"
+            id="operator"
+            placeholder="Masukkan nama PIC">
 
-</div>
+    </div>
 
-<!-- KATEGORI -->
-<div class="form-group">
+    <!-- KATEGORI -->
+    <div class="form-group">
 
-    <label>Kategori</label>
+        <label>Kategori</label>
 
-    <select id="kategori">
+        <select id="kategori">
 
-        <option value="">
-            -- Pilih Kategori --
-        </option>
+            <option value="">
+                -- Pilih Kategori --
+            </option>
 
-        <option value="Kitchen">
-            Kitchen
-        </option>
+            <option value="Kitchen">
+                Kitchen
+            </option>
 
-        <option value="Frontliner">
-            Frontliner
-        </option>
+            <option value="Frontliner">
+                Frontliner
+            </option>
 
-    </select>
+        </select>
 
-</div>
+    </div>
 
-<!-- TYPE -->
-<div class="form-group">
+    <!-- TYPE -->
+    <div class="form-group">
 
-    <label>Type</label>
+        <label>Type</label>
 
-    <select id="type">
+        <select id="type">
 
-        <option value="">
-            -- Pilih Type --
-        </option>
+            <option value="">
+                -- Pilih Type --
+            </option>
 
-        <option value="Daily">
-            Daily
-        </option>
+            <option value="Daily">
+                Daily
+            </option>
 
-        <option value="WM">
-            Weekly / Monthly
-        </option>
+            <option value="WM">
+                Weekly / Monthly
+            </option>
 
-    </select>
+        </select>
 
-</div>
+    </div>
 
-<!-- TANGGAL -->
-<div class="form-group">
+    <!-- TANGGAL -->
+    <div class="form-group">
 
-    <label>Tanggal</label>
+        <label>Tanggal</label>
 
-    <input
-        type="date"
-        id="tanggal">
+        <input
+            type="date"
+            id="tanggal">
 
-</div>
+    </div>
 
-<!-- MULAI INPUT -->
-<button onclick="mulaiInput()">
+    <!-- MULAI INPUT -->
+    <button onclick="mulaiInput()">
 
-    MULAI INPUT STOCK
+        MULAI INPUT STOCK
 
-</button>
+    </button>
 
-<br><br>
+    <br><br>
 
-<!-- RIWAYAT -->
-<button onclick="window.location.href='history.html'">
+    <!-- RIWAYAT -->
+    <button onclick="window.location.href='history.html'">
 
-    RIWAYAT STOCK OPNAME
+        RIWAYAT STOCK OPNAME
 
-</button>
-
-<br><br>
-
-<!-- INSTALL PWA -->
-<button
-    id="installBtn"
-    style="display:none">
-
-    INSTALL APP
-
-</button>
-```
+    </button>
 
 </div>
+
+<!-- NOTIFIKASI -->
+<div id="notif" class="notif"></div>
 
 <script src="app.js"></script>
 
 </body>
+
 </html>
