@@ -1,219 +1,232 @@
 /* =========================
-   GLOBAL
+GLOBAL
 ========================= */
 
 body{
-    margin:0;
-    padding:0;
-    background:#ffffff;
-    font-family:Arial, sans-serif;
-    color:#000;
+margin:0;
+padding:0;
+background:#ffffff;
+font-family:Arial, sans-serif;
+color:#000;
 }
 
 .container{
-    padding:20px;
+padding:20px;
 }
 
 /* =========================
-   LOGO
+LOGO
 ========================= */
 
 .logo{
-    width:140px;
-    display:block;
-    margin:auto;
+width:140px;
+display:block;
+margin:auto;
 }
 
 /* =========================
-   TITLE
+TITLE
 ========================= */
 
 h1,
 h2,
 h3{
-    text-align:center;
-    color:#000;
+text-align:center;
+color:#000;
 }
 
 /* =========================
-   FORM
+FORM
 ========================= */
 
 .form-group{
-    margin-bottom:15px;
+margin-bottom:15px;
 }
 
 label{
-    display:block;
-    margin-bottom:5px;
-    font-weight:bold;
+display:block;
+margin-bottom:5px;
+font-weight:bold;
 }
 
 select,
 input{
-    width:100%;
-    padding:12px;
-    border:1px solid #cccccc;
-    border-radius:8px;
-    box-sizing:border-box;
+width:100%;
+padding:12px;
+border:1px solid #cccccc;
+border-radius:8px;
+box-sizing:border-box;
 }
 
 /* =========================
-   BUTTON
+BUTTON
 ========================= */
 
 button{
-    width:100%;
-    padding:15px;
-    background:#FFD400;
-    border:none;
-    border-radius:10px;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
+width:100%;
+padding:15px;
+background:#FFD400;
+border:none;
+border-radius:10px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
 }
 
 button:hover{
-    opacity:0.9;
+opacity:0.9;
 }
 
 /* =========================
-   TABLE
+FILTER BOX
+========================= */
+
+.filter-box{
+background:#ffffff;
+border:1px solid #dddddd;
+border-radius:15px;
+padding:15px;
+margin-bottom:20px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* =========================
+TABLE
 ========================= */
 
 .table-stock{
-    width:100%;
-    border-collapse:collapse;
-    background:#ffffff;
-    margin-top:15px;
+width:100%;
+border-collapse:collapse;
+background:#ffffff;
+margin-top:15px;
 }
 
 .table-stock th{
-    background:#FFD400;
-    border:1px solid #dddddd;
-    padding:10px;
-    font-size:14px;
+background:#FFD400;
+border:1px solid #dddddd;
+padding:10px;
+font-size:14px;
 }
 
 .table-stock td{
-    border:1px solid #dddddd;
-    padding:8px;
-    font-size:13px;
+border:1px solid #dddddd;
+padding:8px;
+font-size:13px;
 }
 
 /* =========================
-   INPUT QTY
+INPUT QTY
 ========================= */
 
 .qty-input{
-    width:80px;
-    text-align:center;
+width:80px;
+text-align:center;
 }
 
 /* =========================
-   HISTORY CARD
+HISTORY CARD
 ========================= */
 
 .history-card{
-    background:#ffffff;
-    border:1px solid #dddddd;
-    border-radius:15px;
-    padding:15px;
-    margin-bottom:15px;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+background:#ffffff;
+border:1px solid #dddddd;
+border-radius:15px;
+padding:15px;
+margin-bottom:20px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
 
 .history-card h3{
-    margin-top:0;
+margin-top:0;
 }
 
 .history-card p{
-    margin-bottom:15px;
+margin-bottom:12px;
 }
 
 /* =========================
-   NOTIFICATION
+NOTIFICATION
 ========================= */
 
-.notif {
+.notif{
 
-    display: none;
+display:none;
 
-    position: fixed;
+position:fixed;
 
-    top: 20px;
+top:20px;
 
-    left: 50%;
+left:50%;
 
-    transform: translateX(-50%);
+transform:translateX(-50%);
 
-    background: #dc3545;
+background:#dc3545;
 
-    color: white;
+color:white;
 
-    padding: 15px 25px;
+padding:15px 25px;
 
-    border-radius: 10px;
+border-radius:10px;
 
-    font-size: 14px;
+font-size:14px;
 
-    font-weight: bold;
+font-weight:bold;
 
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
 
-    z-index: 9999;
+z-index:9999;
 
 }
 
 /* =========================
-   WATERMARK
+WATERMARK
 ========================= */
 
 .watermark{
-    position:fixed;
-    right:12px;
-    bottom:12px;
-    font-size:11px;
-    font-weight:500;
-    color:rgba(0,0,0,0.40);
-    letter-spacing:1px;
-    z-index:999;
+position:fixed;
+right:12px;
+bottom:12px;
+font-size:11px;
+font-weight:500;
+color:rgba(0,0,0,0.40);
+letter-spacing:1px;
+z-index:999;
 }
 
 /* =========================
-   RESPONSIVE ANDROID
+RESPONSIVE ANDROID
 ========================= */
 
 @media(max-width:768px){
 
-    .container{
-        padding:12px;
-    }
+.container{
+    padding:12px;
+}
 
-    .table-stock{
-        display:block;
-        overflow-x:auto;
-        white-space:nowrap;
-    }
+.table-stock{
+    display:block;
+    overflow-x:auto;
+    white-space:nowrap;
+}
 
-    .table-stock th{
-        padding:6px;
-        font-size:11px;
-    }
+.table-stock th{
+    padding:6px;
+    font-size:11px;
+}
 
-    .table-stock td{
-        padding:6px;
-        font-size:11px;
-    }
+.table-stock td{
+    padding:6px;
+    font-size:11px;
+}
 
-    .qty-input{
-        width:60px;
-    }
+.qty-input{
+    width:60px;
+}
 
-    button{
-        font-size:14px;
-        padding:14px;
-    }
+button{
+    font-size:14px;
+    padding:14px;
+}
 
 }
