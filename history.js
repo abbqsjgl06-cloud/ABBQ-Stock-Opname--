@@ -1,12 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-tampilkanHistory(
+const historyData =
     JSON.parse(
         localStorage.getItem("historyStock")
-    ) || []
-);
+    ) || [];
+
+tampilkanHistory(historyData);
 
 });
+
+// =====================================
+// Menampilkan history
+// =====================================
 
 function tampilkanHistory(historyData) {
 
@@ -22,7 +27,7 @@ if (historyData.length === 0) {
 
 } else {
 
-    historyData.forEach((item, index) => {
+    historyData.forEach((item) => {
 
         const pic =
             item.pic ||
@@ -98,7 +103,7 @@ if (historyData.length === 0) {
                 ${jumlah}
             </p>
 
-            <button onclick="bukaData(${index})">
+            <button onclick="bukaData(${item.id})">
                 BUKA DATA
             </button>
 
@@ -112,36 +117,30 @@ if (historyData.length === 0) {
 
 }
 
-document.getElementById(
-    "historyList"
-).innerHTML = html;
+document.getElementById("historyList").innerHTML = html;
 
 }
+
+// =====================================
+// Filter tanggal
+// =====================================
 
 function filterHistory() {
 
 const startDate =
-    document.getElementById(
-        "startDate"
-    ).value;
+    document.getElementById("startDate").value;
 
 const endDate =
-    document.getElementById(
-        "endDate"
-    ).value;
+    document.getElementById("endDate").value;
 
-let historyData =
+const historyData =
     JSON.parse(
-        localStorage.getItem(
-            "historyStock"
-        )
+        localStorage.getItem("historyStock")
     ) || [];
 
 if (!startDate || !endDate) {
 
-    tampilkanHistory(
-        historyData
-    );
+    tampilkanHistory(historyData);
 
     return;
 
@@ -157,44 +156,46 @@ const hasilFilter =
 
     });
 
-tampilkanHistory(
-    hasilFilter
-);
+tampilkanHistory(hasilFilter);
 
 }
+
+// =====================================
+// Reset filter
+// =====================================
 
 function resetFilter() {
 
-document.getElementById(
-    "startDate"
-).value = "";
+document.getElementById("startDate").value = "";
 
-document.getElementById(
-    "endDate"
-).value = "";
-
-tampilkanHistory(
-
-    JSON.parse(
-        localStorage.getItem(
-            "historyStock"
-        )
-    ) || []
-
-);
-
-}
-
-function bukaData(index) {
+document.getElementById("endDate").value = "";
 
 const historyData =
     JSON.parse(
-        localStorage.getItem(
-            "historyStock"
-        )
+        localStorage.getItem("historyStock")
     ) || [];
 
-if (!historyData[index]) {
+tampilkanHistory(historyData);
+
+}
+
+// =====================================
+// Buka detail history
+// =====================================
+
+function bukaData(id) {
+
+const historyData =
+    JSON.parse(
+        localStorage.getItem("historyStock")
+    ) || [];
+
+const selectedData =
+    historyData.find(
+        item => item.id === id
+    );
+
+if (!selectedData) {
 
     return;
 
@@ -204,9 +205,7 @@ localStorage.setItem(
 
     "selectedHistory",
 
-    JSON.stringify(
-        historyData[index]
-    )
+    JSON.stringify(selectedData)
 
 );
 
