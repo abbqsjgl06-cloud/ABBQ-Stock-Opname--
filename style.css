@@ -12,8 +12,6 @@ body{
 
 .container{
     padding:20px;
-    max-width:1200px;
-    margin:auto;
 }
 
 /* =========================
@@ -145,7 +143,7 @@ HISTORY CARD
 }
 
 .history-card p{
-    margin-bottom:10px;
+    margin-bottom:12px;
 }
 
 /* =========================
@@ -179,7 +177,7 @@ NOTIFICATION
     box-shadow:0 3px 10px rgba(0,0,0,0.3);
 }
 
-/* SUCCESS */
+/* BERHASIL */
 
 #notif.success{
     background:#28a745;
@@ -210,7 +208,7 @@ WATERMARK
 RESPONSIVE ANDROID
 ========================= */
 
-@media (max-width:768px){
+@media(max-width:768px){
 
     .container{
         padding:12px;
@@ -245,8 +243,4 @@ RESPONSIVE ANDROID
         padding:14px;
     }
 
-    #notif{
-        width:85%;
-        font-size:14px;
-    }
 }
