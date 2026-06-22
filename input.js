@@ -8,15 +8,15 @@ const kategori = activeStock.kategori || localStorage.getItem("kategori") || "";
 const type = activeStock.type || localStorage.getItem("type") || "";
 const tanggal = activeStock.tanggal || localStorage.getItem("tanggal") || "";
 
-// 🔥 SATUKAN PIC (ANTI BUG)
+// SATUKAN PIC
 const pic = activeStock.pic || activeStock.operator || "-";
 
 // =====================================
-// Validasi awal (WAJIB)
+// Validasi awal
 // =====================================
 
 if (!kategori || !type || !tanggal) {
-    tampilNotif("Data tidak lengkap, kembali ke menu awal");
+    tampilNotif("Data tidak lengkap, kembali ke menu awal", "error");
 }
 
 // =====================================
@@ -27,7 +27,7 @@ document.getElementById("judulHalaman").innerHTML =
 `${kategori} - ${type} - ${tanggal}`;
 
 // =====================================
-// Menentukan database
+// DATABASE
 // =====================================
 
 let databaseFile = "";
@@ -50,11 +50,13 @@ console.log("Type:", type);
 console.log("Database:", databaseFile);
 
 // =====================================
-// LOAD DATABASE
+// LOAD DATA
 // =====================================
 
 if (!databaseFile) {
-    tampilNotif("Kategori / Type tidak valid");
+
+    tampilNotif("Kategori / Type tidak valid", "error");
+
 } else {
 
     fetch(databaseFile)
@@ -84,7 +86,6 @@ if (!databaseFile) {
                     </td>
                 </tr>
                 `;
-
             });
 
             document.getElementById("tableBody").innerHTML = html;
@@ -92,12 +93,12 @@ if (!databaseFile) {
         })
         .catch(err => {
             console.error(err);
-            tampilNotif("Gagal load database");
+            tampilNotif("Gagal load database", "error");
         });
 }
 
 // =====================================
-// WAKTU INPUT
+// WAKTU
 // =====================================
 
 function getWaktuInput() {
@@ -120,7 +121,7 @@ function simpanData() {
     let rows = document.querySelectorAll("#tableBody tr");
 
     if (!rows.length) {
-        tampilNotif("Data belum dimuat");
+        tampilNotif("Data belum dimuat", "error");
         return;
     }
 
@@ -134,9 +135,7 @@ function simpanData() {
             item: row.cells[2].textContent,
             konv: Number(row.cells[3].textContent),
             uom: row.cells[4].textContent,
-            pcs_gr: Number(
-                document.getElementById("qty_" + index).value
-            )
+            pcs_gr: Number(document.getElementById("qty_" + index).value)
         });
 
     });
@@ -158,7 +157,7 @@ function simpanData() {
     localStorage.setItem("historyStock", JSON.stringify(historyData));
     localStorage.setItem("currentStock", JSON.stringify(data));
 
-    tampilNotif("✓ Data berhasil disimpan");
+    tampilNotif("✓ Data berhasil disimpan", "success");
 }
 
 // =====================================
@@ -171,18 +170,21 @@ function resetData() {
         input.value = 0;
     });
 
-    tampilNotif("✓ Data berhasil direset");
+    tampilNotif("✓ Data berhasil direset", "success");
 }
 
 // =====================================
-// NOTIFIKASI
+// NOTIFIKASI (FIX UTAMA)
 // =====================================
 
-function tampilNotif(pesan) {
+function tampilNotif(pesan, type = "success") {
 
     let notif = document.getElementById("notif");
 
     if (!notif) return;
+
+    notif.className = "notif";   // reset class
+    notif.classList.add(type);   // success / error
 
     notif.innerHTML = pesan;
     notif.style.display = "block";
@@ -190,5 +192,4 @@ function tampilNotif(pesan) {
     setTimeout(() => {
         notif.style.display = "none";
     }, 2000);
-
 }
