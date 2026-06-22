@@ -1,18 +1,18 @@
 function getWaktuInput() {
 
-    return new Date().toLocaleString("id-ID", {
-
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
-
-    });
+    return new Date().toLocaleString(
+        "id-ID",
+        {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        }
+    );
 
 }
-
 
 window.mulaiInput = function () {
 
@@ -28,10 +28,9 @@ window.mulaiInput = function () {
     const tanggal =
         document.getElementById("tanggal").value;
 
-
     if (!pic || !kategori || !type || !tanggal) {
 
-        alert(
+        tampilNotif(
             "Lengkapi semua data terlebih dahulu"
         );
 
@@ -39,29 +38,25 @@ window.mulaiInput = function () {
 
     }
 
-
-    const waktuInput = getWaktuInput();
-
-
-    // simpan data aktif
     const activeStock = {
 
         pic: pic,
+
         kategori: kategori,
+
         type: type,
+
         tanggal: tanggal,
-        waktuInput: waktuInput
+
+        waktuInput: getWaktuInput()
 
     };
-
 
     localStorage.setItem(
         "activeStock",
         JSON.stringify(activeStock)
     );
 
-
-    // dipakai input.js
     localStorage.setItem(
         "kategori",
         kategori
@@ -77,13 +72,31 @@ window.mulaiInput = function () {
         tanggal
     );
 
-
-    console.log("PIC :", pic);
-    console.log("Kategori :", kategori);
-    console.log("Type :", type);
-    console.log("Tanggal :", tanggal);
-
-
-    window.location.href = "input.html";
+    window.location.href =
+        "input.html";
 
 };
+
+
+function tampilNotif(pesan) {
+
+    let notif =
+        document.getElementById(
+            "notif"
+        );
+
+    if (!notif) return;
+
+    notif.innerHTML = pesan;
+
+    notif.style.display =
+        "block";
+
+    setTimeout(() => {
+
+        notif.style.display =
+            "none";
+
+    }, 2000);
+
+}
