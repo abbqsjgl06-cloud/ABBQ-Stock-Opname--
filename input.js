@@ -1,9 +1,12 @@
 // =====================================
-// AMBIL DATA AKTIF (AMAN + FALLBACK)
+// INPUT.JS FINAL FIX
 // =====================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    // ======================
+    // AMBIL DATA AKTIF
+    // ======================
     const activeStock =
         JSON.parse(localStorage.getItem("activeStock")) || {};
 
@@ -19,111 +22,88 @@ document.addEventListener("DOMContentLoaded", () => {
     const pic =
         activeStock.pic || activeStock.operator || "-";
 
-    // VALIDASI DATA WAJIB
+    // VALIDASI
     if (!kategori || !type || !tanggal) {
-        tampilNotif("Data tidak lengkap, kembali ke menu awal", "error");
+        tampilNotif("Data tidak lengkap", "error");
         return;
     }
 
-    // =====================================
-    // JUDUL HALAMAN
-    // =====================================
-
-    const judulHalaman = document.getElementById("judulHalaman");
-
-    if (judulHalaman) {
-        judulHalaman.innerHTML = `${kategori} - ${type} - ${tanggal}`;
+    // ======================
+    // JUDUL
+    // ======================
+    const judul = document.getElementById("judulHalaman");
+    if (judul) {
+        judul.innerText = `${kategori} - ${type} - ${tanggal}`;
     }
 
-    // =====================================
-    // DATABASE SELECTOR
-    // =====================================
-
+    // ======================
+    // DATABASE
+    // ======================
     let databaseFile = "";
 
     if (kategori === "Kitchen" && type === "Daily") {
         databaseFile = "database/daily_kitchen.json";
-    }
-    else if (kategori === "Frontliner" && type === "Daily") {
+    } else if (kategori === "Frontliner" && type === "Daily") {
         databaseFile = "database/daily_frontliner.json";
-    }
-    else if (kategori === "Kitchen" && type === "WM") {
+    } else if (kategori === "Kitchen" && type === "WM") {
         databaseFile = "database/wm_kitchen.json";
-    }
-    else if (kategori === "Frontliner" && type === "WM") {
+    } else if (kategori === "Frontliner" && type === "WM") {
         databaseFile = "database/wm_frontliner.json";
     }
 
-    // debug
-    console.log("Kategori:", kategori);
-    console.log("Type:", type);
-    console.log("Database:", databaseFile);
-
-    // =====================================
-    // LOAD DATABASE
-    // =====================================
+    console.log("DB:", databaseFile);
 
     const tableBody = document.getElementById("tableBody");
-
     if (!tableBody) return;
 
     if (!databaseFile) {
-        tampilNotif("Kategori / Type tidak valid", "error");
+        tampilNotif("Kategori/Type tidak valid", "error");
         return;
     }
 
     fetch(databaseFile)
         .then(res => {
-            if (!res.ok) throw new Error("Database tidak ditemukan");
+            if (!res.ok) throw new Error("DB error");
             return res.json();
         })
         .then(data => {
 
-            if (!Array.isArray(data) || data.length === 0) {
-                tampilNotif("Data kosong", "error");
-                return;
-            }
-
             let html = "";
 
             data.forEach((item, index) => {
-
                 html += `
-                <tr>
-                    <td>${item.nomor}</td>
-                    <td>${item.kode}</td>
-                    <td>${item.item}</td>
-                    <td>${item.konv}</td>
-                    <td>${item.uom}</td>
-                    <td>
-                        <input type="number"
-                               class="qty-input"
-                               id="qty_${index}"
-                               value="0"
-                               min="0">
-                    </td>
-                </tr>
+                    <tr>
+                        <td>${item.nomor}</td>
+                        <td>${item.kode}</td>
+                        <td>${item.item}</td>
+                        <td>${item.konv}</td>
+                        <td>${item.uom}</td>
+                        <td>
+                            <input type="number"
+                                   class="qty-input"
+                                   id="qty_${index}"
+                                   value="0"
+                                   min="0">
+                        </td>
+                    </tr>
                 `;
             });
 
             tableBody.innerHTML = html;
-
         })
         .catch(err => {
-            console.error(err);
+            console.log(err);
             tampilNotif("Gagal load database", "error");
         });
 
-    // simpan global biar dipakai simpanData
+    // simpan meta global
     window._stockMeta = { kategori, type, tanggal, pic };
-
 });
 
 
 // =====================================
-// WAKTU INPUT
+// WAKTU
 // =====================================
-
 function getWaktuInput() {
     return new Date().toLocaleString("id-ID", {
         year: "numeric",
@@ -139,13 +119,12 @@ function getWaktuInput() {
 // =====================================
 // SIMPAN DATA
 // =====================================
-
 function simpanData() {
 
     const tableBody = document.getElementById("tableBody");
 
-    if (!tableBody || !tableBody.querySelectorAll("tr").length) {
-        tampilNotif("Data belum dimuat", "error");
+    if (!tableBody || tableBody.querySelectorAll("tr").length === 0) {
+        tampilNotif("Data belum siap", "error");
         return;
     }
 
@@ -156,12 +135,14 @@ function simpanData() {
     tableBody.querySelectorAll("tr").forEach((row, index) => {
 
         items.push({
-            nomor: Number(row.cells[0].textContent),
-            kode: row.cells[1].textContent,
-            item: row.cells[2].textContent,
-            konv: Number(row.cells[3].textContent),
-            uom: row.cells[4].textContent,
-            pcs_gr: Number(document.getElementById("qty_" + index)?.value || 0)
+            nomor: Number(row.cells[0].innerText),
+            kode: row.cells[1].innerText,
+            item: row.cells[2].innerText,
+            konv: Number(row.cells[3].innerText),
+            uom: row.cells[4].innerText,
+            pcs_gr: Number(
+                document.getElementById("qty_" + index)?.value || 0
+            )
         });
 
     });
@@ -191,21 +172,17 @@ function simpanData() {
 // =====================================
 // RESET
 // =====================================
-
 function resetData() {
 
-    document.querySelectorAll(".qty-input").forEach(input => {
-        input.value = 0;
-    });
+    document.querySelectorAll(".qty-input").forEach(i => i.value = 0);
 
     tampilNotif("Data berhasil direset", "success");
 }
 
 
 // =====================================
-// NOTIFIKASI
+// NOTIFIKASI FIX
 // =====================================
-
 function tampilNotif(pesan, type = "success") {
 
     const notif = document.getElementById("notif");
