@@ -1,5 +1,5 @@
 /* =========================
-GLOBAL
+   GLOBAL
 ========================= */
 
 body{
@@ -12,10 +12,12 @@ body{
 
 .container{
     padding:20px;
+    max-width:700px;
+    margin:auto;
 }
 
 /* =========================
-LOGO
+   LOGO
 ========================= */
 
 .logo{
@@ -26,7 +28,7 @@ LOGO
 }
 
 /* =========================
-TITLE
+   TITLE
 ========================= */
 
 h1,
@@ -37,7 +39,7 @@ h3{
 }
 
 /* =========================
-FORM
+   FORM
 ========================= */
 
 .form-group{
@@ -60,7 +62,7 @@ input{
 }
 
 /* =========================
-BUTTON
+   BUTTON
 ========================= */
 
 button{
@@ -80,7 +82,7 @@ button:hover{
 }
 
 /* =========================
-FILTER BOX
+   FILTER BOX
 ========================= */
 
 .filter-box{
@@ -93,7 +95,7 @@ FILTER BOX
 }
 
 /* =========================
-TABLE
+   TABLE
 ========================= */
 
 .table-stock{
@@ -117,7 +119,7 @@ TABLE
 }
 
 /* =========================
-INPUT QTY
+   INPUT QTY
 ========================= */
 
 .qty-input{
@@ -126,7 +128,7 @@ INPUT QTY
 }
 
 /* =========================
-HISTORY CARD
+   HISTORY CARD
 ========================= */
 
 .history-card{
@@ -147,50 +149,37 @@ HISTORY CARD
 }
 
 /* =========================
-NOTIFICATION
+   NOTIFICATION
 ========================= */
 
 #notif{
     display:none;
-
     position:fixed;
-
     top:20px;
     left:50%;
-
     transform:translateX(-50%);
-
     padding:15px 25px;
-
     border-radius:10px;
-
     color:#ffffff;
-
     font-weight:bold;
-
     font-size:15px;
-
     text-align:center;
-
     z-index:9999;
-
     box-shadow:0 3px 10px rgba(0,0,0,0.3);
 }
 
 /* BERHASIL */
-
 #notif.success{
     background:#28a745;
 }
 
 /* ERROR */
-
 #notif.error{
     background:#dc3545;
 }
 
 /* =========================
-WATERMARK
+   WATERMARK
 ========================= */
 
 .watermark{
@@ -205,10 +194,10 @@ WATERMARK
 }
 
 /* =========================
-RESPONSIVE ANDROID
+   RESPONSIVE ANDROID
 ========================= */
 
-@media(max-width:768px){
+@media (max-width:768px){
 
     .container{
         padding:12px;
@@ -242,5 +231,4 @@ RESPONSIVE ANDROID
         font-size:14px;
         padding:14px;
     }
-
 }
