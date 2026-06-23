@@ -1,68 +1,142 @@
-// =====================================
-// EXPORT EXCEL (CSV SIMPLE - STABIL)
-// =====================================
-
 function exportExcel() {
 
-    const data =
-        JSON.parse(localStorage.getItem("currentStock"));
+    const data = JSON.parse(localStorage.getItem("currentStock"));
 
     if (!data || !data.items || data.items.length === 0) {
         alert("Tidak ada data untuk di-export");
         return;
     }
 
-    const header = [
-        "No",
-        "Kode",
-        "Item",
-        "Konv",
-        "UOM",
-        "Qty",
-        "PIC",
-        "Kategori",
-        "Type",
-        "Tanggal",
-        "Waktu Input"
-    ];
+    let csv = "";
 
-    let rows = [];
+    // =====================================
+    // HEADER INFO
+    // =====================================
+    csv += "STOCK OPNAME ABBQ\n";
+    csv += `PIC: ${data.pic || "-"}\n`;
+    csv += `Kategori: ${data.kategori || "-"}\n`;
+    csv += `Type: ${data.type || "-"}\n`;
+    csv += `Tanggal: ${data.tanggal || "-"}\n`;
+    csv += `Waktu: ${data.waktuInput || "-"}\n\n`;
 
-    data.items.forEach((item, index) => {
+    // =====================================
+    // TABLE HEADER
+    // =====================================
+    csv += "No,Kode,Item,Konv,UOM,Qty\n";
 
-        rows.push([
-            item.nomor,
-            item.kode,
-            item.item,
-            item.konv,
-            item.uom,
-            item.pcs_gr,
-            data.pic,
-            data.kategori,
-            data.type,
-            data.tanggal,
-            data.waktuInput
-        ]);
+    // =====================================
+    // DATA ITEMS
+    // =====================================
+    data.items.forEach(item => {
 
+        csv +=
+            `${item.nomor},` +
+            `${item.kode},` +
+            `${item.item},` +
+            `${item.konv},` +
+            `${item.uom},` +
+            `${item.pcs_gr}\n`;
     });
 
-    let csvContent = "";
+    downloadCSV(csv, "stock_opname_input.csv");
+}
 
-    csvContent += header.join(",") + "\n";
+// =====================================
+// EXPORT HISTORY (SEMUA / FILTER)
+// =====================================
+function exportHistory(dataList = null) {
 
-    rows.forEach(row => {
-        csvContent += row.join(",") + "\n";
+    const data = dataList || JSON.parse(localStorage.getItem("historyStock")) || [];
+
+    if (data.length === 0) {
+        alert("Tidak ada history untuk di-export");
+        return;
+    }
+
+    let csv = "";
+
+    csv += "HISTORY STOCK OPNAME ABBQ\n\n";
+
+    data.forEach((transaksi, index) => {
+
+        csv += `TRANSAKSI ${index + 1}\n`;
+        csv += `PIC: ${transaksi.pic || "-"}\n`;
+        csv += `Kategori: ${transaksi.kategori || "-"}\n`;
+        csv += `Type: ${transaksi.type || "-"}\n`;
+        csv += `Tanggal: ${transaksi.tanggal || "-"}\n`;
+        csv += `Waktu: ${transaksi.waktuInput || "-"}\n\n`;
+
+        csv += "No,Kode,Item,Konv,UOM,Qty\n";
+
+        (transaksi.items || []).forEach(item => {
+
+            csv +=
+                `${item.nomor},` +
+                `${item.kode},` +
+                `${item.item},` +
+                `${item.konv},` +
+                `${item.uom},` +
+                `${item.pcs_gr}\n`;
+        });
+
+        csv += "\n\n";
     });
 
-    // buat file
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    downloadCSV(csv, "history_stock_opname.csv");
+}
 
-    const url = URL.createObjectURL(blob);
+// =====================================
+// EXPORT DETAIL 1 TRANSAKSI
+// =====================================
+function exportDetail() {
+
+    const data = JSON.parse(localStorage.getItem("selectedHistory"));
+
+    if (!data) {
+        alert("Tidak ada data detail untuk di-export");
+        return;
+    }
+
+    let csv = "";
+
+    csv += "DETAIL STOCK OPNAME ABBQ\n";
+    csv += `PIC: ${data.pic || "-"}\n`;
+    csv += `Kategori: ${data.kategori || "-"}\n`;
+    csv += `Type: ${data.type || "-"}\n`;
+    csv += `Tanggal: ${data.tanggal || "-"}\n`;
+    csv += `Waktu: ${data.waktuInput || "-"}\n\n`;
+
+    csv += "No,Kode,Item,Konv,UOM,Qty\n";
+
+    (data.items || []).forEach(item => {
+
+        csv +=
+            `${item.nomor},` +
+            `${item.kode},` +
+            `${item.item},` +
+            `${item.konv},` +
+            `${item.uom},` +
+            `${item.pcs_gr}\n`;
+    });
+
+    downloadCSV(csv, "detail_stock_opname.csv");
+}
+
+// =====================================
+// DOWNLOAD FUNCTION
+// =====================================
+function downloadCSV(csv, filename) {
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
 
     const link = document.createElement("a");
 
+    const url = URL.createObjectURL(blob);
+
     link.setAttribute("href", url);
-    link.setAttribute("download", `stock_opname_${Date.now()}.csv`);
+    link.setAttribute("download", filename);
+
+    link.style.visibility = "hidden";
 
     document.body.appendChild(link);
 
