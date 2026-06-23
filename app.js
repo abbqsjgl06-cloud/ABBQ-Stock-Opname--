@@ -1,79 +1,50 @@
-// ==========================
-// WAKTU INPUT
-// ==========================
-function getWaktuInput() {
-    return new Date().toLocaleString("id-ID", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
-    });
-}
+document.addEventListener("DOMContentLoaded", () => {
 
-// ==========================
-// MULAI INPUT STOCK (FIX TOTAL)
-// ==========================
-window.mulaiInput = function () {
-
-    const pic = document.getElementById("operator")?.value.trim();
-    const kategori = document.getElementById("kategori")?.value;
-    const type = document.getElementById("type")?.value;
-    const tanggal = document.getElementById("tanggal")?.value;
-
-    // ==========================
-    // VALIDASI WAJIB
-    // ==========================
-    if (!pic || !kategori || !type || !tanggal) {
-        tampilNotif("Lengkapi semua data terlebih dahulu", "error");
-        return;
+    function getWaktuInput() {
+        return new Date().toLocaleString("id-ID", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        });
     }
 
-    // ==========================
-    // DATA AKTIF (STANDAR FIX)
-    // ==========================
-    const activeStock = {
-        pic: pic,
-        operator: pic, // 🔥 biar kompatibel dengan history lama
-        kategori: kategori,
-        type: type,
-        tanggal: tanggal,
-        waktuInput: getWaktuInput()
+    window.mulaiInput = function () {
+
+        const pic = document.getElementById("operator")?.value.trim();
+        const kategori = document.getElementById("kategori")?.value;
+        const type = document.getElementById("type")?.value;
+        const tanggal = document.getElementById("tanggal")?.value;
+
+        if (!pic || !kategori || !type || !tanggal) {
+            tampilNotif("Lengkapi semua data", "error");
+            return;
+        }
+
+        const activeStock = {
+            pic,
+            kategori,
+            type,
+            tanggal,
+            waktuInput: getWaktuInput()
+        };
+
+        localStorage.setItem("activeStock", JSON.stringify(activeStock));
+
+        window.location.href = "input.html";
     };
 
-    // ==========================
-    // SIMPAN LOCALSTORAGE
-    // ==========================
-    localStorage.setItem("activeStock", JSON.stringify(activeStock));
+    window.tampilNotif = function (pesan, type = "success") {
+        const notif = document.getElementById("notif");
+        if (!notif) return;
 
-    // backup lama (biar tidak rusak sistem lama)
-    localStorage.setItem("kategori", kategori);
-    localStorage.setItem("type", type);
-    localStorage.setItem("tanggal", tanggal);
+        notif.className = "notif " + type;
+        notif.innerText = pesan;
+        notif.style.display = "block";
 
-    console.log("ACTIVE STOCK SAVED:", activeStock);
+        setTimeout(() => notif.style.display = "none", 2000);
+    };
 
-    // ==========================
-    // REDIRECT
-    // ==========================
-    window.location.href = "input.html";
-};
-
-// ==========================
-// NOTIFIKASI (FIX STABIL)
-// ==========================
-function tampilNotif(pesan, type = "success") {
-
-    const notif = document.getElementById("notif");
-
-    if (!notif) return;
-
-    notif.className = "notif " + type;
-    notif.innerText = pesan;
-    notif.style.display = "block";
-
-    setTimeout(() => {
-        notif.style.display = "none";
-    }, 2000);
-}
+});
