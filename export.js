@@ -1,3 +1,7 @@
+// =====================================
+// EXPORT EXCEL (INPUT DATA)
+// =====================================
+
 function exportExcel() {
 
     const data = JSON.parse(localStorage.getItem("currentStock"));
@@ -9,9 +13,7 @@ function exportExcel() {
 
     let csv = "";
 
-    // =====================================
-    // HEADER INFO
-    // =====================================
+    // HEADER
     csv += "STOCK OPNAME ABBQ\n";
     csv += `PIC: ${data.pic || "-"}\n`;
     csv += `Kategori: ${data.kategori || "-"}\n`;
@@ -19,31 +21,28 @@ function exportExcel() {
     csv += `Tanggal: ${data.tanggal || "-"}\n`;
     csv += `Waktu: ${data.waktuInput || "-"}\n\n`;
 
-    // =====================================
     // TABLE HEADER
-    // =====================================
     csv += "No,Kode,Item,Konv,UOM,Qty\n";
 
-    // =====================================
-    // DATA ITEMS
-    // =====================================
+    // DATA
     data.items.forEach(item => {
-
         csv +=
             `${item.nomor},` +
             `${item.kode},` +
             `${item.item},` +
             `${item.konv},` +
             `${item.uom},` +
-            `${item.pcs_gr}\n`;
+            `${item.pcs_gr || 0}\n`;
     });
 
     downloadCSV(csv, "stock_opname_input.csv");
 }
 
+
 // =====================================
-// EXPORT HISTORY (SEMUA / FILTER)
+// EXPORT HISTORY
 // =====================================
+
 function exportHistory(dataList = null) {
 
     const data = dataList || JSON.parse(localStorage.getItem("historyStock")) || [];
@@ -69,14 +68,13 @@ function exportHistory(dataList = null) {
         csv += "No,Kode,Item,Konv,UOM,Qty\n";
 
         (transaksi.items || []).forEach(item => {
-
             csv +=
                 `${item.nomor},` +
                 `${item.kode},` +
                 `${item.item},` +
                 `${item.konv},` +
                 `${item.uom},` +
-                `${item.pcs_gr}\n`;
+                `${item.pcs_gr || 0}\n`;
         });
 
         csv += "\n\n";
@@ -85,9 +83,11 @@ function exportHistory(dataList = null) {
     downloadCSV(csv, "history_stock_opname.csv");
 }
 
+
 // =====================================
-// EXPORT DETAIL 1 TRANSAKSI
+// EXPORT DETAIL
 // =====================================
+
 function exportDetail() {
 
     const data = JSON.parse(localStorage.getItem("selectedHistory"));
@@ -109,22 +109,23 @@ function exportDetail() {
     csv += "No,Kode,Item,Konv,UOM,Qty\n";
 
     (data.items || []).forEach(item => {
-
         csv +=
             `${item.nomor},` +
             `${item.kode},` +
             `${item.item},` +
             `${item.konv},` +
             `${item.uom},` +
-            `${item.pcs_gr}\n`;
+            `${item.pcs_gr || 0}\n`;
     });
 
     downloadCSV(csv, "detail_stock_opname.csv");
 }
 
+
 // =====================================
-// DOWNLOAD FUNCTION
+// DOWNLOAD CSV
 // =====================================
+
 function downloadCSV(csv, filename) {
 
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
@@ -136,11 +137,7 @@ function downloadCSV(csv, filename) {
     link.setAttribute("href", url);
     link.setAttribute("download", filename);
 
-    link.style.visibility = "hidden";
-
     document.body.appendChild(link);
-
     link.click();
-
     document.body.removeChild(link);
 }
