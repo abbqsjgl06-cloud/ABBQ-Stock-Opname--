@@ -1,140 +1,80 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <title>ABBQ Stock Opname</title>
 
-    <title>
-        ABBQ Stock Opname
-    </title>
-
-    <link
-        rel="stylesheet"
-        href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
+<!-- =========================
+NOTIFIKASI
+========================= -->
+<div id="notif" class="notif"></div>
+
+<!-- =========================
+CONTAINER
+========================= -->
 <div class="container">
 
     <!-- JUDUL -->
-    <h2 id="judulHalaman"></h2>
+    <h2 id="judulHalaman">Loading...</h2>
 
-
-    <!-- TABEL -->
+    <!-- =========================
+    TABEL STOCK
+    ========================= -->
     <table class="table-stock">
 
         <thead>
-
             <tr>
-
                 <th>No</th>
-
                 <th>Kode</th>
-
                 <th>Item</th>
-
                 <th>Konv</th>
-
                 <th>UOM</th>
-
                 <th>PCS/Gr</th>
-
             </tr>
-
         </thead>
 
         <tbody id="tableBody">
-
+            <!-- isi dari JS -->
         </tbody>
 
     </table>
 
-
     <br>
 
+    <!-- =========================
+    BUTTON ACTION
+    ========================= -->
+    <button onclick="simpanData()">SIMPAN</button>
 
-    <!-- SIMPAN -->
-    <button onclick="simpanData()">
+    <br><br>
 
-        SIMPAN
+    <button onclick="resetData()">RESET</button>
 
-    </button>
+    <br><br>
 
+    <button onclick="exportExcel()">EXPORT EXCEL</button>
 
-    <br>
-    <br>
+    <br><br>
 
-
-    <!-- RESET -->
-    <button onclick="resetData()">
-
-        RESET
-
-    </button>
-
-
-    <br>
-    <br>
-
-
-    <!-- EXPORT -->
-    <button onclick="exportExcel()">
-
-        EXPORT EXCEL
-
-    </button>
-
-
-    <br>
-    <br>
-
-
-    <!-- RIWAYAT -->
-    <button
-        onclick="window.location.href='history.html'">
-
+    <button onclick="window.location.href='history.html'">
         RIWAYAT STOCK OPNAME
-
     </button>
 
-
 </div>
 
-
-<!-- NOTIFIKASI -->
-<div
-    id="notif"
-    class="notif">
-
-</div>
-
-
-<!-- WATERMARK -->
-<div class="watermark">
-
-    © 2026 Fdl
-
-</div>
-
-
-<!-- XLSX -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-
-<!-- EXPORT -->
-<script src="export.js"></script>
-
-
-<!-- INPUT -->
+<!-- =========================
+SCRIPT WAJIB (INI SERING TERLEWAT)
+========================= -->
 <script src="input.js"></script>
-
 
 </body>
 </html>
