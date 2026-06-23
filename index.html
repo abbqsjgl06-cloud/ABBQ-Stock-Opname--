@@ -3,15 +3,23 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<title>Stock Opname ABBQ</title>
+    <title>
+        STOCK OPNAME ABBQ
+    </title>
 
-<link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css">
+
+    <link
+        rel="manifest"
+        href="manifest.json">
 
 </head>
 
@@ -19,17 +27,24 @@
 
 <div class="container">
 
+    <!-- LOGO -->
     <img
         src="abbq_logo.png"
         class="logo"
-        alt="logo">
+        alt="ABBQ Logo">
 
-    <h1>STOCK OPNAME ABBQ</h1>
+    <!-- TITLE -->
+    <h1>
+        STOCK OPNAME ABBQ
+    </h1>
+
 
     <!-- PIC -->
     <div class="form-group">
 
-        <label>PIC</label>
+        <label>
+            PIC
+        </label>
 
         <input
             type="text"
@@ -38,10 +53,13 @@
 
     </div>
 
+
     <!-- KATEGORI -->
     <div class="form-group">
 
-        <label>Kategori</label>
+        <label>
+            Kategori
+        </label>
 
         <select id="kategori">
 
@@ -61,10 +79,13 @@
 
     </div>
 
+
     <!-- TYPE -->
     <div class="form-group">
 
-        <label>Type</label>
+        <label>
+            Type
+        </label>
 
         <select id="type">
 
@@ -84,16 +105,20 @@
 
     </div>
 
+
     <!-- TANGGAL -->
     <div class="form-group">
 
-        <label>Tanggal</label>
+        <label>
+            Tanggal
+        </label>
 
         <input
             type="date"
             id="tanggal">
 
     </div>
+
 
     <!-- MULAI INPUT -->
     <button onclick="mulaiInput()">
@@ -102,22 +127,73 @@
 
     </button>
 
-    <br><br>
+    <br>
+    <br>
 
-    <!-- RIWAYAT -->
-    <button onclick="window.location.href='history.html'">
+
+    <!-- HISTORY -->
+    <button
+        onclick="window.location.href='history.html'">
 
         RIWAYAT STOCK OPNAME
 
     </button>
 
+    <br>
+    <br>
+
+
+    <!-- INSTALL APP -->
+    <button
+        id="installBtn"
+        style="display:none">
+
+        INSTALL APP
+
+    </button>
+
 </div>
 
-<!-- NOTIFIKASI -->
-<div id="notif" class="notif"></div>
 
+<!-- NOTIFIKASI -->
+<div
+    id="notif"
+    class="notif">
+</div>
+
+
+<!-- WATERMARK -->
+<div class="watermark">
+
+    © 2026 Fdl
+
+</div>
+
+
+<!-- APP -->
 <script src="app.js"></script>
 
-</body>
 
+<!-- SERVICE WORKER -->
+<script>
+
+if ("serviceWorker" in navigator) {
+
+    navigator.serviceWorker
+        .register(
+            "service-worker.js"
+        )
+        .then(() => {
+
+            console.log(
+                "Service Worker aktif"
+            );
+
+        });
+
+}
+
+</script>
+
+</body>
 </html>
