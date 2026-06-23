@@ -1,72 +1,150 @@
+```javascript
+// =====================================
+// EXPORT EXCEL
+// =====================================
 function exportExcel() {
 
-    let rows = document.querySelectorAll("#tableBody tr");
+    // cek library XLSX
+    if (typeof XLSX === "undefined") {
 
-    if(rows.length === 0){
-        tampilNotif("Tidak ada data untuk diexport");
+        alert(
+            "Library XLSX belum dimuat"
+        );
+
+        return;
+    }
+
+    // ambil semua row
+    const rows =
+        document.querySelectorAll(
+            "#tableBody tr"
+        );
+
+    if (rows.length === 0) {
+
+        tampilNotif(
+            "Tidak ada data untuk diexport",
+            "error"
+        );
+
         return;
     }
 
     let excelData = [];
 
-    rows.forEach((row,index)=>{
+    rows.forEach((row, index) => {
 
-        let nomor = row.cells[0].innerText;
-        let kode = row.cells[1].innerText;
-        let item = row.cells[2].innerText;
-        let konv = row.cells[3].innerText;
-        let uom = row.cells[4].innerText;
-
-        let qty = document.getElementById(
-            "qty_" + index
-        ).value;
+        const qtyInput =
+            document.getElementById(
+                "qty_" + index
+            );
 
         excelData.push({
 
-            "No": nomor,
-            "Kode": kode,
-            "Item": item,
-            "Konv": konv,
-            "UOM": uom,
-            "PCS/Gr": qty
+            "No":
+                row.cells[0].textContent,
+
+            "Kode":
+                row.cells[1].textContent,
+
+            "Item":
+                row.cells[2].textContent,
+
+            "Konv":
+                row.cells[3].textContent,
+
+            "UOM":
+                row.cells[4].textContent,
+
+            "PCS/Gr":
+                qtyInput
+                    ? qtyInput.value
+                    : 0
 
         });
 
     });
 
+
+    // ==========================
+    // Workbook
+    // ==========================
     const worksheet =
-        XLSX.utils.json_to_sheet(excelData);
+        XLSX.utils.json_to_sheet(
+            excelData
+        );
 
     const workbook =
         XLSX.utils.book_new();
 
     XLSX.utils.book_append_sheet(
+
         workbook,
+
         worksheet,
+
         "Stock Opname"
+
     );
 
-    let kategori =
-        localStorage.getItem("kategori");
 
-    let type =
-        localStorage.getItem("type");
+    // ==========================
+    // Nama file
+    // ==========================
+    const activeStock =
+        JSON.parse(
+            localStorage.getItem(
+                "activeStock"
+            )
+        ) || {};
 
-    let tanggal =
-        localStorage.getItem("tanggal");
+    const kategori =
+        activeStock.kategori ||
+        localStorage.getItem("kategori") ||
+        "Stock";
 
-    let namaFile =
+    const type =
+        activeStock.type ||
+        localStorage.getItem("type") ||
+        "-";
+
+    const tanggal =
+        activeStock.tanggal ||
+        localStorage.getItem("tanggal") ||
+        "-";
+
+    const namaFile =
+
         "SO_" +
+
         kategori +
+
         "_" +
+
         type +
+
         "_" +
+
         tanggal +
+
         ".xlsx";
 
+
+    // ==========================
+    // Download
+    // ==========================
     XLSX.writeFile(
+
         workbook,
+
         namaFile
+
+    );
+
+    tampilNotif(
+        "Excel berhasil dibuat",
+        "success"
     );
 
 }
+```
