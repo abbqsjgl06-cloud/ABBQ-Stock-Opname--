@@ -1,6 +1,5 @@
-```javascript
 // =====================================
-// INPUT.JS
+// INPUT.JS FINAL (STABIL + CLEAN)
 // =====================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -12,215 +11,114 @@ document.addEventListener("DOMContentLoaded", () => {
         JSON.parse(localStorage.getItem("activeStock")) || {};
 
     const kategori =
-        activeStock.kategori ||
-        localStorage.getItem("kategori") ||
-        "";
+        activeStock.kategori || localStorage.getItem("kategori") || "";
 
     const type =
-        activeStock.type ||
-        localStorage.getItem("type") ||
-        "";
+        activeStock.type || localStorage.getItem("type") || "";
 
     const tanggal =
-        activeStock.tanggal ||
-        localStorage.getItem("tanggal") ||
-        "";
+        activeStock.tanggal || localStorage.getItem("tanggal") || "";
 
     const pic =
-        activeStock.pic ||
-        activeStock.operator ||
-        "-";
+        activeStock.pic || activeStock.operator || "-";
 
-    // validasi
+    // VALIDASI
     if (!kategori || !type || !tanggal) {
-
-        tampilNotif(
-            "Data tidak lengkap",
-            "error"
-        );
-
+        tampilNotif("Data tidak lengkap", "error");
         return;
     }
 
     // ======================
     // JUDUL HALAMAN
     // ======================
-    const judulHalaman =
-        document.getElementById("judulHalaman");
-
-    if (judulHalaman) {
-
-        judulHalaman.innerHTML =
-            `${kategori} - ${type} - ${tanggal}`;
-
+    const judul = document.getElementById("judulHalaman");
+    if (judul) {
+        judul.innerText = `${kategori} - ${type} - ${tanggal}`;
     }
 
     // ======================
-    // PILIH DATABASE
+    // DATABASE SELECTOR
     // ======================
     let databaseFile = "";
 
-    if (
-        kategori === "Kitchen" &&
-        type === "Daily"
-    ) {
-
-        databaseFile =
-            "database/daily_kitchen.json";
-
+    if (kategori === "Kitchen" && type === "Daily") {
+        databaseFile = "database/daily_kitchen.json";
     }
-    else if (
-        kategori === "Frontliner" &&
-        type === "Daily"
-    ) {
-
-        databaseFile =
-            "database/daily_frontliner.json";
-
+    else if (kategori === "Frontliner" && type === "Daily") {
+        databaseFile = "database/daily_frontliner.json";
     }
-    else if (
-        kategori === "Kitchen" &&
-        type === "WM"
-    ) {
-
-        databaseFile =
-            "database/wm_kitchen.json";
-
+    else if (kategori === "Kitchen" && type === "WM") {
+        databaseFile = "database/wm_kitchen.json";
     }
-    else if (
-        kategori === "Frontliner" &&
-        type === "WM"
-    ) {
-
-        databaseFile =
-            "database/wm_frontliner.json";
-
+    else if (kategori === "Frontliner" && type === "WM") {
+        databaseFile = "database/wm_frontliner.json";
     }
 
-    console.log("Database :", databaseFile);
-
-    const tableBody =
-        document.getElementById("tableBody");
-
+    const tableBody = document.getElementById("tableBody");
     if (!tableBody) return;
 
     if (!databaseFile) {
-
-        tampilNotif(
-            "Kategori atau type tidak valid",
-            "error"
-        );
-
+        tampilNotif("Kategori/Type tidak valid", "error");
         return;
-
     }
 
     // ======================
-    // LOAD DATABASE JSON
+    // LOAD DATABASE
     // ======================
     fetch(databaseFile)
-
-        .then(response => {
-
-            if (!response.ok) {
-
-                throw new Error(
-                    "Database tidak ditemukan"
-                );
-
-            }
-
-            return response.json();
-
+        .then(res => {
+            if (!res.ok) throw new Error("Database error");
+            return res.json();
         })
-
         .then(data => {
 
             let html = "";
 
             data.forEach((item, index) => {
-
                 html += `
-
                 <tr>
-
                     <td>${item.nomor}</td>
-
                     <td>${item.kode}</td>
-
                     <td>${item.item}</td>
-
                     <td>${item.konv}</td>
-
                     <td>${item.uom}</td>
-
                     <td>
-
-                        <input
-                            type="number"
-                            class="qty-input"
-                            id="qty_${index}"
-                            min="0"
-                            value="0">
-
+                        <input type="number"
+                               class="qty-input"
+                               id="qty_${index}"
+                               value="0"
+                               min="0">
                     </td>
-
                 </tr>
-
                 `;
-
             });
 
             tableBody.innerHTML = html;
-
         })
-
-        .catch(error => {
-
-            console.error(error);
-
-            tampilNotif(
-                "Gagal load database",
-                "error"
-            );
-
+        .catch(err => {
+            console.log(err);
+            tampilNotif("Gagal load database", "error");
         });
 
-    // simpan meta
-    window._stockMeta = {
-
-        kategori,
-        type,
-        tanggal,
-        pic
-
-    };
+    // simpan global meta
+    window._stockMeta = { kategori, type, tanggal, pic };
 
 });
 
 
 // =====================================
-// WAKTU INPUT
+// WAKTU REALTIME
 // =====================================
 function getWaktuInput() {
-
-    return new Date().toLocaleString(
-
-        "id-ID",
-
-        {
-
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit"
-
-        }
-
-    );
-
+    const now = new Date();
+    return now.toLocaleString("id-ID", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
 }
 
 
@@ -229,117 +127,51 @@ function getWaktuInput() {
 // =====================================
 function simpanData() {
 
-    const tableBody =
-        document.getElementById("tableBody");
+    const tableBody = document.getElementById("tableBody");
 
-    const rows =
-        tableBody.querySelectorAll("tr");
-
-    if (rows.length === 0) {
-
-        tampilNotif(
-            "Data belum siap",
-            "error"
-        );
-
+    if (!tableBody || tableBody.querySelectorAll("tr").length === 0) {
+        tampilNotif("Data belum dimuat", "error");
         return;
-
     }
 
-    const meta =
-        window._stockMeta || {};
+    const meta = window._stockMeta || {};
 
     let items = [];
 
-    rows.forEach((row, index) => {
+    tableBody.querySelectorAll("tr").forEach((row, index) => {
 
         items.push({
-
-            nomor:
-                Number(row.cells[0].textContent),
-
-            kode:
-                row.cells[1].textContent,
-
-            item:
-                row.cells[2].textContent,
-
-            konv:
-                Number(row.cells[3].textContent),
-
-            uom:
-                row.cells[4].textContent,
-
-            pcs_gr:
-                Number(
-                    document.getElementById(
-                        "qty_" + index
-                    ).value
-                )
-
+            nomor: Number(row.cells[0].innerText),
+            kode: row.cells[1].innerText,
+            item: row.cells[2].innerText,
+            konv: Number(row.cells[3].innerText),
+            uom: row.cells[4].innerText,
+            pcs_gr: Number(
+                document.getElementById("qty_" + index)?.value || 0
+            )
         });
 
     });
 
     const data = {
-
         id: Date.now(),
-
-        pic:
-            meta.pic || "-",
-
-        kategori:
-            meta.kategori || "-",
-
-        type:
-            meta.type || "-",
-
-        tanggal:
-            meta.tanggal || "-",
-
-        waktuInput:
-            getWaktuInput(),
-
-        items:
-            items
-
+        pic: meta.pic || "-",
+        kategori: meta.kategori || "-",
+        type: meta.type || "-",
+        tanggal: meta.tanggal || "-",
+        waktuInput: getWaktuInput(),
+        items: items
     };
 
-    // current stock
-    localStorage.setItem(
+    let historyStock =
+        JSON.parse(localStorage.getItem("historyStock")) || [];
 
-        "currentStock",
+    historyStock.push(data);
 
-        JSON.stringify(data)
+    localStorage.setItem("historyStock", JSON.stringify(historyStock));
+    localStorage.setItem("currentStock", JSON.stringify(data));
 
-    );
-
-    // history stock
-    let historyData =
-
-        JSON.parse(
-            localStorage.getItem(
-                "historyStock"
-            )
-        ) || [];
-
-    historyData.push(data);
-
-    localStorage.setItem(
-
-        "historyStock",
-
-        JSON.stringify(historyData)
-
-    );
-
-    console.log(historyData);
-
-    tampilNotif(
-        "Data berhasil disimpan",
-        "success"
-    );
-
+    tampilNotif("Data berhasil disimpan", "success");
 }
 
 
@@ -348,50 +180,25 @@ function simpanData() {
 // =====================================
 function resetData() {
 
-    document
-        .querySelectorAll(".qty-input")
-        .forEach(input => {
+    document.querySelectorAll(".qty-input").forEach(i => i.value = 0);
 
-            input.value = 0;
-
-        });
-
-    tampilNotif(
-        "Data berhasil direset",
-        "success"
-    );
-
+    tampilNotif("Data berhasil direset", "success");
 }
 
 
 // =====================================
-// NOTIFIKASI
+// NOTIFIKASI FINAL FIX
 // =====================================
-function tampilNotif(
-    pesan,
-    type = "success"
-) {
+function tampilNotif(pesan, type = "success") {
 
-    const notif =
-        document.getElementById("notif");
-
+    const notif = document.getElementById("notif");
     if (!notif) return;
 
-    notif.className =
-        "notif " + type;
-
-    notif.innerHTML =
-        pesan;
-
-    notif.style.display =
-        "block";
+    notif.className = "notif " + type;
+    notif.innerText = pesan;
+    notif.style.display = "block";
 
     setTimeout(() => {
-
-        notif.style.display =
-            "none";
-
+        notif.style.display = "none";
     }, 2000);
-
 }
-```
