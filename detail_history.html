@@ -2,66 +2,49 @@
 <html lang="id">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <title>Detail Riwayat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail History Stock Opname</title>
 
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
 <div class="container">
 
-    <h2 id="judulHistory"></h2>
+    <h2>DETAIL STOCK OPNAME</h2>
 
+    <!-- INFO HEADER -->
+    <div class="history-card">
+
+        <h3 id="judul"></h3>
+
+        <p><b>PIC:</b> <span id="pic"></span></p>
+        <p><b>Tanggal:</b> <span id="tanggal"></span></p>
+        <p><b>Waktu:</b> <span id="waktu"></span></p>
+
+    </div>
+
+    <!-- TABLE DETAIL -->
     <table class="table-stock">
 
         <thead>
-
             <tr>
-
                 <th>No</th>
-
                 <th>Kode</th>
-
                 <th>Item</th>
-
                 <th>Konv</th>
-
                 <th>UOM</th>
-
-                <th>PCS/Gr</th>
-
+                <th>Qty</th>
             </tr>
-
         </thead>
 
-        <tbody id="tableBody">
-
-        </tbody>
+        <tbody id="detailBody"></tbody>
 
     </table>
 
     <br>
-
-    <button onclick="updateData()">
-        UPDATE DATA
-    </button>
-
-    <br><br>
-
-    <button onclick="exportHistoryExcel()">
-        EXPORT EXCEL
-    </button>
-
-    <br><br>
 
     <button onclick="window.location.href='history.html'">
         KEMBALI
@@ -69,28 +52,9 @@
 
 </div>
 
+<!-- NOTIF -->
+<div id="notif" class="notif"></div>
 
-<!-- NOTIFIKASI -->
-<div
-    id="notif"
-    class="notif">
-
-</div>
-
-
-<!-- WATERMARK -->
-<div class="watermark">
-
-    © 2026 Fdl
-
-</div>
-
-
-<!-- LIBRARY EXCEL -->
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-
-
-<!-- DETAIL HISTORY JS -->
 <script src="detail_history.js"></script>
 
 </body>
