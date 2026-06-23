@@ -1,85 +1,41 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // =========================
-    // AMBIL DATA AKTIF
-    // =========================
-    const activeStock =
-        JSON.parse(localStorage.getItem("activeStock")) || {};
+    const activeStock = JSON.parse(localStorage.getItem("activeStock")) || {};
 
-    const kategori =
-        activeStock.kategori || "";
-
-    const type =
-        activeStock.type || "";
-
-    const tanggal =
-        activeStock.tanggal || "";
-
-    const pic =
-        activeStock.pic || activeStock.operator || "-";
-
-    // =========================
-    // VALIDASI
-    // =========================
-    const judul = document.getElementById("judulHalaman");
-
-    if (judul) {
-        judul.innerText = `${kategori} - ${type} - ${tanggal}`;
-    }
+    const kategori = activeStock.kategori || "";
+    const type = activeStock.type || "";
+    const tanggal = activeStock.tanggal || "";
+    const pic = activeStock.pic || "-";
 
     if (!kategori || !type || !tanggal) {
-        console.error("DATA ACTIVE STOCK KOSONG");
+        alert("Data tidak lengkap, kembali ke menu awal");
         return;
     }
 
-    // =========================
-    // DATABASE SELECT
-    // =========================
+    document.getElementById("judulHalaman").innerText =
+        `${kategori} - ${type} - ${tanggal}`;
+
     let databaseFile = "";
 
     if (kategori === "Kitchen" && type === "Daily") {
         databaseFile = "database/daily_kitchen.json";
-    }
-    else if (kategori === "Frontliner" && type === "Daily") {
+    } else if (kategori === "Frontliner" && type === "Daily") {
         databaseFile = "database/daily_frontliner.json";
-    }
-    else if (kategori === "Kitchen" && type === "WM") {
+    } else if (kategori === "Kitchen" && type === "WM") {
         databaseFile = "database/wm_kitchen.json";
-    }
-    else if (kategori === "Frontliner" && type === "WM") {
+    } else if (kategori === "Frontliner" && type === "WM") {
         databaseFile = "database/wm_frontliner.json";
     }
 
-    console.log("LOAD:", databaseFile);
-
     const tableBody = document.getElementById("tableBody");
 
-    if (!tableBody) {
-        console.error("tableBody TIDAK DITEMUKAN");
-        return;
-    }
-
-    if (!databaseFile) {
-        alert("Kategori/type tidak valid");
-        return;
-    }
-
-    // =========================
-    // FETCH DATA
-    // =========================
-    fetch(databaseFile + "?v=" + Date.now()) // anti cache android
-        .then(res => {
-            if (!res.ok) throw new Error("File tidak ditemukan");
-            return res.json();
-        })
+    fetch(databaseFile + "?v=" + Date.now())
+        .then(r => r.json())
         .then(data => {
-
-            console.log("table load :", data.length);
 
             let html = "";
 
-            data.forEach((item, index) => {
-
+            data.forEach((item, i) => {
                 html += `
                 <tr>
                     <td>${item.nomor}</td>
@@ -88,25 +44,54 @@ document.addEventListener("DOMContentLoaded", () => {
                     <td>${item.konv}</td>
                     <td>${item.uom}</td>
                     <td>
-                        <input type="number"
-                               class="qty-input"
-                               id="qty_${index}"
-                               value="0">
+                        <input type="number" id="qty_${i}" value="0">
                     </td>
                 </tr>`;
             });
 
             tableBody.innerHTML = html;
 
-        })
-        .catch(err => {
-            console.error(err);
-            alert("Gagal load database");
         });
 
-    // =========================
-    // GLOBAL META
-    // =========================
-    window._stockMeta = { kategori, type, tanggal, pic };
+    window.simpanData = function () {
+
+        const rows = document.querySelectorAll("#tableBody tr");
+        if (!rows.length) return;
+
+        let items = [];
+
+        rows.forEach((row, i) => {
+            items.push({
+                nomor: row.cells[0].textContent,
+                kode: row.cells[1].textContent,
+                item: row.cells[2].textContent,
+                konv: row.cells[3].textContent,
+                uom: row.cells[4].textContent,
+                pcs_gr: Number(document.getElementById("qty_" + i).value)
+            });
+        });
+
+        const data = {
+            id: Date.now(),
+            pic,
+            kategori,
+            type,
+            tanggal,
+            waktuInput: new Date().toLocaleString("id-ID"),
+            items
+        };
+
+        let history = JSON.parse(localStorage.getItem("historyStock")) || [];
+        history.push(data);
+
+        localStorage.setItem("historyStock", JSON.stringify(history));
+        localStorage.setItem("currentStock", JSON.stringify(data));
+
+        alert("Data tersimpan");
+    };
+
+    window.resetData = function () {
+        document.querySelectorAll(".qty-input").forEach(i => i.value = 0);
+    };
 
 });
