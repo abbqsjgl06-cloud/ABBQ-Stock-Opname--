@@ -1,84 +1,112 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const activeStock = JSON.parse(localStorage.getItem("activeStock"));
+    // =========================
+    // AMBIL DATA AKTIF
+    // =========================
+    const activeStock =
+        JSON.parse(localStorage.getItem("activeStock")) || {};
 
-    if (!activeStock) {
-        alert("Data session hilang, kembali ke menu awal");
-        window.location.href = "index.html";
+    const kategori =
+        activeStock.kategori || "";
+
+    const type =
+        activeStock.type || "";
+
+    const tanggal =
+        activeStock.tanggal || "";
+
+    const pic =
+        activeStock.pic || activeStock.operator || "-";
+
+    // =========================
+    // VALIDASI
+    // =========================
+    const judul = document.getElementById("judulHalaman");
+
+    if (judul) {
+        judul.innerText = `${kategori} - ${type} - ${tanggal}`;
+    }
+
+    if (!kategori || !type || !tanggal) {
+        console.error("DATA ACTIVE STOCK KOSONG");
         return;
     }
 
-    const kategori = activeStock.kategori;
-    const type = activeStock.type;
-    const tanggal = activeStock.tanggal;
-    const pic = activeStock.pic;
-
-    document.getElementById("judulHalaman").innerText =
-        `${kategori} - ${type} - ${tanggal}`;
-
+    // =========================
+    // DATABASE SELECT
+    // =========================
     let databaseFile = "";
 
     if (kategori === "Kitchen" && type === "Daily") {
         databaseFile = "database/daily_kitchen.json";
-    } else if (kategori === "Frontliner" && type === "Daily") {
+    }
+    else if (kategori === "Frontliner" && type === "Daily") {
         databaseFile = "database/daily_frontliner.json";
-    } else if (kategori === "Kitchen" && type === "WM") {
+    }
+    else if (kategori === "Kitchen" && type === "WM") {
         databaseFile = "database/wm_kitchen.json";
-    } else if (kategori === "Frontliner" && type === "WM") {
+    }
+    else if (kategori === "Frontliner" && type === "WM") {
         databaseFile = "database/wm_frontliner.json";
     }
 
-    console.log("DB:", databaseFile);
+    console.log("LOAD:", databaseFile);
 
-    if (!databaseFile) {
-        alert("Kategori tidak valid");
+    const tableBody = document.getElementById("tableBody");
+
+    if (!tableBody) {
+        console.error("tableBody TIDAK DITEMUKAN");
         return;
     }
 
-    fetch(databaseFile)
+    if (!databaseFile) {
+        alert("Kategori/type tidak valid");
+        return;
+    }
+
+    // =========================
+    // FETCH DATA
+    // =========================
+    fetch(databaseFile + "?v=" + Date.now()) // anti cache android
         .then(res => {
-            if (!res.ok) throw new Error("DB tidak ditemukan");
+            if (!res.ok) throw new Error("File tidak ditemukan");
             return res.json();
         })
         .then(data => {
 
-            const tableBody = document.getElementById("tableBody");
-
-            if (!tableBody) {
-                console.error("tableBody tidak ditemukan");
-                return;
-            }
+            console.log("table load :", data.length);
 
             let html = "";
 
             data.forEach((item, index) => {
 
                 html += `
-                    <tr>
-                        <td>${item.nomor}</td>
-                        <td>${item.kode}</td>
-                        <td>${item.item}</td>
-                        <td>${item.konv}</td>
-                        <td>${item.uom}</td>
-                        <td>
-                            <input type="number"
-                                   id="qty_${index}"
-                                   value="0"
-                                   min="0"
-                                   class="qty-input">
-                        </td>
-                    </tr>
-                `;
+                <tr>
+                    <td>${item.nomor}</td>
+                    <td>${item.kode}</td>
+                    <td>${item.item}</td>
+                    <td>${item.konv}</td>
+                    <td>${item.uom}</td>
+                    <td>
+                        <input type="number"
+                               class="qty-input"
+                               id="qty_${index}"
+                               value="0">
+                    </td>
+                </tr>`;
             });
 
             tableBody.innerHTML = html;
-
-            console.log("TABLE LOADED:", data.length);
 
         })
         .catch(err => {
             console.error(err);
             alert("Gagal load database");
         });
+
+    // =========================
+    // GLOBAL META
+    // =========================
+    window._stockMeta = { kategori, type, tanggal, pic };
 
 });
