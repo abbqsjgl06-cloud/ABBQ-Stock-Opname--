@@ -9,91 +9,132 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-    <title>ABBQ Stock Opname</title>
+    <title>
+        ABBQ Stock Opname
+    </title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css">
 
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- Judul -->
-        <h2 id="judulHalaman"></h2>
+    <!-- JUDUL -->
+    <h2 id="judulHalaman"></h2>
 
-        <!-- Notifikasi -->
-        <div id="notif"></div>
 
-        <!-- Tabel Stock -->
-        <table class="table-stock">
+    <!-- TABEL -->
+    <table class="table-stock">
 
-            <thead>
+        <thead>
 
-                <tr>
+            <tr>
 
-                    <th>No</th>
-                    <th>Kode</th>
-                    <th>Item</th>
-                    <th>Konv</th>
-                    <th>UOM</th>
-                    <th>PCS/Gr</th>
+                <th>No</th>
 
-                </tr>
+                <th>Kode</th>
 
-            </thead>
+                <th>Item</th>
 
-            <tbody id="tableBody">
+                <th>Konv</th>
 
-            </tbody>
+                <th>UOM</th>
 
-        </table>
+                <th>PCS/Gr</th>
 
-        <br>
+            </tr>
 
-        <!-- Tombol Simpan -->
-        <button onclick="simpanData()">
-            SIMPAN
-        </button>
+        </thead>
 
-        <br><br>
+        <tbody id="tableBody">
 
-        <!-- Tombol Reset -->
-        <button onclick="resetData()">
-            RESET
-        </button>
+        </tbody>
 
-        <br><br>
+    </table>
 
-        <!-- Tombol Export -->
-        <button onclick="exportExcel()">
-            EXPORT EXCEL
-        </button>
 
-        <br><br>
+    <br>
 
-        <!-- Tombol Riwayat -->
-        <button onclick="window.location.href='history.html'">
-            RIWAYAT
-        </button>
 
-        <br><br>
+    <!-- SIMPAN -->
+    <button onclick="simpanData()">
 
-        <!-- Tombol Menu Utama -->
-        <button onclick="window.location.href='index.html'">
-            MENU UTAMA
-        </button>
+        SIMPAN
 
-    </div>
+    </button>
 
-    <!-- Javascript -->
-    <script src="input.js"></script>
 
-    <!-- Jika ada file export excel -->
-    <!--
-    <script src="export.js"></script>
-    -->
+    <br>
+    <br>
+
+
+    <!-- RESET -->
+    <button onclick="resetData()">
+
+        RESET
+
+    </button>
+
+
+    <br>
+    <br>
+
+
+    <!-- EXPORT -->
+    <button onclick="exportExcel()">
+
+        EXPORT EXCEL
+
+    </button>
+
+
+    <br>
+    <br>
+
+
+    <!-- RIWAYAT -->
+    <button
+        onclick="window.location.href='history.html'">
+
+        RIWAYAT STOCK OPNAME
+
+    </button>
+
+
+</div>
+
+
+<!-- NOTIFIKASI -->
+<div
+    id="notif"
+    class="notif">
+
+</div>
+
+
+<!-- WATERMARK -->
+<div class="watermark">
+
+    © 2026 Fdl
+
+</div>
+
+
+<!-- XLSX -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+
+<!-- EXPORT -->
+<script src="export.js"></script>
+
+
+<!-- INPUT -->
+<script src="input.js"></script>
+
 
 </body>
-
 </html>
