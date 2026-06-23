@@ -1,20 +1,36 @@
-let allData = JSON.parse(localStorage.getItem("historyStock")) || [];
+```javascript
+// ====================================
+// AMBIL SEMUA HISTORY
+// ====================================
+let allData =
+    JSON.parse(
+        localStorage.getItem("historyStock")
+    ) || [];
 
+
+// ====================================
+// HALAMAN PERTAMA
+// ====================================
 document.addEventListener("DOMContentLoaded", () => {
 
-    // TIDAK AUTO RENDER SEMUA DATA
-    document.getElementById("historyList").innerHTML =
-        `<p style="text-align:center;color:gray">
-            Silakan pilih tanggal untuk melihat riwayat
-        </p>`;
+    document.getElementById(
+        "historyList"
+    ).innerHTML =
+
+    `
+    <p style="text-align:center;color:gray">
+
+        Silakan pilih tanggal untuk melihat riwayat
+
+    </p>
+    `;
 
 });
 
 
-// ======================
-// RENDER FUNCTION
-// ======================
-
+// ====================================
+// TAMPILKAN HISTORY
+// ====================================
 function renderHistory(data) {
 
     let html = "";
@@ -22,98 +38,218 @@ function renderHistory(data) {
     if (!data || data.length === 0) {
 
         html = `
+
         <div class="history-card">
-            <h3>Tidak ada data</h3>
+
+            <h3>
+                Tidak ada data
+            </h3>
+
         </div>
+
         `;
 
-    } else {
+    }
+    else {
 
-        data.forEach((item, index) => {
+        data.forEach(item => {
+
+            // ambil jam saja
+            let waktu = "-";
+
+            if (item.waktuInput) {
+
+                const bagian =
+                    item.waktuInput.split(",");
+
+                if (bagian.length > 1) {
+
+                    waktu =
+                        bagian[1].trim();
+
+                }
+                else {
+
+                    waktu =
+                        item.waktuInput;
+
+                }
+
+            }
 
             html += `
+
             <div class="history-card">
 
-                <h3>${item.kategori} - ${item.type}</h3>
+                <h3>
 
-                <p><b>PIC:</b> ${item.pic || item.operator || "-"}</p>
+                    ${item.kategori}
+                    -
+                    ${item.type}
 
-                <p><b>Tanggal:</b> ${item.tanggal}</p>
+                </h3>
 
-                <p><b>Waktu Input:</b> ${item.waktuInput || "-"}</p>
+                <p>
 
-                <p><b>Jumlah Item:</b> ${item.items?.length || 0}</p>
+                    <b>PIC :</b>
 
-                <button onclick="bukaData(${index})">
+                    ${item.pic || item.operator || "-"}
+
+                </p>
+
+                <p>
+
+                    <b>Tanggal :</b>
+
+                    ${item.tanggal}
+
+                </p>
+
+                <p>
+
+                    <b>Waktu Input :</b>
+
+                    ${waktu}
+
+                </p>
+
+                <p>
+
+                    <b>Jumlah Item :</b>
+
+                    ${item.items?.length || 0}
+
+                </p>
+
+                <button
+                    onclick="bukaData(${item.id})">
+
                     BUKA DATA
+
                 </button>
 
             </div>
+
             <br>
+
             `;
+
         });
+
     }
 
-    document.getElementById("historyList").innerHTML = html;
+    document.getElementById(
+        "historyList"
+    ).innerHTML = html;
+
 }
 
 
-// ======================
-// FILTER
-// ======================
-
+// ====================================
+// FILTER HISTORY
+// ====================================
 function filterHistory() {
 
-    const start = document.getElementById("startDate").value;
-    const end = document.getElementById("endDate").value;
+    const startDate =
+        document.getElementById(
+            "startDate"
+        ).value;
 
-    if (!start || !end) {
-        alert("Pilih tanggal awal dan akhir");
+    const endDate =
+        document.getElementById(
+            "endDate"
+        ).value;
+
+    if (!startDate || !endDate) {
+
+        alert(
+            "Pilih tanggal awal dan akhir"
+        );
+
         return;
+
     }
 
-    const startDate = new Date(start);
-    const endDate = new Date(end);
+    const filteredData =
+        allData.filter(item => {
 
-    const filtered = allData.filter(item => {
+            return (
 
-        const itemDate = new Date(item.tanggal);
+                item.tanggal >= startDate &&
 
-        return itemDate >= startDate && itemDate <= endDate;
+                item.tanggal <= endDate
 
-    });
+            );
 
-    renderHistory(filtered);
-}
+        });
 
-
-// ======================
-// RESET
-// ======================
-
-function resetFilter() {
-
-    document.getElementById("startDate").value = "";
-    document.getElementById("endDate").value = "";
-
-    document.getElementById("historyList").innerHTML =
-        `<p style="text-align:center;color:gray">
-            Silakan pilih tanggal untuk melihat riwayat
-        </p>`;
-
-}
-
-
-// ======================
-// DETAIL
-// ======================
-
-function bukaData(index) {
-
-    localStorage.setItem(
-        "selectedHistory",
-        JSON.stringify(allData[index])
+    renderHistory(
+        filteredData
     );
 
-    window.location.href = "detail_history.html";
 }
+
+
+// ====================================
+// RESET FILTER
+// ====================================
+function resetFilter() {
+
+    document.getElementById(
+        "startDate"
+    ).value = "";
+
+    document.getElementById(
+        "endDate"
+    ).value = "";
+
+    document.getElementById(
+        "historyList"
+    ).innerHTML =
+
+    `
+    <p style="text-align:center;color:gray">
+
+        Silakan pilih tanggal untuk melihat riwayat
+
+    </p>
+    `;
+
+}
+
+
+// ====================================
+// BUKA DETAIL
+// ====================================
+function bukaData(id) {
+
+    const selectedData =
+        allData.find(
+            item => item.id === id
+        );
+
+    if (!selectedData) {
+
+        alert(
+            "Data tidak ditemukan"
+        );
+
+        return;
+
+    }
+
+    localStorage.setItem(
+
+        "selectedHistory",
+
+        JSON.stringify(
+            selectedData
+        )
+
+    );
+
+    window.location.href =
+        "detail_history.html";
+
+}
+```
