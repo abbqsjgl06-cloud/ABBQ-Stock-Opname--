@@ -1,149 +1,72 @@
 // =====================================
-// EXPORT EXCEL
+// EXPORT EXCEL (CSV SIMPLE - STABIL)
 // =====================================
+
 function exportExcel() {
 
-    // cek library XLSX
-    if (typeof XLSX === "undefined") {
+    const data =
+        JSON.parse(localStorage.getItem("currentStock"));
 
-        alert(
-            "Library XLSX belum dimuat"
-        );
-
+    if (!data || !data.items || data.items.length === 0) {
+        alert("Tidak ada data untuk di-export");
         return;
     }
 
-    // ambil semua row
-    const rows =
-        document.querySelectorAll(
-            "#tableBody tr"
-        );
+    const header = [
+        "No",
+        "Kode",
+        "Item",
+        "Konv",
+        "UOM",
+        "Qty",
+        "PIC",
+        "Kategori",
+        "Type",
+        "Tanggal",
+        "Waktu Input"
+    ];
 
-    if (rows.length === 0) {
+    let rows = [];
 
-        tampilNotif(
-            "Tidak ada data untuk diexport",
-            "error"
-        );
+    data.items.forEach((item, index) => {
 
-        return;
-    }
-
-    let excelData = [];
-
-    rows.forEach((row, index) => {
-
-        const qtyInput =
-            document.getElementById(
-                "qty_" + index
-            );
-
-        excelData.push({
-
-            "No":
-                row.cells[0].textContent,
-
-            "Kode":
-                row.cells[1].textContent,
-
-            "Item":
-                row.cells[2].textContent,
-
-            "Konv":
-                row.cells[3].textContent,
-
-            "UOM":
-                row.cells[4].textContent,
-
-            "PCS/Gr":
-                qtyInput
-                    ? qtyInput.value
-                    : 0
-
-        });
+        rows.push([
+            item.nomor,
+            item.kode,
+            item.item,
+            item.konv,
+            item.uom,
+            item.pcs_gr,
+            data.pic,
+            data.kategori,
+            data.type,
+            data.tanggal,
+            data.waktuInput
+        ]);
 
     });
 
+    let csvContent = "";
 
-    // ==========================
-    // Workbook
-    // ==========================
-    const worksheet =
-        XLSX.utils.json_to_sheet(
-            excelData
-        );
+    csvContent += header.join(",") + "\n";
 
-    const workbook =
-        XLSX.utils.book_new();
+    rows.forEach(row => {
+        csvContent += row.join(",") + "\n";
+    });
 
-    XLSX.utils.book_append_sheet(
+    // buat file
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
 
-        workbook,
+    const url = URL.createObjectURL(blob);
 
-        worksheet,
+    const link = document.createElement("a");
 
-        "Stock Opname"
+    link.setAttribute("href", url);
+    link.setAttribute("download", `stock_opname_${Date.now()}.csv`);
 
-    );
+    document.body.appendChild(link);
 
+    link.click();
 
-    // ==========================
-    // Nama file
-    // ==========================
-    const activeStock =
-        JSON.parse(
-            localStorage.getItem(
-                "activeStock"
-            )
-        ) || {};
-
-    const kategori =
-        activeStock.kategori ||
-        localStorage.getItem("kategori") ||
-        "Stock";
-
-    const type =
-        activeStock.type ||
-        localStorage.getItem("type") ||
-        "-";
-
-    const tanggal =
-        activeStock.tanggal ||
-        localStorage.getItem("tanggal") ||
-        "-";
-
-    const namaFile =
-
-        "SO_" +
-
-        kategori +
-
-        "_" +
-
-        type +
-
-        "_" +
-
-        tanggal +
-
-        ".xlsx";
-
-
-    // ==========================
-    // Download
-    // ==========================
-    XLSX.writeFile(
-
-        workbook,
-
-        namaFile
-
-    );
-
-    tampilNotif(
-        "Excel berhasil dibuat",
-        "success"
-    );
-
+    document.body.removeChild(link);
 }
-```
