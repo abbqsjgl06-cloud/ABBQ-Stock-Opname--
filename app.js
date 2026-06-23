@@ -3,16 +3,17 @@
 // ==========================
 function getWaktuInput() {
 
-    return new Date().toLocaleString("id-ID", {
-
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
-
-    });
+    return new Date().toLocaleString(
+        "id-ID",
+        {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        }
+    );
 
 }
 
@@ -23,22 +24,35 @@ function getWaktuInput() {
 window.mulaiInput = function () {
 
     const pic =
-        document.getElementById("operator")?.value.trim() || "";
+        document.getElementById(
+            "operator"
+        )?.value.trim();
 
     const kategori =
-        document.getElementById("kategori")?.value || "";
+        document.getElementById(
+            "kategori"
+        )?.value;
 
     const type =
-        document.getElementById("type")?.value || "";
+        document.getElementById(
+            "type"
+        )?.value;
 
     const tanggal =
-        document.getElementById("tanggal")?.value || "";
+        document.getElementById(
+            "tanggal"
+        )?.value;
 
 
     // ==========================
     // VALIDASI
     // ==========================
-    if (!pic || !kategori || !type || !tanggal) {
+    if (
+        !pic ||
+        !kategori ||
+        !type ||
+        !tanggal
+    ) {
 
         tampilNotif(
             "Lengkapi semua data terlebih dahulu",
@@ -68,14 +82,21 @@ window.mulaiInput = function () {
     };
 
 
-    // simpan data aktif
+    // ==========================
+    // SIMPAN
+    // ==========================
     localStorage.setItem(
+
         "activeStock",
-        JSON.stringify(activeStock)
+
+        JSON.stringify(
+            activeStock
+        )
+
     );
 
 
-    // backup kompatibilitas
+    // backup untuk kompatibilitas
     localStorage.setItem(
         "kategori",
         kategori
@@ -92,16 +113,20 @@ window.mulaiInput = function () {
     );
 
 
-    console.log("PIC :", pic);
-    console.log("Kategori :", kategori);
-    console.log("Type :", type);
-    console.log("Tanggal :", tanggal);
+    console.log(
+        "Active Stock:",
+        activeStock
+    );
 
 
-    // pindah halaman
-    window.location.href = "input.html";
+    // ==========================
+    // PINDAH HALAMAN
+    // ==========================
+    window.location.href =
+        "input.html";
 
 };
+
 
 
 // ==========================
@@ -113,25 +138,30 @@ function tampilNotif(
 ) {
 
     const notif =
-        document.getElementById("notif");
+        document.getElementById(
+            "notif"
+        );
 
     if (!notif) {
 
-        alert(pesan);
         return;
 
     }
 
-    notif.className = "notif";
-    notif.classList.add(type);
+    notif.className =
+        "notif " + type;
 
-    notif.innerHTML = pesan;
+    notif.innerHTML =
+        pesan;
 
-    notif.style.display = "block";
+    notif.style.display =
+        "block";
+
 
     setTimeout(() => {
 
-        notif.style.display = "none";
+        notif.style.display =
+            "none";
 
     }, 2000);
 
