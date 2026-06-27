@@ -1,32 +1,137 @@
-function downloadCSV(csv, filename) {
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
+// =====================================
+// EXPORT.JS FINAL STABLE
+// =====================================
 
 function exportExcel() {
 
-    const data = JSON.parse(localStorage.getItem("currentStock"));
+    const rows =
+        document.querySelectorAll(
+            "#tableBody tr"
+        );
 
-    if (!data || !data.items) return;
+    if (rows.length === 0) {
 
-    let csv = "STOCK OPNAME\n\n";
-    csv += `PIC: ${data.pic}\n`;
-    csv += `Kategori: ${data.kategori}\n`;
-    csv += `Type: ${data.type}\n`;
-    csv += `Tanggal: ${data.tanggal}\n\n`;
+        tampilNotif(
+            "Tidak ada data untuk diexport",
+            "error"
+        );
 
-    csv += "No,Kode,Item,Konv,UOM,Qty\n";
+        return;
 
-    data.items.forEach(i => {
-        csv += `${i.nomor},${i.kode},${i.item},${i.konv},${i.uom},${i.pcs_gr}\n`;
+    }
+
+    let excelData = [];
+
+    rows.forEach((row, index) => {
+
+        excelData.push({
+
+            "No":
+                row.cells[0].innerText,
+
+            "Kode":
+                row.cells[1].innerText,
+
+            "Item":
+                row.cells[2].innerText,
+
+            "Konv":
+                row.cells[3].innerText,
+
+            "UOM":
+                row.cells[4].innerText,
+
+            "PCS/Gr":
+                Number(
+                    document.getElementById(
+                        "qty_" + index
+                    ).value
+                )
+
+        });
+
     });
 
-    downloadCSV(csv, "stock_opname.csv");
+    const worksheet =
+        XLSX.utils.json_to_sheet(
+            excelData
+        );
+
+    const workbook =
+        XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+
+        workbook,
+
+        worksheet,
+
+        "Stock Opname"
+
+    );
+
+    // ==========================
+    // Ambil data aktif
+    // ==========================
+
+    const activeStock =
+        JSON.parse(
+            localStorage.getItem(
+                "activeStock"
+            )
+        ) || {};
+
+    const kategori =
+        activeStock.kategori ||
+        localStorage.getItem(
+            "kategori"
+        ) ||
+        "Stock";
+
+    const type =
+        activeStock.type ||
+        localStorage.getItem(
+            "type"
+        ) ||
+        "";
+
+    const tanggal =
+        activeStock.tanggal ||
+        localStorage.getItem(
+            "tanggal"
+        ) ||
+        "";
+
+    const namaFile =
+
+        "SO_" +
+
+        kategori +
+
+        "_" +
+
+        type +
+
+        "_" +
+
+        tanggal +
+
+        ".xlsx";
+
+    XLSX.writeFile(
+
+        workbook,
+
+        namaFile
+
+    );
+
+    tampilNotif(
+
+        "✓ Excel berhasil dibuat",
+
+        "success"
+
+    );
+
 }
