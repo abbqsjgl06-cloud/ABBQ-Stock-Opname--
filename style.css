@@ -316,3 +316,77 @@ button{
 }
 
 }
+/* =========================
+FILTER BOX
+========================= */
+
+.filter-box{
+
+    background:#fff;
+
+    border:1px solid #ddd;
+
+    border-radius:15px;
+
+    padding:15px;
+
+    margin-bottom:20px;
+
+}
+
+.filter-box label{
+
+    font-weight:bold;
+
+    margin-top:10px;
+
+}
+
+.filter-box button{
+
+    margin-top:15px;
+
+}
+
+
+/* =========================
+EMPTY HISTORY
+========================= */
+
+.empty-history{
+
+    background:#fff;
+
+    border:1px solid #ddd;
+
+    border-radius:15px;
+
+    padding:50px 20px;
+
+    text-align:center;
+
+    box-shadow:0 2px 5px rgba(0,0,0,.08);
+
+}
+
+.empty-icon{
+
+    font-size:60px;
+
+    margin-bottom:15px;
+
+}
+
+.empty-history h3{
+
+    margin:10px 0;
+
+}
+
+.empty-history p{
+
+    color:#666;
+
+    line-height:1.6;
+
+}
