@@ -2,60 +2,102 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail History Stock Opname</title>
 
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Detail Stock Opname</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+
 </head>
 
 <body>
 
-<div class="container">
+    <!-- NOTIFIKASI -->
+    <div
+        id="notif"
+        class="notif">
+    </div>
 
-    <h2>DETAIL STOCK OPNAME</h2>
+    <div class="container">
 
-    <!-- INFO HEADER -->
-    <div class="history-card">
+        <h2 id="judulHistory">
 
-        <h3 id="judul"></h3>
+            DETAIL STOCK OPNAME
 
-        <p><b>PIC:</b> <span id="pic"></span></p>
-        <p><b>Tanggal:</b> <span id="tanggal"></span></p>
-        <p><b>Waktu:</b> <span id="waktu"></span></p>
+        </h2>
+
+        <table class="table-stock">
+
+            <thead>
+
+                <tr>
+
+                    <th>No</th>
+
+                    <th>Kode</th>
+
+                    <th>Item</th>
+
+                    <th>Konv</th>
+
+                    <th>UOM</th>
+
+                    <th>PCS/Gr</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="tableBody">
+
+            </tbody>
+
+        </table>
+
+        <br>
+
+        <button onclick="updateData()">
+
+            UPDATE DATA
+
+        </button>
+
+        <br><br>
+
+        <button onclick="exportHistoryExcel()">
+
+            EXPORT EXCEL
+
+        </button>
+
+        <br><br>
+
+        <button onclick="window.location.href='history.html'">
+
+            KEMBALI
+
+        </button>
 
     </div>
 
-    <!-- TABLE DETAIL -->
-    <table class="table-stock">
+    <div class="watermark">
 
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Kode</th>
-                <th>Item</th>
-                <th>Konv</th>
-                <th>UOM</th>
-                <th>Qty</th>
-            </tr>
-        </thead>
+        © 2026 Fdl
 
-        <tbody id="detailBody"></tbody>
+    </div>
 
-    </table>
+    <!-- XLSX -->
+    <script src="libraries/xlsx.full.min.js"></script>
 
-    <br>
-
-    <button onclick="window.location.href='history.html'">
-        KEMBALI
-    </button>
-
-</div>
-
-<!-- NOTIF -->
-<div id="notif" class="notif"></div>
-
-<script src="detail_history.js"></script>
+    <!-- DETAIL -->
+    <script src="detail_history.js"></script>
 
 </body>
 
