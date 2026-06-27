@@ -1,80 +1,125 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ABBQ Stock Opname</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
+    <title>Input Stock Opname ABBQ</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css">
 
 </head>
 
 <body>
 
-<!-- =========================
-NOTIFIKASI
-========================= -->
-<div id="notif" class="notif"></div>
+    <!-- NOTIFIKASI -->
+    <div
+        id="notif"
+        class="notif">
+    </div>
 
-<!-- =========================
-CONTAINER
-========================= -->
-<div class="container">
+    <div class="container">
 
-    <!-- JUDUL -->
-    <h2 id="judulHalaman">Loading...</h2>
+        <h2 id="judulHalaman">
 
-    <!-- =========================
-    TABEL STOCK
-    ========================= -->
-    <table class="table-stock">
+            LOADING...
 
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Kode</th>
-                <th>Item</th>
-                <th>Konv</th>
-                <th>UOM</th>
-                <th>PCS/Gr</th>
-            </tr>
-        </thead>
+        </h2>
 
-        <tbody id="tableBody">
-            <!-- isi dari JS -->
-        </tbody>
+        <table class="table-stock">
 
-    </table>
+            <thead>
 
-    <br>
+                <tr>
 
-    <!-- =========================
-    BUTTON ACTION
-    ========================= -->
-    <button onclick="simpanData()">SIMPAN</button>
+                    <th>No</th>
 
-    <br><br>
+                    <th>Kode</th>
 
-    <button onclick="resetData()">RESET</button>
+                    <th>Item</th>
 
-    <br><br>
+                    <th>Konv</th>
 
-    <button onclick="exportExcel()">EXPORT EXCEL</button>
+                    <th>UOM</th>
 
-    <br><br>
+                    <th>PCS/Gr</th>
 
-    <button onclick="window.location.href='history.html'">
-        RIWAYAT STOCK OPNAME
-    </button>
+                </tr>
 
-</div>
+            </thead>
 
-<!-- =========================
-SCRIPT WAJIB (INI SERING TERLEWAT)
-========================= -->
-<script src="input.js"></script>
+            <tbody id="tableBody">
+
+            </tbody>
+
+        </table>
+
+        <br>
+
+        <button onclick="simpanData()">
+
+            SIMPAN
+
+        </button>
+
+        <br><br>
+
+        <button onclick="resetData()">
+
+            RESET
+
+        </button>
+
+        <br><br>
+
+        <button onclick="exportExcel()">
+
+            EXPORT EXCEL
+
+        </button>
+
+        <br><br>
+
+        <button
+            onclick="window.location.href='history.html'">
+
+            RIWAYAT
+
+        </button>
+
+        <br><br>
+
+        <button
+            onclick="window.location.href='index.html'">
+
+            MENU UTAMA
+
+        </button>
+
+    </div>
+
+    <div class="watermark">
+
+        © 2026 Fdl
+
+    </div>
+
+    <!-- XLSX -->
+    <script src="libraries/xlsx.full.min.js"></script>
+
+    <!-- EXPORT -->
+    <script src="export.js"></script>
+
+    <!-- INPUT -->
+    <script src="input.js"></script>
 
 </body>
+
 </html>
