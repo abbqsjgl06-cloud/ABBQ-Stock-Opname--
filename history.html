@@ -11,95 +11,78 @@
 
     <title>Riwayat Stock Opname</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-    <!-- NOTIFIKASI -->
-    <div
-        id="notif"
-        class="notif">
-    </div>
+<div class="container">
 
-    <div class="container">
+    <h2>RIWAYAT STOCK OPNAME</h2>
 
-        <h2>
+    <div class="filter-box">
 
-            RIWAYAT STOCK OPNAME
+        <label>Dari Tanggal</label>
 
-        </h2>
+        <input
+            type="date"
+            id="startDate">
 
-        <!-- FILTER -->
-        <div class="filter-box">
+        <label>Sampai Tanggal</label>
 
-            <label>
+        <input
+            type="date"
+            id="endDate">
 
-                Dari Tanggal
+        <button onclick="filterHistory()">
+            FILTER
+        </button>
 
-            </label>
-
-            <input
-                type="date"
-                id="startDate">
-
-            <br>
-
-            <label>
-
-                Sampai Tanggal
-
-            </label>
-
-            <input
-                type="date"
-                id="endDate">
-
-            <br><br>
-
-            <button onclick="filterHistory()">
-
-                FILTER
-
-            </button>
-
-            <br><br>
-
-            <button onclick="resetFilter()">
-
-                RESET
-
-            </button>
-
-        </div>
-
-        <!-- LIST HISTORY -->
-
-        <div id="historyList">
-
-        </div>
-
-        <br>
-
-        <button
-            onclick="window.location.href='index.html'">
-
-            KEMBALI KE MENU UTAMA
-
+        <button onclick="resetFilter()">
+            RESET
         </button>
 
     </div>
 
-    <div class="watermark">
+    <br>
 
-        © 2026 Fdl
+    <div id="historyList">
+
+        <div class="empty-history">
+
+            <div class="empty-icon">
+                📋
+            </div>
+
+            <h3>
+                Belum ada data ditampilkan
+            </h3>
+
+            <p>
+                Pilih tanggal terlebih dahulu,
+                kemudian tekan tombol FILTER.
+            </p>
+
+        </div>
 
     </div>
 
-    <script src="history.js"></script>
+    <br>
+
+    <button onclick="window.location.href='index.html'">
+
+        KEMBALI KE MENU UTAMA
+
+    </button>
+
+</div>
+
+<div class="watermark">
+    © 2026 Fdl
+</div>
+
+<script src="history.js"></script>
 
 </body>
 
