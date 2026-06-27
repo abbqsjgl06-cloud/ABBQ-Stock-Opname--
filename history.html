@@ -2,61 +2,103 @@
 <html lang="id">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
     <title>Riwayat Stock Opname</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css">
+
 </head>
 
 <body>
 
+    <!-- NOTIFIKASI -->
+    <div
+        id="notif"
+        class="notif">
+    </div>
+
     <div class="container">
 
-        <h2>RIWAYAT STOCK OPNAME</h2>
+        <h2>
 
-        <!-- =========================
-        FILTER TANGGAL
-        ========================= -->
+            RIWAYAT STOCK OPNAME
+
+        </h2>
+
+        <!-- FILTER -->
         <div class="filter-box">
 
-            <label>Dari Tanggal</label>
-            <input type="date" id="startDate">
+            <label>
 
-            <br><br>
+                Dari Tanggal
 
-            <label>Sampai Tanggal</label>
-            <input type="date" id="endDate">
+            </label>
+
+            <input
+                type="date"
+                id="startDate">
+
+            <br>
+
+            <label>
+
+                Sampai Tanggal
+
+            </label>
+
+            <input
+                type="date"
+                id="endDate">
 
             <br><br>
 
             <button onclick="filterHistory()">
+
                 FILTER
+
             </button>
 
+            <br><br>
+
             <button onclick="resetFilter()">
+
                 RESET
+
             </button>
 
         </div>
 
-        <!-- =========================
-        HASIL RIWAYAT (HANYA INI YANG DIPAKAI)
-        ========================= -->
-        <div id="historyList"></div>
+        <!-- LIST HISTORY -->
 
-        <br><br>
+        <div id="historyList">
 
-        <button onclick="window.location.href='index.html'">
+        </div>
+
+        <br>
+
+        <button
+            onclick="window.location.href='index.html'">
+
             KEMBALI KE MENU UTAMA
+
         </button>
 
     </div>
 
-    <!-- NOTIFIKASI -->
-    <div id="notif" class="notif"></div>
+    <div class="watermark">
 
-    <!-- SCRIPT -->
+        © 2026 Fdl
+
+    </div>
+
     <script src="history.js"></script>
 
 </body>
