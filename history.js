@@ -1,11 +1,12 @@
 // =====================================
-// HISTORY.JS FINAL STABLE
+// HISTORY.JS
+// ABBQ STOCK OPNAME
 // =====================================
 
 let allData = [];
 
 // =====================================
-// LOAD
+// LOAD DATA
 // =====================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -14,9 +15,25 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.getItem("historyStock")
     ) || [];
 
-    renderHistory(allData);
+    const historyList =
+        document.getElementById("historyList");
+
+    if (historyList) {
+
+        historyList.innerHTML = `
+            <div class="history-empty">
+
+                <h3>
+                    Pilih tanggal kemudian tekan FILTER
+                </h3>
+
+            </div>
+        `;
+
+    }
 
 });
+
 
 // =====================================
 // RENDER HISTORY
@@ -36,9 +53,7 @@ function renderHistory(data) {
             <div class="history-card">
 
                 <h3>
-
-                    Belum ada data
-
+                    Tidak ada data
                 </h3>
 
             </div>
@@ -51,7 +66,7 @@ function renderHistory(data) {
 
     let html = "";
 
-    data.forEach((item) => {
+    data.forEach(item => {
 
         const pic =
             item.pic ||
@@ -75,73 +90,59 @@ function renderHistory(data) {
                 ? item.items.length
                 : 0;
 
-        // tampilkan jam saja
-        let waktu = "-";
+        // hanya jam
+        let jam = "-";
 
         if (item.waktuInput) {
 
-            const pecah =
+            const split =
                 item.waktuInput.split(",");
 
-            waktu =
-                pecah.length > 1
-                ? pecah[1].trim()
-                : item.waktuInput;
+            jam =
+                split.length > 1
+                    ? split[1].trim()
+                    : item.waktuInput;
 
         }
 
         html += `
 
-        <div class="history-card">
+            <div class="history-card">
 
-            <h3>
+                <h3>
+                    ${kategori} - ${type}
+                </h3>
 
-                ${kategori} - ${type}
+                <p>
+                    <b>PIC :</b>
+                    ${pic}
+                </p>
 
-            </h3>
+                <p>
+                    <b>Tanggal :</b>
+                    ${tanggal}
+                </p>
 
-            <p>
+                <p>
+                    <b>Jam :</b>
+                    ${jam}
+                </p>
 
-                <b>PIC :</b>
+                <p>
+                    <b>Jumlah Item :</b>
+                    ${jumlah}
+                </p>
 
-                ${pic}
+                <button
+                    onclick="bukaData(${item.id})">
 
-            </p>
+                    BUKA DATA
 
-            <p>
+                </button>
 
-                <b>Tanggal :</b>
+            </div>
 
-                ${tanggal}
-
-            </p>
-
-            <p>
-
-                <b>Jam :</b>
-
-                ${waktu}
-
-            </p>
-
-            <p>
-
-                <b>Jumlah Item :</b>
-
-                ${jumlah}
-
-            </p>
-
-            <button
-                onclick="bukaData(${item.id})">
-
-                BUKA DATA
-
-            </button>
-
-        </div>
-
-        <br>
+            <br>
 
         `;
 
@@ -151,8 +152,10 @@ function renderHistory(data) {
 
 }
 
+
+
 // =====================================
-// FILTER
+// FILTER HISTORY
 // =====================================
 
 function filterHistory() {
@@ -177,11 +180,8 @@ function filterHistory() {
     const hasil = allData.filter(item => {
 
         return (
-
             item.tanggal >= start &&
-
             item.tanggal <= end
-
         );
 
     });
@@ -189,6 +189,8 @@ function filterHistory() {
     renderHistory(hasil);
 
 }
+
+
 
 // =====================================
 // RESET
@@ -204,19 +206,34 @@ function resetFilter() {
         "endDate"
     ).value = "";
 
-    renderHistory(allData);
+    document.getElementById(
+        "historyList"
+    ).innerHTML = `
+
+        <div class="history-empty">
+
+            <h3>
+                Pilih tanggal kemudian tekan FILTER
+            </h3>
+
+        </div>
+
+    `;
 
 }
 
+
+
 // =====================================
-// DETAIL
+// BUKA DETAIL
 // =====================================
 
 function bukaData(id) {
 
-    const data = allData.find(
-        item => item.id == id
-    );
+    const data =
+        allData.find(
+            item => item.id == id
+        );
 
     if (!data) {
 
@@ -242,8 +259,10 @@ function bukaData(id) {
 
 }
 
+
+
 // =====================================
-// NOTIF
+// NOTIFIKASI
 // =====================================
 
 function tampilNotif(
