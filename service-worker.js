@@ -1,93 +1,111 @@
+// =====================================
+// SERVICE WORKER FINAL
+// =====================================
 
-// ===============================
-// NAMA CACHE
-// ===============================
-const CACHE_NAME = "abbq-stock-opname-v1";
+const CACHE_NAME = "abbq-stock-v2";
 
-// ===============================
-// FILE YANG DI-CACHE
-// ===============================
-const CACHE_FILES = [
+const urlsToCache = [
+
     "./",
+
     "./index.html",
     "./input.html",
     "./history.html",
     "./detail_history.html",
+
     "./style.css",
+
     "./app.js",
     "./input.js",
     "./history.js",
     "./detail_history.js",
     "./export.js",
+
     "./manifest.json",
-    "./abbq_logo.png"
+
+    "./abbq_logo.png",
+
+    "./libraries/xlsx.full.min.js",
+
+    "./database/daily_frontliner.json",
+    "./database/daily_kitchen.json",
+    "./database/wm_frontliner.json",
+    "./database/wm_kitchen.json"
+
 ];
 
-// ===============================
-// INSTALL SERVICE WORKER
-// ===============================
+// ===========================
+// INSTALL
+// ===========================
+
 self.addEventListener("install", event => {
 
+    self.skipWaiting();
+
     event.waitUntil(
+
         caches.open(CACHE_NAME)
+
             .then(cache => {
-                return cache.addAll(CACHE_FILES);
+
+                return cache.addAll(urlsToCache);
+
             })
+
     );
 
-    self.skipWaiting();
 });
 
-// ===============================
-// ACTIVATE SERVICE WORKER
-// ===============================
+// ===========================
+// ACTIVATE
+// ===========================
+
 self.addEventListener("activate", event => {
 
     event.waitUntil(
-        caches.keys().then(keys => {
-            return Promise.all(
-                keys.map(key => {
-                    if (key !== CACHE_NAME) {
-                        return caches.delete(key);
-                    }
-                })
-            );
-        })
+
+        caches.keys()
+
+            .then(keys => {
+
+                return Promise.all(
+
+                    keys.map(key => {
+
+                        if (key !== CACHE_NAME) {
+
+                            return caches.delete(key);
+
+                        }
+
+                    })
+
+                );
+
+            })
+
     );
 
     self.clients.claim();
+
 });
 
-// ===============================
-// FETCH (OFFLINE STRATEGY)
-// ===============================
+// ===========================
+// FETCH
+// ===========================
+
 self.addEventListener("fetch", event => {
 
     event.respondWith(
+
         caches.match(event.request)
+
             .then(response => {
-                // kalau ada di cache, pakai cache
-                if (response) {
-                    return response;
-                }
 
-                // kalau tidak ada, ambil dari network
-                return fetch(event.request)
-                    .then(networkResponse => {
-
-                        // optional: cache baru
-                        return caches.open(CACHE_NAME)
-                            .then(cache => {
-                                cache.put(event.request, networkResponse.clone());
-                                return networkResponse;
-                            });
-
-                    })
-                    .catch(() => {
-                        // fallback kalau offline total
-                        return caches.match("./index.html");
-                    });
+                return response || fetch(event.request);
 
             })
+
     );
+
 });
