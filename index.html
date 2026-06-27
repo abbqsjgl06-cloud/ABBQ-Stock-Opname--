@@ -9,9 +9,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-    <title>
-        STOCK OPNAME ABBQ
-    </title>
+    <title>ABBQ Stock Opname</title>
 
     <link
         rel="stylesheet"
@@ -21,179 +19,139 @@
         rel="manifest"
         href="manifest.json">
 
+    <meta
+        name="theme-color"
+        content="#FFD400">
+
 </head>
 
 <body>
 
-<div class="container">
+    <!-- NOTIFIKASI -->
+    <div
+        id="notif"
+        class="notif">
+    </div>
 
-    <!-- LOGO -->
-    <img
-        src="abbq_logo.png"
-        class="logo"
-        alt="ABBQ Logo">
+    <div class="container">
 
-    <!-- TITLE -->
-    <h1>
-        STOCK OPNAME ABBQ
-    </h1>
+        <!-- LOGO -->
+        <img
+            src="abbq_logo.png"
+            class="logo"
+            alt="ABBQ Logo">
 
+        <h1>STOCK OPNAME ABBQ</h1>
 
-    <!-- PIC -->
-    <div class="form-group">
+        <!-- PIC -->
+        <div class="form-group">
 
-        <label>
-            PIC
-        </label>
+            <label>PIC</label>
 
-        <input
-            type="text"
-            id="operator"
-            placeholder="Masukkan nama PIC">
+            <input
+                type="text"
+                id="operator"
+                placeholder="Masukkan Nama PIC">
+
+        </div>
+
+        <!-- KATEGORI -->
+        <div class="form-group">
+
+            <label>Kategori</label>
+
+            <select id="kategori">
+
+                <option value="">
+                    -- Pilih Kategori --
+                </option>
+
+                <option value="Kitchen">
+                    Kitchen
+                </option>
+
+                <option value="Frontliner">
+                    Frontliner
+                </option>
+
+            </select>
+
+        </div>
+
+        <!-- TYPE -->
+        <div class="form-group">
+
+            <label>Type</label>
+
+            <select id="type">
+
+                <option value="">
+                    -- Pilih Type --
+                </option>
+
+                <option value="Daily">
+                    Daily
+                </option>
+
+                <option value="WM">
+                    Weekly / Monthly
+                </option>
+
+            </select>
+
+        </div>
+
+        <!-- TANGGAL -->
+        <div class="form-group">
+
+            <label>Tanggal</label>
+
+            <input
+                type="date"
+                id="tanggal">
+
+        </div>
+
+        <br>
+
+        <!-- MULAI -->
+        <button onclick="mulaiInput()">
+
+            MULAI INPUT STOCK
+
+        </button>
+
+        <br><br>
+
+        <!-- HISTORY -->
+        <button
+            onclick="window.location.href='history.html'">
+
+            RIWAYAT STOCK OPNAME
+
+        </button>
+
+        <br><br>
+
+        <!-- INSTALL -->
+        <button
+            id="installBtn"
+            style="display:none;">
+
+            INSTALL APP
+
+        </button>
 
     </div>
 
+    <div class="watermark">
 
-    <!-- KATEGORI -->
-    <div class="form-group">
-
-        <label>
-            Kategori
-        </label>
-
-        <select id="kategori">
-
-            <option value="">
-                -- Pilih Kategori --
-            </option>
-
-            <option value="Kitchen">
-                Kitchen
-            </option>
-
-            <option value="Frontliner">
-                Frontliner
-            </option>
-
-        </select>
+        © 2026 Fdl
 
     </div>
 
-
-    <!-- TYPE -->
-    <div class="form-group">
-
-        <label>
-            Type
-        </label>
-
-        <select id="type">
-
-            <option value="">
-                -- Pilih Type --
-            </option>
-
-            <option value="Daily">
-                Daily
-            </option>
-
-            <option value="WM">
-                Weekly / Monthly
-            </option>
-
-        </select>
-
-    </div>
-
-
-    <!-- TANGGAL -->
-    <div class="form-group">
-
-        <label>
-            Tanggal
-        </label>
-
-        <input
-            type="date"
-            id="tanggal">
-
-    </div>
-
-
-    <!-- MULAI INPUT -->
-    <button onclick="mulaiInput()">
-
-        MULAI INPUT STOCK
-
-    </button>
-
-    <br>
-    <br>
-
-
-    <!-- HISTORY -->
-    <button
-        onclick="window.location.href='history.html'">
-
-        RIWAYAT STOCK OPNAME
-
-    </button>
-
-    <br>
-    <br>
-
-
-    <!-- INSTALL APP -->
-    <button
-        id="installBtn"
-        style="display:none">
-
-        INSTALL APP
-
-    </button>
-
-</div>
-
-
-<!-- NOTIFIKASI -->
-<div
-    id="notif"
-    class="notif">
-</div>
-
-
-<!-- WATERMARK -->
-<div class="watermark">
-
-    © 2026 Fdl
-
-</div>
-
-
-<!-- APP -->
-<script src="app.js"></script>
-
-
-<!-- SERVICE WORKER -->
-<script>
-
-if ("serviceWorker" in navigator) {
-
-    navigator.serviceWorker
-        .register(
-            "service-worker.js"
-        )
-        .then(() => {
-
-            console.log(
-                "Service Worker aktif"
-            );
-
-        });
-
-}
-
-</script>
+    <script src="app.js"></script>
 
 </body>
+
 </html>
