@@ -1,139 +1,275 @@
+// =====================================
+// HISTORY.JS FINAL STABLE
+// =====================================
+
+let allData = [];
+
+// =====================================
+// LOAD
+// =====================================
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    renderHistory();
+    allData = JSON.parse(
+        localStorage.getItem("historyStock")
+    ) || [];
+
+    renderHistory(allData);
+
 });
 
 // =====================================
-// AMBIL DATA HISTORY
+// RENDER HISTORY
 // =====================================
-function getHistoryData() {
-    return JSON.parse(localStorage.getItem("historyStock")) || [];
-}
 
-// =====================================
-// RENDER SEMUA / FILTER HASIL
-// =====================================
-function renderHistory(data = null) {
+function renderHistory(data) {
 
-    const list = document.getElementById("historyList");
-    if (!list) return;
+    const historyList =
+        document.getElementById("historyList");
 
-    const history = data || getHistoryData();
+    if (!historyList) return;
 
-    if (history.length === 0) {
-        list.innerHTML = `
+    if (data.length === 0) {
+
+        historyList.innerHTML = `
+
             <div class="history-card">
-                <h3>Belum ada data</h3>
-                <p>Silakan lakukan stock opname terlebih dahulu</p>
+
+                <h3>
+
+                    Belum ada data
+
+                </h3>
+
             </div>
+
         `;
+
         return;
+
     }
 
     let html = "";
 
-    history.forEach((item, index) => {
+    data.forEach((item) => {
 
-        const pic = item.pic || item.operator || "-";
-        const waktu = item.waktuInput || item.timestamp || "-";
+        const pic =
+            item.pic ||
+            item.operator ||
+            "-";
+
+        const kategori =
+            item.kategori ||
+            "-";
+
+        const type =
+            item.type ||
+            "-";
+
+        const tanggal =
+            item.tanggal ||
+            "-";
+
+        const jumlah =
+            Array.isArray(item.items)
+                ? item.items.length
+                : 0;
+
+        // tampilkan jam saja
+        let waktu = "-";
+
+        if (item.waktuInput) {
+
+            const pecah =
+                item.waktuInput.split(",");
+
+            waktu =
+                pecah.length > 1
+                ? pecah[1].trim()
+                : item.waktuInput;
+
+        }
 
         html += `
-            <div class="history-card">
 
-                <h3>${item.kategori || "-"} - ${item.type || "-"}</h3>
+        <div class="history-card">
 
-                <p><b>PIC:</b> ${pic}</p>
+            <h3>
 
-                <p><b>Tanggal:</b> ${item.tanggal || "-"}</p>
+                ${kategori} - ${type}
 
-                <p><b>Waktu Input:</b> ${waktu}</p>
+            </h3>
 
-                <p><b>Jumlah Item:</b> ${item.items ? item.items.length : 0}</p>
+            <p>
 
-                <button onclick="bukaData(${index})">
-                    BUKA DATA
-                </button>
+                <b>PIC :</b>
 
-            </div>
+                ${pic}
+
+            </p>
+
+            <p>
+
+                <b>Tanggal :</b>
+
+                ${tanggal}
+
+            </p>
+
+            <p>
+
+                <b>Jam :</b>
+
+                ${waktu}
+
+            </p>
+
+            <p>
+
+                <b>Jumlah Item :</b>
+
+                ${jumlah}
+
+            </p>
+
+            <button
+                onclick="bukaData(${item.id})">
+
+                BUKA DATA
+
+            </button>
+
+        </div>
+
+        <br>
+
         `;
+
     });
 
-    list.innerHTML = html;
+    historyList.innerHTML = html;
+
 }
 
 // =====================================
-// FILTER TANGGAL
+// FILTER
 // =====================================
+
 function filterHistory() {
 
-    const start = document.getElementById("startDate").value;
-    const end = document.getElementById("endDate").value;
+    const start =
+        document.getElementById("startDate").value;
 
-    const history = getHistoryData();
+    const end =
+        document.getElementById("endDate").value;
 
     if (!start || !end) {
-        tampilNotif("Pilih tanggal mulai dan akhir", "error");
+
+        tampilNotif(
+            "Pilih tanggal terlebih dahulu",
+            "error"
+        );
+
         return;
+
     }
 
-    const filtered = history.filter(item => {
+    const hasil = allData.filter(item => {
 
-        if (!item.tanggal) return false;
+        return (
 
-        return item.tanggal >= start && item.tanggal <= end;
+            item.tanggal >= start &&
+
+            item.tanggal <= end
+
+        );
+
     });
 
-    renderHistory(filtered);
+    renderHistory(hasil);
 
-    tampilNotif("Filter berhasil", "success");
 }
 
 // =====================================
-// RESET FILTER
+// RESET
 // =====================================
+
 function resetFilter() {
 
-    document.getElementById("startDate").value = "";
-    document.getElementById("endDate").value = "";
+    document.getElementById(
+        "startDate"
+    ).value = "";
 
-    renderHistory();
+    document.getElementById(
+        "endDate"
+    ).value = "";
 
-    tampilNotif("Filter direset", "success");
+    renderHistory(allData);
+
 }
 
 // =====================================
-// BUKA DETAIL DATA
+// DETAIL
 // =====================================
-function bukaData(index) {
 
-    const history = getHistoryData();
+function bukaData(id) {
 
-    if (!history[index]) {
-        tampilNotif("Data tidak ditemukan", "error");
+    const data = allData.find(
+        item => item.id == id
+    );
+
+    if (!data) {
+
+        tampilNotif(
+            "Data tidak ditemukan",
+            "error"
+        );
+
         return;
+
     }
 
     localStorage.setItem(
+
         "selectedHistory",
-        JSON.stringify(history[index])
+
+        JSON.stringify(data)
+
     );
 
-    window.location.href = "detail_history.html";
+    window.location.href =
+        "detail_history.html";
+
 }
 
 // =====================================
-// NOTIFIKASI
+// NOTIF
 // =====================================
-function tampilNotif(pesan, type = "success") {
 
-    let notif = document.getElementById("notif");
+function tampilNotif(
+    pesan,
+    type = "success"
+) {
+
+    const notif =
+        document.getElementById("notif");
+
     if (!notif) return;
 
-    notif.className = "notif " + type;
-    notif.innerText = pesan;
-    notif.style.display = "block";
+    notif.className =
+        "notif " + type;
+
+    notif.innerHTML =
+        pesan;
+
+    notif.style.display =
+        "block";
 
     setTimeout(() => {
-        notif.style.display = "none";
+
+        notif.style.display =
+            "none";
+
     }, 2000);
+
 }
